@@ -45,6 +45,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "p33FJ128GP802.h"
+#include "timer.h"
 
 /*
 1kHz -> T_timeout = 1ms
@@ -77,11 +78,13 @@ int main(int argc, char** argv) {
     while(1) {
         // if RB6 is low, change freq to 2kHz
         if(PORTBbits.RB6 == 0) {
-            PR1 = 999;
+            //PR1 = 999;
+            setT1(999);
         }
         // if RB6 is high, change freq to 1kHz
         else {
-            PR1 = 1999;
+            // PR1 = 1999;
+            setT1(1999);
         }
         // check if timer 1 is greater or equal period register
         if(TMR1 >= PR1) {
