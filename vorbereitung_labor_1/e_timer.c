@@ -87,12 +87,12 @@ int main(int argc, char** argv) {
             setT1(1999);
         }
         // check if timer 1 is greater or equal period register
-        if(TMR1 >= PR1) {
-            // set timer 1 to 0
-            TMR1 = 0;
-            // invert portB RB15
-            PORTBbits.RB15 = !PORTBbits.RB15;
-        }
+        // if(TMR1 >= PR1) {
+        //     // set timer 1 to 0
+        //     TMR1 = 0;
+        //     // invert portB RB15
+        //     PORTBbits.RB15 = !PORTBbits.RB15;
+        // }
     }
 
     return (EXIT_SUCCESS);
