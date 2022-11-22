@@ -30,7 +30,7 @@
 #pragma config POSCMD = XT // Primary Oscillator Source (XT Oscillator Mode)
 #pragma config OSCIOFNC =                                                      \
     OFF // OSC2 Pin Function (OSC2 pin has clock out function)
-#pragma config IOL1WAY = ON // Peripheral Pin Select Configuration (Allow Only
+#pragma config IOL1WAY = OFF // Peripheral Pin Select Configuration (Allow Only
                             // One Re-configuration)
 #pragma config FCKSM =                                                         \
     CSECME // Clock Switching and Monitor (Both Clock Switching and Fail-Safe

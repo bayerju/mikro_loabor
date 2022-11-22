@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "p33FJ128GP802.h"
 #include "config.h"
-#include "init_osc_80.h"
-#include "init_osc_80.h"
 #include "adc.h"
 #include "timer.h"
 #include "pwm.h"

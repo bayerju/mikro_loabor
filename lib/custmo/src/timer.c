@@ -3,7 +3,7 @@
 #include "p33FJ128GP802.h"
 
 // define constants
-#define T3_PERIOD 9999
+#define T3_PERIOD 499
 #define ON 1
 #define OFF 0
 
@@ -12,7 +12,7 @@ void T3_init(void) {
     T3CONbits.TCS = 0;
 
     T3CONbits.TGATE = 0;
-    T3CONbits.TCKPS = 0b01;
+    T3CONbits.TCKPS = 0b00;
     TMR3 = 0x00;
 
     PR3 = T3_PERIOD;
@@ -59,6 +59,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void){
        /* Interrupt Service Routine code goes here */
     // rect signal on RB15
        PORTBbits.RB15 = !LATBbits.LATB15;
+       IFS0bits.T1IF = 0; // Clear Timer1 Interrupt Flag
     //    if(PORTBbits.RB6 == 1) {
     //        PR1 = 999;
     //    }
@@ -70,4 +71,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void){
     //    } else {
     //        PORTBbits.RB15 = 1;
     //    }
+}
+
+void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt (void) {
+    LATBbits.LATB14 = !LATBbits.LATB14;
+    IFS0bits.T3IF = 0;
 }
