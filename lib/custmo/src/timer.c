@@ -54,3 +54,20 @@ void setT1(int period) {
     IEC0bits.T1IE = 1; // Enable Timer1 interrupt
     T1CONbits.TON = 1; // Start Timer
 }
+
+void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void){
+       /* Interrupt Service Routine code goes here */
+    // rect signal on RB15
+       PORTBbits.RB15 = !LATBbits.LATB15;
+    //    if(PORTBbits.RB6 == 1) {
+    //        PR1 = 999;
+    //    }
+    //     else {
+    //         PR1 = 499;
+    //     }
+    //    if (LATBbits.LATB15 == 1) {
+    //        PORTBbits.RB15 = 0;
+    //    } else {
+    //        PORTBbits.RB15 = 1;
+    //    }
+}
