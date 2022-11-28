@@ -7,7 +7,7 @@
 #define ON 1
 #define OFF 0
 
-void T3_init(void) {
+void T3_setup(void) {
     T3CONbits.TON = 0;
     T3CONbits.TCS = 0;
 

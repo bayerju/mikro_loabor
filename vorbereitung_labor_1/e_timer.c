@@ -56,7 +56,7 @@ void main (int argc, char** argv) {
     // unsigned int rescmp = 512;
     TRISB = 0;
     adc_init();
-    T3_init();
+    T3_setup();
 
   
     

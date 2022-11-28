@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c timer.c global_definitions.c dht.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/global_definitions.o ${OBJECTDIR}/dht.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/timer.o.d ${OBJECTDIR}/global_definitions.o.d ${OBJECTDIR}/dht.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/global_definitions.o ${OBJECTDIR}/dht.o
 
 # Source Files
-SOURCEFILES=main.c
+SOURCEFILES=main.c timer.c global_definitions.c dht.c
 
 
 
@@ -101,12 +101,48 @@ ${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/46027fd066a0b346c274
 	@${RM} ${OBJECTDIR}/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
+${OBJECTDIR}/timer.o: timer.c  .generated_files/flags/default/65dd7aa307d2c7fed7d77172315f27226485f958 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/timer.o.d 
+	@${RM} ${OBJECTDIR}/timer.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  timer.c  -o ${OBJECTDIR}/timer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/timer.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/global_definitions.o: global_definitions.c  .generated_files/flags/default/81a1ecc2a12e31bcee6445cf17174c59b066f9a4 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/global_definitions.o.d 
+	@${RM} ${OBJECTDIR}/global_definitions.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  global_definitions.c  -o ${OBJECTDIR}/global_definitions.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/global_definitions.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/dht.o: dht.c  .generated_files/flags/default/4d81d2deb7fcef4a0ff3b15c974f5c3986687fab .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/dht.o.d 
+	@${RM} ${OBJECTDIR}/dht.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  dht.c  -o ${OBJECTDIR}/dht.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/dht.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 else
 ${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/4b132a5091cd6af34a4b9deddfd5d799b725579e .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/timer.o: timer.c  .generated_files/flags/default/c1382725813872232e7f521a208cf927344e4c0f .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/timer.o.d 
+	@${RM} ${OBJECTDIR}/timer.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  timer.c  -o ${OBJECTDIR}/timer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/timer.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/global_definitions.o: global_definitions.c  .generated_files/flags/default/e0e6d3253f7f874898b064e075fa626c7a067299 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/global_definitions.o.d 
+	@${RM} ${OBJECTDIR}/global_definitions.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  global_definitions.c  -o ${OBJECTDIR}/global_definitions.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/global_definitions.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/dht.o: dht.c  .generated_files/flags/default/ac79d0af497de8651d7968aae49a83711e848575 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/dht.o.d 
+	@${RM} ${OBJECTDIR}/dht.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  dht.c  -o ${OBJECTDIR}/dht.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/dht.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 
