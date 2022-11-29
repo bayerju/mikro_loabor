@@ -8,6 +8,7 @@
 #ifndef DHT_H
 #define DHT_H
 extern int evalWakingData(short int *a_data, short int length);
+extern int evalBit(int *dataPoints);
 
 #ifdef __cplusplus
 extern "C" {
