@@ -21,6 +21,7 @@ void T3_setup(void) {
 void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
     /* Interrupt Service Routine code goes here */
     static short int counter = 0;
+    static short int recievedBits = 0;
     if (isWakingSensorFlag == 1 && isMessuringSensorFlag == 0) {
         data[counter] = PORTBbits.RB15;
         counter++;
@@ -30,12 +31,21 @@ void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
         counter = 0;
     }
     if (isMessuringSensorFlag == 1) {
-        data[counter] = PORTBbits.RB15;
+        bitEvalData[counter] = PORTBbits.RB15;
+        short int currentBit = evalBit(bitEvalData);
+        if (currentBit != -1) {
+            measurementBits[counter] = currentBit;
+            counter = 0;
+            recievedBits++;
+        }
         counter++;
     }
-    if (counter >= MAX_DATA_ARRAY_LENGTH && isMessuringSensorFlag == 1) {
-        // evaluate messuring data here
-        counter = 0;
+    if (recievedBits >= 40) {
+        counter == 0;
+        T3CONbits.TON = 0; // Disable Timer
+        IEC0bits.T3IE = 0; // Disable Timer3 interrupt
+
     }
+    
     IFS0bits.T3IF = 0;
 }

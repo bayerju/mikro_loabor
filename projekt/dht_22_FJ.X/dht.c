@@ -1,5 +1,6 @@
 #include "p33FJ128GP802.h"
 #include "global_definitions.h"
+#include <stdio.h>
 
 int evalWakingData(short int *a_data, short int length) {
     #if DEBUG
