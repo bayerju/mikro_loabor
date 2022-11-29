@@ -36,6 +36,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
         if (currentBit != -1) {
             measurementBits[counter] = currentBit;
             counter = 0;
+            for (int i = 0; i < sizeof(bitEvalData); i++) {
+                bitEvalData[i] = -1;
+            }
             recievedBits++;
         }
         counter++;

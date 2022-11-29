@@ -9,13 +9,13 @@
 #define GLOBAL_DEFINITIONS_H
 
 extern short int
-    isWakingSensorFlag; // löst die Messung und das Aufwachen des Sensors aus
+    isWakingSensorFlag; // lÃ¶st die Messung und das Aufwachen des Sensors aus
 extern short int
-    isMessuringSensorFlag; // löst die Messung der Daten des Sensors aus
+    isMessuringSensorFlag; // lÃ¶st die Messung der Daten des Sensors aus
 extern const short int MAX_DATA_ARRAY_LENGTH;
-extern short int data[MAX_DATA_ARRAY_LENGTH];
-extern short int bitEvalData[12];
-extern short int measurementBits[40];
+extern short int data[];
+extern short int bitEvalData[];
+extern short int measurementBits[];
 #define DEBUG 1
 
 #ifdef __cplusplus
