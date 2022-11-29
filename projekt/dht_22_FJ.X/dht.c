@@ -1,6 +1,7 @@
 #include "p33FJ128GP802.h"
 #include "global_definitions.h"
 #include <stdio.h>
+#include "timer002.h"
 
 void startDHT22(void){
     Setup_T1();
@@ -14,7 +15,7 @@ int evalWakingData(short int *a_data, short int length) {
     short int counter_zero = 0;
     short int currentState = 1;
     for (i = 0; i < length; i++) {
-        if (a_data[i] = 0) {
+        if (a_data[i] == 0) {
             counter_zero++;
             currentState = 0;
         }

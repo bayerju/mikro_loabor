@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "p33FJ128GP802.h"
 #include "global_definitions.h"
+#include "dht.h"
 
 #define T3_Period 19 // 1us with 4MHz: 4MHz -> Befehlstakt: 2Mhz -> 1/2Mhz = 0.5us -> 10us/0.5us = 20
 
@@ -23,18 +24,22 @@ void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
     static short int counter = 0;
     static short int recievedBits = 0;
     if (isWakingSensorFlag == 1 && isMessuringSensorFlag == 0) {
-        data[counter] = PORTBbits.RB15;
+        data[counter] = 1;//PORTBbits.RB15;
+        LATBbits.LATB14 = LATBbits.LATB14 ^1;
         counter++;
     }
     if (counter >= MAX_DATA_ARRAY_LENGTH && isWakingSensorFlag == 1) {
         short int didActivate = evalWakingData(data, MAX_DATA_ARRAY_LENGTH);
+        // ERROR
         if (didActivate == -1) {
-            counter == 0;
+            counter = 0;
             isWakingSensorFlag = 0;
             T3CONbits.TON = 0; // Disable Timer
             IEC0bits.T3IE = 0; // Disable Timer3 interrupt
             
-        } else
+        } 
+        // Success
+        else
         {
             counter = 0;
             isWakingSensorFlag = 0;
@@ -49,7 +54,8 @@ void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
         if (currentBit != -1) {
             measurementBits[counter] = currentBit;
             counter = 0;
-            for (int i = 0; i < sizeOf(bitEvalData); i++) {
+            int i = 0;
+            for (i = 0; i < 12; i++) {
                 bitEvalData[i] = -1;
             }
             recievedBits++;
@@ -57,7 +63,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
         counter++;
     }
     if (recievedBits >= 40) {
-        counter == 0;
+        counter = 0;
         T3CONbits.TON = 0; // Disable Timer
         IEC0bits.T3IE = 0; // Disable Timer3 interrupt
 
