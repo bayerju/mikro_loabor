@@ -27,7 +27,20 @@ void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
         counter++;
     }
     if (counter >= MAX_DATA_ARRAY_LENGTH && isWakingSensorFlag == 1) {
-        evalWakingData(data, MAX_DATA_ARRAY_LENGTH);
+        short int didActivate = evalWakingData(data, MAX_DATA_ARRAY_LENGTH);
+        if (didActivate == -1) {
+            counter == 0;
+            isWakingSensorFlag = 0;
+            T3CONbits.TON = 0; // Disable Timer
+            IEC0bits.T3IE = 0; // Disable Timer3 interrupt
+            
+        } else
+        {
+            counter = 0;
+            isWakingSensorFlag = 0;
+            isMessuringSensorFlag = 1;
+        }
+        
         counter = 0;
     }
     if (isMessuringSensorFlag == 1) {
