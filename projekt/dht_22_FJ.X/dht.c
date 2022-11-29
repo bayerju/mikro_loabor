@@ -2,6 +2,10 @@
 #include "global_definitions.h"
 #include <stdio.h>
 
+void startDHT22(void){
+    Setup_T1();
+}
+
 int evalWakingData(short int *a_data, short int length) {
     #if DEBUG
     TRISBbits.TRISB4 = 0;
