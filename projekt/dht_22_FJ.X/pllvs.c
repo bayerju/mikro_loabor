@@ -1,7 +1,6 @@
-
  #include "p33FJ128GP802.h"
     
-    void setup_pll() {
+    void setup_pll_80mhz() {
             // set plldiv to 78
     PLLFBDbits.PLLDIV = 78;
     // set pllpost to 0

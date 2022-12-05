@@ -8,6 +8,8 @@
       <itemPath>config.h</itemPath>
       <itemPath>global_definitions.h</itemPath>
       <itemPath>dht.h</itemPath>
+      <itemPath>pll.h</itemPath>
+      <itemPath>timerstart.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -20,6 +22,8 @@
       <itemPath>timer.c</itemPath>
       <itemPath>global_definitions.c</itemPath>
       <itemPath>dht.c</itemPath>
+      <itemPath>pll.c</itemPath>
+      <itemPath>timerstart.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -27,6 +31,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">

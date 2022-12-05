@@ -19,55 +19,55 @@ void T3_setup(void) {
     T3CONbits.TON = 1; // Start Timer
 }
 
-void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
-    /* Interrupt Service Routine code goes here */
-    static short int counter = 0;
-    static short int recievedBits = 0;
-    if (isWakingSensorFlag == 1 && isMessuringSensorFlag == 0) {
-        data[counter] = 1;//PORTBbits.RB15;
-        LATBbits.LATB14 = LATBbits.LATB14 ^1;
-        counter++;
-    }
-    if (counter >= MAX_DATA_ARRAY_LENGTH && isWakingSensorFlag == 1) {
-        short int didActivate = evalWakingData(data, MAX_DATA_ARRAY_LENGTH);
-        // ERROR
-        if (didActivate == -1) {
-            counter = 0;
-            isWakingSensorFlag = 0;
-            T3CONbits.TON = 0; // Disable Timer
-            IEC0bits.T3IE = 0; // Disable Timer3 interrupt
+// void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
+//     /* Interrupt Service Routine code goes here */
+//     static short int counter = 0;
+//     static short int recievedBits = 0;
+//     if (isWakingSensorFlag == 1 && isMessuringSensorFlag == 0) {
+//         data[counter] = 1;//PORTBbits.RB15;
+//         LATBbits.LATB14 = !LATBbits.LATB14;
+//         counter++;
+//     }
+//     if (counter >= MAX_DATA_ARRAY_LENGTH && isWakingSensorFlag == 1) {
+//         short int didActivate = evalWakingData(data, MAX_DATA_ARRAY_LENGTH);
+//         // ERROR
+//         if (didActivate == -1) {
+//             counter = 0;
+//             isWakingSensorFlag = 0;
+//             T3CONbits.TON = 0; // Disable Timer
+//             IEC0bits.T3IE = 0; // Disable Timer3 interrupt
             
-        } 
-        // Success
-        else
-        {
-            counter = 0;
-            isWakingSensorFlag = 0;
-            isMessuringSensorFlag = 1;
-        }
+//         } 
+//         // Success
+//         else
+//         {
+//             counter = 0;
+//             isWakingSensorFlag = 0;
+//             isMessuringSensorFlag = 1;
+//         }
         
-        counter = 0;
-    }
-    if (isMessuringSensorFlag == 1) {
-        bitEvalData[counter] = PORTBbits.RB15;
-        short int currentBit = evalBit(bitEvalData);
-        if (currentBit != -1) {
-            measurementBits[counter] = currentBit;
-            counter = 0;
-            int i = 0;
-            for (i = 0; i < 12; i++) {
-                bitEvalData[i] = -1;
-            }
-            recievedBits++;
-        }
-        counter++;
-    }
-    if (recievedBits >= 40) {
-        counter = 0;
-        T3CONbits.TON = 0; // Disable Timer
-        IEC0bits.T3IE = 0; // Disable Timer3 interrupt
+//         counter = 0;
+//     }
+//     if (isMessuringSensorFlag == 1) {
+//         bitEvalData[counter] = PORTBbits.RB15;
+//         short int currentBit = evalBit(bitEvalData);
+//         if (currentBit != -1) {
+//             measurementBits[counter] = currentBit;
+//             counter = 0;
+//             int i = 0;
+//             for (i = 0; i < 12; i++) {
+//                 bitEvalData[i] = -1;
+//             }
+//             recievedBits++;
+//         }
+//         counter++;
+//     }
+//     if (recievedBits >= 40) {
+//         counter = 0;
+//         T3CONbits.TON = 0; // Disable Timer
+//         IEC0bits.T3IE = 0; // Disable Timer3 interrupt
 
-    }
+//     }
     
-    IFS0bits.T3IF = 0;
-}
+//     IFS0bits.T3IF = 0;
+// }

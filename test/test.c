@@ -1,28 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int bitshifter(int *dataPoints) {
-    int i;
-    *dataPoints = 0;
-    for (i = 0; i < 8; i++) {
-
-       *dataPoints = *dataPoints | 1;
-    }
-    return 0;
+int set_bit(int num, int position)
+{
+	int mask = 1 << position;
+	return num | mask;
 }
 
-int bitshifterSelf(int *dataPoints) {
-    int i;
-    for (i = 0; i < 8; i++) {
-       dataPoints[i] = 1;
-    }
-    return 0;
-}
 
 int main(int argc, char** argv) {
-    printf("Hello world!");
-    int result[8] = {0};
-    bitshifterSelf(result);
+    
+int checksum = 0;
+int data[40] = {0};
+int i = 0;
+while(1) {
+    checksum = set_bit(checksum, i);
+    i++;
+}
 
     return (0);
 }

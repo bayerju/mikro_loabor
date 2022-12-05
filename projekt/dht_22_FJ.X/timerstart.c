@@ -1,4 +1,5 @@
 
+
 /* 
  * File:   Timer002.c
  * Author: felix
@@ -23,8 +24,8 @@ void Setup_T1(void) // Aus Moodle
     T1CONbits.TGATE = 0;    // Disable Gated Timer mode
     T1CONbits.TCKPS = 0b00; // Select 1:1 Prescaler
     TMR1 = 0x00;            // Clear timer register
-    PR1 = T1_Periode_Ground;              // F�r Rechteck 1kHz
-    // PR1 = 499;           // F�r Rechteck 2kHz
+    PR1 = T1_Periode_Ground;              // F?r Rechteck 1kHz
+    // PR1 = 499;           // F?r Rechteck 2kHz
 
     IPC0bits.T1IP = 0x01;   // Set Timer1 Interrupt Priority Level
     IFS0bits.T1IF = 0;      // Clear Timer1 Interrupt Flag
@@ -32,7 +33,7 @@ void Setup_T1(void) // Aus Moodle
     T1CONbits.TON = 1; // Einschalten des Timers 
     }
     
-    // Interrut sorgt f�r das Rechtecksignal
+    // Interrut sorgt f?r das Rechtecksignal
     void __attribute__((__interrupt__,  no_auto_psv)) _T1Interrupt(void){
         
         static short int counter = 0;

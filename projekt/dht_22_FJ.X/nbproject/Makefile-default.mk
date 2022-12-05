@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c timer.c global_definitions.c dht.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c timer.c global_definitions.c dht.c pll.c timerstart.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/global_definitions.o ${OBJECTDIR}/dht.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/timer.o.d ${OBJECTDIR}/global_definitions.o.d ${OBJECTDIR}/dht.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/global_definitions.o ${OBJECTDIR}/dht.o ${OBJECTDIR}/pll.o ${OBJECTDIR}/timerstart.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/timer.o.d ${OBJECTDIR}/global_definitions.o.d ${OBJECTDIR}/dht.o.d ${OBJECTDIR}/pll.o.d ${OBJECTDIR}/timerstart.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/global_definitions.o ${OBJECTDIR}/dht.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/global_definitions.o ${OBJECTDIR}/dht.o ${OBJECTDIR}/pll.o ${OBJECTDIR}/timerstart.o
 
 # Source Files
-SOURCEFILES=main.c timer.c global_definitions.c dht.c
+SOURCEFILES=main.c timer.c global_definitions.c dht.c pll.c timerstart.c
 
 
 
@@ -119,6 +119,18 @@ ${OBJECTDIR}/dht.o: dht.c  .generated_files/flags/default/4d81d2deb7fcef4a0ff3b1
 	@${RM} ${OBJECTDIR}/dht.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  dht.c  -o ${OBJECTDIR}/dht.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/dht.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
+${OBJECTDIR}/pll.o: pll.c  .generated_files/flags/default/58e1f95d604e85be70c5791cc47d0a5882a5ec4b .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/pll.o.d 
+	@${RM} ${OBJECTDIR}/pll.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  pll.c  -o ${OBJECTDIR}/pll.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/pll.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/timerstart.o: timerstart.c  .generated_files/flags/default/48153dc10791fa4bc8a5ab9898d0d4d9e44d4fe .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/timerstart.o.d 
+	@${RM} ${OBJECTDIR}/timerstart.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  timerstart.c  -o ${OBJECTDIR}/timerstart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/timerstart.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 else
 ${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/4b132a5091cd6af34a4b9deddfd5d799b725579e .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
 	@${MKDIR} "${OBJECTDIR}" 
@@ -143,6 +155,18 @@ ${OBJECTDIR}/dht.o: dht.c  .generated_files/flags/default/ac79d0af497de8651d7968
 	@${RM} ${OBJECTDIR}/dht.o.d 
 	@${RM} ${OBJECTDIR}/dht.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  dht.c  -o ${OBJECTDIR}/dht.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/dht.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/pll.o: pll.c  .generated_files/flags/default/b0bdf927311f2f076a0312921ebf2a871ab0d0b3 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/pll.o.d 
+	@${RM} ${OBJECTDIR}/pll.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  pll.c  -o ${OBJECTDIR}/pll.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/pll.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/timerstart.o: timerstart.c  .generated_files/flags/default/1ccfa38ac8f8d4dd19456e64ed8e951a14a09fcf .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/timerstart.o.d 
+	@${RM} ${OBJECTDIR}/timerstart.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  timerstart.c  -o ${OBJECTDIR}/timerstart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/timerstart.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 
