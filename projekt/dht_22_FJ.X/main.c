@@ -9,7 +9,10 @@
 #include <stdlib.h>
 #include "p33FJ128GP802.h"
 #include "config.h" // sets primary oscillator to 4MHz
+#include "dht.h"
 #include "timer.h"
+#include "global_definitions.h"
+#include "pll.h"
 
 #define datapin 15 // RB15
 
@@ -17,12 +20,19 @@
  * 
  */
 int main(int argc, char** argv) {
+    setup_pll();
     CNPU1bits.CN15PUE = 1; // pull up resistor for RB15
     isMessuringSensorFlag = 0;
-    setup_pll();
-    T3_setup();
+    TRISBbits.TRISB14 = 0;
+    int i;
+    for (i = 0; i > 100000; i++);
+    startDHT22();
+    for (i = 0; i> 10000000; i++);
+    int test = 0;
+    while (1) {
+        test++;
+    }
 
-
-    return (EXIT_SUCCESS);
+    return (0);
 }
 

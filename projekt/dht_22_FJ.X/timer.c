@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "p33FJ128GP802.h"
 #include "global_definitions.h"
+#include "dht.h"
 
 #define T3_Period 19 // 1us with 4MHz: 4MHz -> Befehlstakt: 2Mhz -> 1/2Mhz = 0.5us -> 10us/0.5us = 20
 
@@ -21,21 +22,52 @@ void T3_setup(void) {
 void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
     /* Interrupt Service Routine code goes here */
     static short int counter = 0;
+    static short int recievedBits = 0;
     if (isWakingSensorFlag == 1 && isMessuringSensorFlag == 0) {
-        data[counter] = PORTBbits.RB15;
+        data[counter] = 1;//PORTBbits.RB15;
+        LATBbits.LATB14 = LATBbits.LATB14 ^1;
         counter++;
     }
     if (counter >= MAX_DATA_ARRAY_LENGTH && isWakingSensorFlag == 1) {
-        evalWakingData(data, MAX_DATA_ARRAY_LENGTH);
+        short int didActivate = evalWakingData(data, MAX_DATA_ARRAY_LENGTH);
+        // ERROR
+        if (didActivate == -1) {
+            counter = 0;
+            isWakingSensorFlag = 0;
+            T3CONbits.TON = 0; // Disable Timer
+            IEC0bits.T3IE = 0; // Disable Timer3 interrupt
+            
+        } 
+        // Success
+        else
+        {
+            counter = 0;
+            isWakingSensorFlag = 0;
+            isMessuringSensorFlag = 1;
+        }
+        
         counter = 0;
     }
     if (isMessuringSensorFlag == 1) {
-        data[counter] = PORTBbits.RB15;
+        bitEvalData[counter] = PORTBbits.RB15;
+        short int currentBit = evalBit(bitEvalData);
+        if (currentBit != -1) {
+            measurementBits[counter] = currentBit;
+            counter = 0;
+            int i = 0;
+            for (i = 0; i < 12; i++) {
+                bitEvalData[i] = -1;
+            }
+            recievedBits++;
+        }
         counter++;
     }
-    if (counter >= MAX_DATA_ARRAY_LENGTH && isMessuringSensorFlag == 1) {
-        // evaluate messuring data here
+    if (recievedBits >= 40) {
         counter = 0;
+        T3CONbits.TON = 0; // Disable Timer
+        IEC0bits.T3IE = 0; // Disable Timer3 interrupt
+
     }
+    
     IFS0bits.T3IF = 0;
 }
