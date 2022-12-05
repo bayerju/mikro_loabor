@@ -35,8 +35,8 @@ int main(int argc, char** argv) {
     __builtin_write_OSCCONH(0x03);
     __builtin_write_OSCCONL(0x01);
 
-    while (OSCCONbits.COSC != 0b011);
-    while (OSCCONbits.LOCK != 1);
+    while (OSCCONbits.COSC != 0b011); // Wait for Clock switch to occur
+    while (OSCCONbits.LOCK != 1); // Wait for PLL to lock
 
     TRISBbits.TRISB15 = 0;
     while(1) {

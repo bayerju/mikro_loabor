@@ -17,9 +17,9 @@
  * 
  */
 int main(int argc, char** argv) {
-    // pull up resistor for RB15
-    CNPU1bits.CN15PUE = 1;
+    CNPU1bits.CN15PUE = 1; // pull up resistor for RB15
     isMessuringSensorFlag = 0;
+    setup_pll();
     T3_setup();
 
 
