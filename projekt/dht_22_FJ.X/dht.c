@@ -1,10 +1,13 @@
 #include "p33FJ128GP802.h"
 #include "global_definitions.h"
 #include <stdio.h>
-#include "timer002.h"
 
 void startDHT22(void){
     Setup_T1();
+}
+
+int readDHT() {
+    if (evalWakingData())
 }
 
 int evalWakingData(short int *a_data, short int length) {

@@ -15,6 +15,7 @@
 #include "pll.h"
 
 #define datapin 15 // RB15
+#define FCY 80 000 000 // 80MHz
 
 /*
  * 
@@ -25,8 +26,9 @@ int main(int argc, char** argv) {
     isMessuringSensorFlag = 0;
     TRISBbits.TRISB14 = 0;
     int i;
-    for (i = 0; i > 100000; i++);
+    delay_ms(1000);
     startDHT22();
+    T3_setup();
     for (i = 0; i> 10000000; i++);
     int test = 0;
     while (1) {
