@@ -8,16 +8,16 @@
 #ifndef GLOBAL_DEFINITIONS_H
 #define GLOBAL_DEFINITIONS_H
 
-#define DHT_PIN PORTBbits.RB15
+#define DHT_PIN PORTBbits.RB5 // von RB15 auf RB2 stellen da runtergezogen
 #define FCY 80000000 // 80MHz
 #define VALUE_10us 0.00001 // 1us
 // VALUE_10us/(1/(FCY/2))
 #define step_10us 400;
 
 extern short int
-    isWakingSensorFlag; // lÃ¶st die Messung und das Aufwachen des Sensors aus
+    isWakingSensorFlag; // löst die Messung und das Aufwachen des Sensors aus
 extern short int
-    isMessuringSensorFlag; // lÃ¶st die Messung der Daten des Sensors aus
+    isMessuringSensorFlag; // löst die Messung der Daten des Sensors aus
 extern const short int MAX_DATA_ARRAY_LENGTH;
 extern short int data[];
 extern short int bitEvalData[];

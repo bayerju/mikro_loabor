@@ -7,7 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "p33FJ128GP802.h"
+// #include "p33FJ128GP802.h"
+#include <xc.h>
 #include "config.h" // sets primary oscillator to 4MHz
 #include "dht.h"
 #include "timer.h"
@@ -15,7 +16,7 @@
 #include "pll.h"
 #include <libpic30.h>
 
-#define datapin 15 // RB15
+#define datapin 5 // RB15
 #define FCY 80000000 // 80MHz
 // #define VALUE_10us 0.000001 // 1ms
 
@@ -39,16 +40,24 @@ int set_bit(int num, int position)
  * 
  */
 int main(int argc, char** argv) {
+    AD1PCFGL = 0xffff;
     int data[40] = {0};
     int temp, hum, checksum = 0;
 
     setup_pll();
-    CNPU1bits.CN15PUE = 1; // pull up resistor for RB15
+    // CNPU1bits.CN15PUE = 1; // pull up resistor for RB15
     isMessuringSensorFlag = 0;
     TRISBbits.TRISB14 = 0;
+    TRISBbits.TRISB9 = 0;
+    PORTBbits.RB9 = 0;
+
+    
+    
     
     __delay_ms(1000);
-    startDHT22();
+   
+    while(1){
+        startDHT22();
     T3_setup();
     readData(data);
 
@@ -65,8 +74,9 @@ int main(int argc, char** argv) {
                                        // we only write 8 bits
         }
     }
+    __delay_ms(5000)
+    };
 
 
     return (0);
 }
-

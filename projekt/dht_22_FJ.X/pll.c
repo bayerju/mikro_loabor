@@ -1,5 +1,5 @@
-
- #include "p33FJ128GP802.h"
+// #include "p33FJ128GP802.h"
+#include <xc.h>
     
     void setup_pll() {
             // set plldiv to 78

@@ -11,7 +11,7 @@ extern int evalWakingData(short int *a_data, short int length);
 extern int evalBit();
 extern void startDHT22 (void);
 extern int checkSensorReply(void);
-extern void readData(int *data);
+extern int readData(int *data);
 
 #ifdef __cplusplus
 extern "C" {

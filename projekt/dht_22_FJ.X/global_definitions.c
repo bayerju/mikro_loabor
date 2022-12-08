@@ -6,4 +6,3 @@ short int isWakingSensorFlag = 0;
 short int data[25];
 short int bitEvalData[12];
 short int measurementBits[40];
-

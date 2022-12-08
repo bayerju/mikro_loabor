@@ -20,5 +20,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* TIMER002_H */
-
+#endif /* TIMER002_H */

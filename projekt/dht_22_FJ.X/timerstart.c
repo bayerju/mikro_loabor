@@ -9,7 +9,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <xc.h>
 #include "p33FJ128GP802.h"
 #include "global_definitions.h"
 #include "timer.h"
@@ -29,21 +28,21 @@ void Setup_T1(void) // Aus Moodle
 
     IPC0bits.T1IP = 0x01;   // Set Timer1 Interrupt Priority Level
     IFS0bits.T1IF = 0;      // Clear Timer1 Interrupt Flag
-    IEC0bits.T1IE = 1;      // Enable Timer1 interrupt
+    IEC0bits.T1IE = 0;      // Disable Timer1 interrupt
     T1CONbits.TON = 1; // Einschalten des Timers 
     }
     
     // Interrut sorgt f?r das Rechtecksignal
-    void __attribute__((__interrupt__,  no_auto_psv)) _T1Interrupt(void){
+    /*void __attribute__((__interrupt__,  no_auto_psv)) _T1Interrupt(void){
         
         static short int counter = 0;
         if (counter == 0){
-        TRISBbits.TRISB15 = 0;
-        PORTBbits.RB15 = 0;
+        TRISBbits.TRISB5 = 0; // output
+        PORTBbits.RB5 = 0;
         }
         if (counter >= 20){
-        PORTBbits.RB15 = 1;
-        TRISBbits.TRISB15 = 1;
+        PORTBbits.RB5 = 1;
+        TRISBbits.TRISB5 = 1; // input
         isWakingSensorFlag = 1;
         T1CONbits.TON = 0;
         IEC0bits.T1IE = 0;
@@ -53,4 +52,4 @@ void Setup_T1(void) // Aus Moodle
         
         
         IFS0bits.T1IF = 0;
-    }
+    }*/

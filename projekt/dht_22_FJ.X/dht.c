@@ -1,10 +1,20 @@
-#include "p33FJ128GP802.h"
+// #include "p33FJ128GP802.h"
+#include <xc.h>
 #include "global_definitions.h"
 #include <stdio.h>
+#include "timerstartvs.h"
+#include "dht.h"
+#include <libpic30.h>
 
 void startDHT22(void){
-    Setup_T1();
+    TRISBbits.TRISB5 = 0;
+    PORTBbits.RB5 = 0;
+    __delay_ms(2);
+    PORTBbits.RB5 = 1;
+    TRISBbits.TRISB5 = 1;
+    //Setup_T1();
 }
+
 
 int splitDataArray(short int *a_data, short int length){
     
@@ -19,9 +29,10 @@ int splitDataArray(short int *a_data, short int length){
     return 0;
 }
 
-void readData(int *data) {
+int readData(int *data) {
     int counterBits = 0;
-    if (checkSensorReply() == 0){ // all good start reading
+    int isAnswerOk = checkSensorReply();
+    if (isAnswerOk == 0){ // all good start reading
         int bit = -1;
         while (DHT_PIN == 1 && TMR3 < 4000); // wait up to 100us;
         while (counterBits < 40){
@@ -32,6 +43,7 @@ void readData(int *data) {
             counterBits++;
         }
     }
+    return 0;
 }
 
 /**
@@ -41,10 +53,14 @@ void readData(int *data) {
  */
 int evalBit() {
     int prevPin = 0;
+    PORTBbits.RB9 = 1;
+    TMR3 = 0;
     while(DHT_PIN == 0 && TMR3 < 3000); // wait up to 75us;
-    if (TMR3 > 3000)
-        {TMR3 = 0;
-        return -1;}
+    PORTBbits.RB9 = 0;
+    if (TMR3 > 3000) {
+        TMR3 = 0;
+        return -1;
+    }
     while(DHT_PIN == 1){
         if(DHT_PIN == 1 && prevPin == 0){ // wait for pin to go to 0;
             TMR3 = 0;
@@ -52,11 +68,11 @@ int evalBit() {
         }
     }
     int time = TMR3;
-    if (time > 6000 && time < 20000){ // 15us * 400 && 50us * 400
+    if (time > 600 && time < 2000){ // 15us * 400 && 50us * 400
         TMR3 = 0;
         return 0;
     }
-    else if (time > 20000 && time < 40000){ // 50us *400 && 100us * 400
+    else if (time > 2000 && time < 4000){ // 50us *400 && 100us * 400
         TMR3 = 0;
         return 1;
     }
@@ -74,25 +90,31 @@ int evalBit() {
 int checkSensorReply() {
     // 400 is 10 us (step_10us) and 12 to wait 80us+20 to 40us
     int maxTime = 4800; // 400*12
+    int prevValue = 1;
+    //TRISBbits.TRISB5 = 0; hier wollten wir toggeln
+    //PORTBbits.RB5  = 0;
     while (TMR3 < maxTime) {
-        int timeGoneZero;
-        char prevValue = 1;
-        if (DHT_PIN == 1 && prevValue == 1) {
+        
+        
+        if (PORTBbits.RB5 == 1 && prevValue == 1) {
+            PORTBbits.RB15 = !LATBbits.LATB15;
             continue;
         } 
-        if (DHT_PIN == 0 && prevValue == 1) {
-            timeGoneZero = TMR3;
+        if (PORTBbits.RB5 == 0 && prevValue == 1) {
+            TMR3 = 0;
             prevValue = 0;
+            
         }
-        if (DHT_PIN == 1 && prevValue == 0) {
 
-                int timeStayedZero = TMR3 - timeGoneZero;
-                if (timeStayedZero > 7 && timeStayedZero < 9) {
+        if (PORTBbits.RB5 == 1 && prevValue == 0) {
+
+                int timeStayedZero = TMR3;
+                if (timeStayedZero > 2800 && timeStayedZero < 3600) { // zwischen 70 und 90 us // 1/40E6 = 25E-9 70E-6/25E-9 = 2800
                     TMR3 = 0;
                     return 0;
                     break;
                 } else {
-                    return 1;
+                    return -1;
                 }
             // if (timeStayedZero > step_10us*50) {
             //     PORTBbits.RB14 = 1;
@@ -100,7 +122,7 @@ int checkSensorReply() {
             //     PORTBbits.RB14 = 0;
             // }
             // prevValue = 1;
-        }
+        } 
     }
     return 1;
 }
