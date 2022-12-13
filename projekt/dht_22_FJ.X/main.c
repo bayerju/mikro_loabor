@@ -36,13 +36,23 @@ int set_bit(int num, int position)
 	return num | mask;
 }
 
+ int getRecievedByte(int offset, int *data) {
+     int byte = 0;
+     int i = 0;
+     for (i = 0 ; i < 8; i++) {
+            if (data[i + offset] == 1) {
+                byte = set_bit(byte, 7-i);
+            }
+        }
+     return byte;
+ }
+
 /*
  * 
  */
 int main(int argc, char** argv) {
     AD1PCFGL = 0xffff;
-    int data[40] = {0};
-    int temp, hum, checksum = 0;
+    
 
     setup_pll();
     // CNPU1bits.CN15PUE = 1; // pull up resistor for RB15
@@ -50,6 +60,8 @@ int main(int argc, char** argv) {
     TRISBbits.TRISB14 = 0;
     TRISBbits.TRISB9 = 0;
     PORTBbits.RB9 = 0;
+    
+  
 
     
     
@@ -57,24 +69,25 @@ int main(int argc, char** argv) {
     __delay_ms(1000);
    
     while(1){
+        int data[40] = {0};
+        int temp = 0, hum = 0, tempByte1 = 0, tempByte2 = 0, humByte1 = 0,humByte2 = 0, checksum = 0;
         startDHT22();
-    T3_setup();
-    readData(data);
+        T3_setup();
+        readData(data);
 
-    int i;
-    for (i = 0; i < 40; i++) {
-        if (data[i] == 1 && i < 16) {
-            temp = set_bit(temp, i);
+        humByte1 = getRecievedByte(0, data);
+        humByte2 = getRecievedByte(8, data);
+        tempByte1 = getRecievedByte(16, data);
+        tempByte2 = getRecievedByte(24, data);
+        checksum = getRecievedByte(32, data);
+        
+        int sum = humByte1 + humByte2 + tempByte1 +tempByte2;
+        int low8Bits = sum & 0xFF;
+        if (checksum == low8Bits) {
+            temp = (tempByte1 << 8) + tempByte2;
+            hum = (humByte1 << 8) + humByte2;
         }
-        if (data[i] == 1 && i >= 16 && i < 32) {
-            hum = set_bit(hum, i - 16);
-        }
-        if (data[i] == 1 && i >= 32 && i < 40) {
-            checksum = set_bit(checksum, i - 32); // check because checksum is 16 bits and
-                                       // we only write 8 bits
-        }
-    }
-    __delay_ms(5000)
+        __delay_ms(2000)
     };
 
 
