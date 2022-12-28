@@ -7,7 +7,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-// #include "p33FJ128GP802.h"
+#ifndef __dsPIC33FJ128GP802__
+    #define __dsPIC33FJ128GP802__
+#endif
+     
 #include <xc.h>
 #include "config.h" // sets primary oscillator to 4MHz
 #include "dht.h"
@@ -18,8 +21,14 @@
 #include "PIC_init.h"
 #include "i2c_routines.h"
 #include "OLED.h"
+#include "uart.h"
+#include "uart_dsPIC.h"
 
 #define datapin 5 // RB15
+
+#define ROT LATBbits.LATB15
+#define GELB LATBbits.LATB13
+#define GRUEN LATBbits.LATB14
 
 // #define VALUE_10us 0.000001 // 1ms
 
@@ -96,15 +105,57 @@ int main(int argc, char** argv) {
     setup_pll();
     // CNPU1bits.CN15PUE = 1; // pull up resistor for RB15
     isMessuringSensorFlag = 0;
+
+    // init ampel LEDs
+    TRISBbits.TRISB13 = 0;
     TRISBbits.TRISB14 = 0;
+    TRISBbits.TRISB15 = 0;
+
+
     TRISBbits.TRISB9 = 0;
     PORTBbits.RB9 = 0;
     init_i2c();
     init_OLED();
     
+    float boarderRedHum = 70;
+    float borderYellowHum = 61;
+    
+    
     __delay_ms(1000);
+
+    unsigned char iState = 0;
+    char inputValue[30] = {0};
+    CommPutChar("To change the middle border value type x and to change the upper boarder Value type k.");
    
     while(1){
+
+        if (CommIsEmpty() != 1){  // Echo of RX
+            iState = CommGetChar();
+            char buffer[30] = "The new value is: ";
+            switch (iState) {
+                case 1:
+                    CommPutChar("To change the middle border value type x and to change the upper boarder Value type k.");
+                    iState = 0;
+                    break;
+                case 120: // x changes the middle boarder value
+                    boarderRedHum = atof(CommGetChar());
+                    snprintf(buffer, sizeof(buffer), "%.1f", boarderRedHum);
+                    CommPutChar(buffer);
+                    iState = 1;
+                    break;
+                case 107: // k changes the upper boarder value
+                    borderYellowHum = atof(CommGetChar());
+                    snprintf(buffer, sizeof(buffer), "%.1f", borderYellowHum);
+                    CommPutChar(buffer);
+                    iState = 1;
+                    break;
+
+                default:
+                    break;
+            }
+
+           
+        }
         int data[40] = {0};
         int temp = 0, hum = 0; 
         float tempFloat = 0, humFloat = 0;
@@ -126,7 +177,7 @@ int main(int argc, char** argv) {
         int sum = humByte1 + humByte2 + tempByte1 +tempByte2;
         int low8Bits = sum & 0xFF;
         if (checksum == low8Bits) {
-            temp = (tempByte1 << 8) + tempByte2; // TODO: geteilt durch ersetzen für Performence
+            temp = (tempByte1 << 8) + tempByte2; // TODO: geteilt durch ersetzen fï¿½r Performence
             tempFloat = (float)temp/10;
             hum = (humByte1 << 8) + humByte2;
             humFloat = (float)hum/10;
@@ -141,6 +192,20 @@ int main(int argc, char** argv) {
         fb_draw_string(10,7,humStringDisplay);
         //fb_draw_string(10,16,"Feuchtigkeit: ");
         fb_show();
+        
+        if (humFloat > boarderRedHum) {
+            ROT = 1;
+            GRUEN = 0;
+            GELB = 0;
+        } else if (humFloat > borderYellowHum && humFloat < boarderRedHum) {
+            ROT = 0;
+            GRUEN = 0;
+            GELB = 1;
+        } else {
+            ROT = 0;
+            GRUEN = 1;
+            GELB = 0;
+        }
         
         __delay_ms(2000)
     };

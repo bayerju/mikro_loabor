@@ -10,6 +10,7 @@
         "limits": "c",
         "ostream": "c",
         "sstream": "c",
-        "streambuf": "c"
+        "streambuf": "c",
+        "xc.h": "c"
     }
 }
