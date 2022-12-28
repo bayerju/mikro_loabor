@@ -1,1 +1,2 @@
-build/default/production/pll.o: pll.c
+build/default/production/pll.o:  \
+pll.c 

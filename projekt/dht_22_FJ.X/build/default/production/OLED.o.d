@@ -1,0 +1,6 @@
+build/default/production/OLED.o:  \
+OLED.c  \
+OLED.h  \
+i2c_routines.h  \
+font.h  \
+ logo.h 

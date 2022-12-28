@@ -1,4 +1,4 @@
-build/default/production/dht.o:  \
+build/default/debug/dht.o:  \
 dht.c  \
 global_definitions.h  \
 timerstartvs.h  \

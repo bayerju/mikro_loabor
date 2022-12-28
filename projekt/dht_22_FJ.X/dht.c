@@ -139,7 +139,7 @@ int evalWakingData(short int *a_data, short int length) {
             counter_zero++;
             currentState = 0;
         }
-        if (counter_zero >= 7 && data[i] == 1) {
+        if (counter_zero >= 7 && a_data[i] == 1) {
             isWakingSensorFlag = 0;
             isMessuringSensorFlag = 1;
             return 0;

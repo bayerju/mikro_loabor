@@ -15,12 +15,51 @@
 #include "global_definitions.h"
 #include "pll.h"
 #include <libpic30.h>
+#include "PIC_init.h"
+#include "i2c_routines.h"
+#include "OLED.h"
 
 #define datapin 5 // RB15
-#define FCY 80000000 // 80MHz
+
 // #define VALUE_10us 0.000001 // 1ms
 
 // #define step_10us = VALUE_10us/(1/(FCY/2));
+
+
+// convert int with multiple digits to char array and write to char array c
+int intToChar(int num, char *c) {
+    int i = 0;
+    int j = 0;
+    int temp = num;
+    int length = 0;
+    while (temp != 0) {
+        temp = temp / 10;
+        length++;
+    }
+    for (i = length - 1; i >= 0; i--) {
+        c[i] = num % 10 + '0';
+        num = num / 10;
+    }
+    return 0;
+}
+
+// concat char array to char array
+int concatChar(char *c1, char *c2, char *newArray) {
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    while (c1[i] != '\0') {
+        newArray[k] = c1[i];
+        i++;
+        k++;
+    }
+    while (c2[j] != '\0') {
+        newArray[k] = c2[j];
+        j++;
+        k++;
+    }
+    return 0;
+}
 
 /**
  * @brief Set the bit object
@@ -60,17 +99,20 @@ int main(int argc, char** argv) {
     TRISBbits.TRISB14 = 0;
     TRISBbits.TRISB9 = 0;
     PORTBbits.RB9 = 0;
-    
-  
-
-    
-    
+    init_i2c();
+    init_OLED();
     
     __delay_ms(1000);
    
     while(1){
         int data[40] = {0};
-        int temp = 0, hum = 0, tempByte1 = 0, tempByte2 = 0, humByte1 = 0,humByte2 = 0, checksum = 0;
+        int temp = 0, hum = 0; 
+        float tempFloat = 0, humFloat = 0;
+        int tempByte1 = 0, tempByte2 = 0, humByte1 = 0,humByte2 = 0, checksum = 0;
+        char tempString [20] = {0};
+        char tempStringDisplay [20] = {0};
+        char humStringDisplay [20] = {0};
+        char humString [20] = {0};
         startDHT22();
         T3_setup();
         readData(data);
@@ -84,9 +126,22 @@ int main(int argc, char** argv) {
         int sum = humByte1 + humByte2 + tempByte1 +tempByte2;
         int low8Bits = sum & 0xFF;
         if (checksum == low8Bits) {
-            temp = (tempByte1 << 8) + tempByte2;
+            temp = (tempByte1 << 8) + tempByte2; // TODO: geteilt durch ersetzen für Performence
+            tempFloat = (float)temp/10;
             hum = (humByte1 << 8) + humByte2;
+            humFloat = (float)hum/10;
+            snprintf(tempString, sizeof tempString, "%.1f", tempFloat);
+            snprintf(humString, sizeof humString, "%.1f", humFloat);
+            // intToChar(temp, tempString);
+            concatChar("Temperatur: ", tempString, tempStringDisplay);
+            concatChar("Feuchtigkeit: ", humString, humStringDisplay);
         }
+        fb_draw_string_big(35,0,"FH KIEL");
+        fb_draw_string(10,3,tempStringDisplay);
+        fb_draw_string(10,7,humStringDisplay);
+        //fb_draw_string(10,16,"Feuchtigkeit: ");
+        fb_show();
+        
         __delay_ms(2000)
     };
 

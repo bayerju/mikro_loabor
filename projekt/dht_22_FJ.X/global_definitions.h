@@ -19,7 +19,7 @@ extern short int
 extern short int
     isMessuringSensorFlag; // löst die Messung der Daten des Sensors aus
 extern const short int MAX_DATA_ARRAY_LENGTH;
-extern short int data[];
+// extern short int data[];
 extern short int bitEvalData[];
 extern short int measurementBits[];
 #define DEBUG 1
