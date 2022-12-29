@@ -209,6 +209,8 @@ int main(int argc, char** argv) {
         char tempStringDisplay [20] = {0};
         char humStringDisplay [20] = {0};
         char humString [20] = {0};
+        char walkingString [20] = {0};
+        char walkingStringDisplay [20] = {0};
         startDHT22();
         T3_setup();
         readData(data);
@@ -231,10 +233,12 @@ int main(int argc, char** argv) {
             // intToChar(temp, tempString);
             concatChar("Temperatur: ", tempString, tempStringDisplay);
             concatChar("Feuchtigkeit: ", humString, humStringDisplay);
+            concatChar("Walking: ", walkingString, walkingStringDisplay);
         }
-        fb_draw_string_big(35,0,"FH KIEL");
-        fb_draw_string(10,3,tempStringDisplay);
-        fb_draw_string(10,7,humStringDisplay);
+        //fb_draw_string_big(35,0,"FH KIEL");
+        fb_draw_string(10,0,tempStringDisplay);
+        fb_draw_string(10,3,humStringDisplay);
+        fb_draw_string(10,8,walkingString);
         //fb_draw_string(10,16,"Feuchtigkeit: ");
         fb_show();
 
