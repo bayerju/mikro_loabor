@@ -102,7 +102,7 @@ int set_bit(int num, int position)
  void CommGetString(char *stringArray) {
      int i = 0;
      unsigned char currentInput = 0;
-     while (CommIsEmpty() != 1 && i < sizeof(stringArray)) { // sizeof gibt die Größe in Byte zurück und nicht die Anzahl der Elemente, aber da es hier achrs sind, ist das das gleiche.
+     while (CommIsEmpty() != 1 ) { // sizeof gibt die Größe in Byte zurück und nicht die Anzahl der Elemente, aber da es hier achrs sind, ist das das gleiche.
          currentInput = CommGetChar();
          if (currentInput == '\n' || currentInput == '\r' || currentInput == 'q') {
              return;
@@ -132,9 +132,6 @@ int set_bit(int num, int position)
     return;
  }
 
-/*
- * 
- */
 int main(int argc, char** argv) {
     AD1PCFGL = 0xffff;
     
