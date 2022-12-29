@@ -117,11 +117,17 @@ int set_bit(int num, int position)
     if (CommIsEmpty() != 1){  // Echo of RX
         char buffer[30] = "The new value is: ";
         char inputBuffer[10] = {0};
+        float currentvalue = 0;
         CommGetString(inputBuffer);
-        *boarder = (float)atof(inputBuffer);
-        snprintf(buffer, sizeof(buffer), "%.1f\n", *boarder);
-        CommPutString(buffer);
-        *iState = 1;
+        currentvalue = (float)atof(inputBuffer);
+        if (currentvalue > 0 && currentvalue < 100) {
+            *boarder = currentvalue;
+            snprintf(buffer, sizeof(buffer), "%.1f\n", *boarder);
+            CommPutString(buffer);
+            *iState = 1;
+        } else {
+            CommPutString("The value is not in the range of 0 to 100. \nPlase try again. \n");
+        }
     }
     return;
  }
