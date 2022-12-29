@@ -95,6 +95,24 @@ int set_bit(int num, int position)
      return byte;
  }
 
+ void startUartComm() {
+
+ }
+
+ void CommGetString(char *stringArray) {
+     int i = 0;
+     unsigned char currentInput = 0;
+     while (CommIsEmpty() != 1 && i < sizeof(stringArray)) { // sizeof gibt die Größe in Byte zurück und nicht die Anzahl der Elemente, aber da es hier achrs sind, ist das das gleiche.
+         currentInput = CommGetChar();
+         if (currentInput == '\n' || currentInput == '\r' || currentInput == 'q') {
+             return;
+         }
+         stringArray[i] = currentInput;
+         i++;
+     }
+     return;
+ }
+
 /*
  * 
  */
@@ -128,37 +146,50 @@ int main(int argc, char** argv) {
 
     unsigned char iState = 0;
     char inputValue[30] = {0};
-    CommPutString("To change the middle border value type x and to change the upper boarder Value type k.");
+    CommPutString("To change the middle border value type x and to change the upper boarder Value type k. \n");
    
     while(1){
-
-        if (CommIsEmpty() != 1){  // Echo of RX
-            iState = CommGetChar();
             char buffer[30] = "The new value is: ";
+            char inputBuffer[10] = {0};
             switch (iState) {
+                case 0: // wait for first input
+                    if (CommIsEmpty() != 1){  // Echo of RX
+                        iState = CommGetChar();
+                    }
+                    break;
                 case 1:
-                    CommPutString("To change the middle border value type x and to change the upper boarder Value type k.");
+                    CommPutString("To change the middle border value type x and to change the upper boarder Value type k.\n");
                     iState = 0;
                     break;
                 case 120: // x changes the middle boarder value
-                    boarderRedHum = atof(CommGetChar());
-                    snprintf(buffer, sizeof(buffer), "%.1f", boarderRedHum);
-                    CommPutString(buffer);
-                    iState = 1;
+                    CommPutString("please insert the new value for the middle Boarder for the humidity: \n");
+                    if (CommIsEmpty() != 1){  // Echo of RX
+                        CommGetString(inputBuffer);
+                        borderYellowHum = atof(inputBuffer);
+                        snprintf(buffer, sizeof(buffer), "%.1f\n", borderYellowHum);
+                        CommPutString(buffer);
+                        iState = 1;
+                    }
                     break;
                 case 107: // k changes the upper boarder value
-                    borderYellowHum = atof(CommGetChar());
-                    snprintf(buffer, sizeof(buffer), "%.1f", borderYellowHum);
-                    CommPutString(buffer);
-                    iState = 1;
+                    CommPutString("please insert the new value for the upper Boarder for the humidity: \n");
+                    if (CommIsEmpty() != 1){  // Echo of RX
+                        CommGetString(inputBuffer);
+                        boarderRedHum = atof(inputBuffer);
+                        snprintf(buffer, sizeof(buffer), "%.1f\n", boarderRedHum);
+                        CommPutString(buffer);
+                        iState = 1;
+                    }
                     break;
 
                 default:
+                    // if (CommIsEmpty() != 1){  // Echo of RX
+                    //     iState = CommGetChar();
+                    // }
                     break;
             }
 
            
-        }
         int data[40] = {0};
         int temp = 0, hum = 0; 
         float tempFloat = 0, humFloat = 0;
@@ -210,7 +241,7 @@ int main(int argc, char** argv) {
             GELB = 0;
         }
         
-        __delay_ms(2000)
+        __delay_ms(1000)
     };
 
 
