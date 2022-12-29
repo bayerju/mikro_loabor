@@ -238,6 +238,7 @@ int main(int argc, char** argv) {
         fb_draw_string(10,5,walkingStringDisplay);
         //fb_draw_string(10,16,"Feuchtigkeit: ");
         // Animations
+        int i = 0;
         for(i=0;i<128;i++){
             fb_drawPixel(i,63,1);
             fb_show();
