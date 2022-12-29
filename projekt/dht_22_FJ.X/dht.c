@@ -97,7 +97,6 @@ int checkSensorReply() {
         
         
         if (PORTBbits.RB5 == 1 && prevValue == 1) {
-            PORTBbits.RB15 = !LATBbits.LATB15;
             continue;
         } 
         if (PORTBbits.RB5 == 0 && prevValue == 1) {

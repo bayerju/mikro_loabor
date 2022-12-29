@@ -116,6 +116,9 @@ int main(int argc, char** argv) {
     PORTBbits.RB9 = 0;
     init_i2c();
     init_OLED();
+    CommConfig();               // Configure UART1
+    CommInit();
+    CommEnable();               // Enable UART1
     
     float boarderRedHum = 70;
     float borderYellowHum = 61;
@@ -125,7 +128,7 @@ int main(int argc, char** argv) {
 
     unsigned char iState = 0;
     char inputValue[30] = {0};
-    CommPutChar("To change the middle border value type x and to change the upper boarder Value type k.");
+    CommPutString("To change the middle border value type x and to change the upper boarder Value type k.");
    
     while(1){
 
@@ -134,19 +137,19 @@ int main(int argc, char** argv) {
             char buffer[30] = "The new value is: ";
             switch (iState) {
                 case 1:
-                    CommPutChar("To change the middle border value type x and to change the upper boarder Value type k.");
+                    CommPutString("To change the middle border value type x and to change the upper boarder Value type k.");
                     iState = 0;
                     break;
                 case 120: // x changes the middle boarder value
                     boarderRedHum = atof(CommGetChar());
                     snprintf(buffer, sizeof(buffer), "%.1f", boarderRedHum);
-                    CommPutChar(buffer);
+                    CommPutString(buffer);
                     iState = 1;
                     break;
                 case 107: // k changes the upper boarder value
                     borderYellowHum = atof(CommGetChar());
                     snprintf(buffer, sizeof(buffer), "%.1f", borderYellowHum);
-                    CommPutChar(buffer);
+                    CommPutString(buffer);
                     iState = 1;
                     break;
 
@@ -192,7 +195,7 @@ int main(int argc, char** argv) {
         fb_draw_string(10,7,humStringDisplay);
         //fb_draw_string(10,16,"Feuchtigkeit: ");
         fb_show();
-        
+
         if (humFloat > boarderRedHum) {
             ROT = 1;
             GRUEN = 0;
