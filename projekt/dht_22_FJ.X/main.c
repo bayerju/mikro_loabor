@@ -235,7 +235,7 @@ int main(int argc, char** argv) {
         //fb_draw_string_big(35,0,"FH KIEL");
         fb_draw_string(10,0,tempStringDisplay);
         fb_draw_string(10,3,humStringDisplay);
-        fb_draw_string(10,8,walkingString);
+        fb_draw_string(10,5,walkingStringDisplay);
         //fb_draw_string(10,16,"Feuchtigkeit: ");
         fb_show();
 
