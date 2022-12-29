@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/dht_22_FJ.X.production.elf">
+  <executable name="dist/default/debug/dht_22_FJ.X.debug.elf">
     <memory name="data">
       <units>bytes</units>
       <length>16384</length>
-      <used>1444</used>
-      <free>14940</free>
+      <used>1524</used>
+      <free>14860</free>
     </memory>
     <memory name="program">
       <units>bytes</units>
       <length>131328</length>
-      <used>36702</used>
-      <free>94626</free>
+      <used>36660</used>
+      <free>94668</free>
     </memory>
   </executable>
 </project>

@@ -113,6 +113,19 @@ int set_bit(int num, int position)
      return;
  }
 
+ void CommGetSetBorderValue(float *boarder, unsigned char *iState) {
+    if (CommIsEmpty() != 1){  // Echo of RX
+        char buffer[30] = "The new value is: ";
+        char inputBuffer[10] = {0};
+        CommGetString(inputBuffer);
+        *boarder = (float)atof(inputBuffer);
+        snprintf(buffer, sizeof(buffer), "%.1f\n", *boarder);
+        CommPutString(buffer);
+        *iState = 1;
+    }
+    return;
+ }
+
 /*
  * 
  */
@@ -149,8 +162,7 @@ int main(int argc, char** argv) {
     CommPutString("To change the middle border value type x and to change the upper boarder Value type k. \n");
    
     while(1){
-            char buffer[30] = "The new value is: ";
-            char inputBuffer[10] = {0};
+            
             switch (iState) {
                 case 0: // wait for first input
                     if (CommIsEmpty() != 1){  // Echo of RX
@@ -163,24 +175,17 @@ int main(int argc, char** argv) {
                     break;
                 case 120: // x changes the middle boarder value
                     CommPutString("please insert the new value for the middle Boarder for the humidity: \n");
-                    if (CommIsEmpty() != 1){  // Echo of RX
-                        CommGetString(inputBuffer);
-                        borderYellowHum = atof(inputBuffer);
-                        snprintf(buffer, sizeof(buffer), "%.1f\n", borderYellowHum);
-                        CommPutString(buffer);
-                        iState = 1;
-                    }
+                    iState = 2;
+                case 2:
+                    CommGetSetBorderValue(&borderYellowHum, &iState);
                     break;
                 case 107: // k changes the upper boarder value
                     CommPutString("please insert the new value for the upper Boarder for the humidity: \n");
-                    if (CommIsEmpty() != 1){  // Echo of RX
-                        CommGetString(inputBuffer);
-                        boarderRedHum = atof(inputBuffer);
-                        snprintf(buffer, sizeof(buffer), "%.1f\n", boarderRedHum);
-                        CommPutString(buffer);
-                        iState = 1;
-                    }
+                    iState = 3;
+                case 3:
+                    CommGetSetBorderValue(&boarderRedHum, &iState);
                     break;
+
 
                 default:
                     // if (CommIsEmpty() != 1){  // Echo of RX
