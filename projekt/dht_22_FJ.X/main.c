@@ -237,6 +237,39 @@ int main(int argc, char** argv) {
         fb_draw_string(10,3,humStringDisplay);
         fb_draw_string(10,5,walkingStringDisplay);
         //fb_draw_string(10,16,"Feuchtigkeit: ");
+        // Animations
+        for(i=0;i<128;i++){
+            fb_drawPixel(i,63,1);
+            fb_show();
+        }
+        for(i=63;i>42;i--){
+            fb_drawPixel(127,i,1);
+            fb_show();
+        }
+        for(i=127;i;i--){
+            fb_drawPixel(i,42,1);
+            fb_show();
+        }
+         for(i=42;i<63;i++){
+            fb_drawPixel(0,i,1);
+            fb_show();
+        }
+        for(i=0;i<128;i++){
+            fb_drawPixel(i,63,0);
+            fb_show();
+        }
+        for(i=63;i>42;i--){
+            fb_drawPixel(127,i,0);
+            fb_show();
+        }
+        for(i=127;i;i--){
+            fb_drawPixel(i,42,0);
+            fb_show();
+        }
+         for(i=42;i<63;i++){
+            fb_drawPixel(0,i,0);
+            fb_show();
+         }
         fb_show();
 
         if (humFloat > boarderRedHum) {
