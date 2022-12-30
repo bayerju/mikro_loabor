@@ -61,7 +61,7 @@ void init_OLED(void)
 }
 
 //*******************************************************************************
-// Übertragen eines Befehls an das OLED-Display
+// ï¿½bertragen eines Befehls an das OLED-Display
 
 void OLED_sendCommand(uint8_t command)
 {
@@ -85,7 +85,7 @@ void OLED_invert(uint8_t inverted)
 }
 
 //*******************************************************************************
-// Übertragen des Framebuffers an das OLED-Display
+// ï¿½bertragen des Framebuffers an das OLED-Display
 
 void OLED_sendFramebuffer(uint8_t *framebuffer)
 {
@@ -187,7 +187,7 @@ void fb_drawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t fi
 }
 
 //*******************************************************************************
-// Löschen des Framebuffers
+// Lï¿½schen des Framebuffers
 
 void fb_clear()
 {
@@ -261,6 +261,46 @@ void fb_draw_string (uint16_t x, uint16_t y, const char *pS)
     }
 }
 
+/**
+ * @brief 
+ * clears the whole row, which can be between 0 and 7
+ * 
+ * @param row 
+ */
+void fb_clear_string_row(uint8_t row) {
+    uint8_t i;
+    for(i=0; i<SSD1306_WIDTH; i++){
+        framebuffer[(row << 7) + i] = 0;
+    }
+
+}
+
+/**
+ * @brief clears the hole row from x1 to the end of the row
+ * 
+ * @param row any value form 0 to 7
+ * @param x1 starting value of x
+ */
+void fb_clear_string_row_from(uint8_t row, uint8_t x1) {
+    fb_clear_string_area(row, x1, SSD1306_WIDTH);
+}
+
+/**
+ * @brief 
+ * clears the area of a string in a certain row starting from x1 to x2
+ * 
+ * @param x1 
+ * @param y1 
+ * @param x2 
+ * @param y2 
+ */
+void fb_clear_string_area(uint8_t row, uint8_t x1, uint8_t x2) {
+    uint8_t i;
+    for(i=x1; i<x2; i++){
+        framebuffer[(row << 7) + i] = 0;
+    }
+}
+
 void fb_draw_string_big (uint16_t x, uint16_t y, const char *pS)
 {
     uint8_t k;
@@ -276,6 +316,37 @@ void fb_draw_string_big (uint16_t x, uint16_t y, const char *pS)
         // next charachter
         pS++;
     }    
+}
+
+void fb_draw_one_line_string( uint8_t x,uint8_t row, const char *pS) {
+    fb_clear_string_row(row);
+    
+     uint16_t lIndex, k;
+    
+    while(*pS){
+        // index the width information of character <c> 
+        lIndex = 0;
+        for(k=0; k < (*pS - ' '); k++){
+            lIndex += (font[lIndex]) + 1;
+        }
+
+        int test = 127 - font[lIndex] - 1;
+        // q: what is the width of one letter?
+        // a: font[lIndex]
+        if (x > test) {
+            x = 0;
+        }
+        
+        // draw character
+        fb_draw_char(x, row, lIndex);
+        
+        // move the cursor forward for the next character
+        x += font[lIndex] + 1;
+        
+        
+        // next charachter
+        pS++;
+    }
 }
 
 

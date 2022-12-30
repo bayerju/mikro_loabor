@@ -234,43 +234,48 @@ int main(int argc, char** argv) {
         }
         //fb_draw_string_big(35,0,"FH KIEL");
         fb_draw_string(10,0,tempStringDisplay);
-        fb_draw_string(10,3,humStringDisplay);
-        //fb_draw_string(10,5,walkingStringDisplay);
+        fb_draw_one_line_string(0,3,humStringDisplay);
+        // fb_draw_string(0,5,walkingStringDisplay);
         //fb_draw_string(10,16,"Feuchtigkeit: ");
         // Animations
         int i = 0;
         for(i=0;i<128;i++){
-            fb_draw_string(i,5,walkingStringDisplay);
+            // for (int j = 0; j < 128; j++)
+            // {
+            //     fb_drawPixel(i,j,1);
+            // }
+            // fb_drawPixel(i,5,1);
+            fb_draw_one_line_string(i,5,walkingStringDisplay);
             fb_show();
         }
-        for(i=63;i>42;i--){
-            fb_draw_string(i,5,walkingStringDisplay);
-            fb_show();
-        }
-        for(i=127;i;i--){
-            fb_draw_string(i,5,walkingStringDisplay);
-            fb_show();
-        }
-         for(i=42;i<63;i++){
-            fb_draw_string(i,5,walkingStringDisplay);
-            fb_show();
-        }
-        for(i=0;i<128;i++){
-            fb_draw_string(i,5,walkingStringDisplay);
-            fb_show();
-        }
-        for(i=63;i>42;i--){
-            fb_draw_string(i,5,walkingStringDisplay);
-            fb_show();
-        }
-        for(i=127;i;i--){
-            fb_draw_string(i,5,walkingStringDisplay);
-            fb_show();
-        }
-         for(i=42;i<63;i++){
-            fb_draw_string(i,5,walkingStringDisplay);
-            fb_show();
-         }
+        // for(i=63;i>42;i--){
+        //     fb_draw_string(i,5,walkingStringDisplay);
+        //     fb_show();
+        // }
+        // for(i=127;i;i--){
+        //     fb_draw_string(i,5,walkingStringDisplay);
+        //     fb_show();
+        // }
+        //  for(i=42;i<63;i++){
+        //     fb_draw_string(i,5,walkingStringDisplay);
+        //     fb_show();
+        // }
+        // for(i=0;i<128;i++){
+        //     fb_draw_string(i,5,walkingStringDisplay);
+        //     fb_show();
+        // }
+        // for(i=63;i>42;i--){
+        //     fb_draw_string(i,5,walkingStringDisplay);
+        //     fb_show();
+        // }
+        // for(i=127;i;i--){
+        //     fb_draw_string(i,5,walkingStringDisplay);
+        //     fb_show();
+        // }
+        //  for(i=42;i<63;i++){
+        //     fb_draw_string(i,5,walkingStringDisplay);
+        //     fb_show();
+        //  }
         fb_show();
 
         if (humFloat > boarderRedHum) {

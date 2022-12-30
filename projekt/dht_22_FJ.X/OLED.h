@@ -35,7 +35,7 @@
 #define SSD1306_WIDTH               128
 #define SSD1306_HEIGHT              64
 
-#define SSD1306_BUFFERSIZE (SSD1306_WIDTH*SSD1306_HEIGHT)/8
+#define SSD1306_BUFFERSIZE (SSD1306_WIDTH*SSD1306_HEIGHT)/8 // it is devided by 8 because there are 8 pixels per byte
 
 //*******************************************************************************
 // globale Variablen
@@ -60,6 +60,7 @@ void fb_show();
 void fb_show_bmp(uint8_t *pBmp);
 void fb_draw_char (uint16_t x, uint16_t y, uint16_t fIndex);
 void fb_draw_string (uint16_t x, uint16_t y, const char *pS);
+void fb_draw_one_line_string ( uint8_t x, uint8_t row, const char *pS);
 
 void fb_draw_string_big (uint16_t x, uint16_t y, const char *pS);
 void fb_draw_BMP (uint16_t x, uint16_t y);
