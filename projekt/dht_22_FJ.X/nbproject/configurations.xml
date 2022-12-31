@@ -4,19 +4,29 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>timer.h</itemPath>
-      <itemPath>config.h</itemPath>
-      <itemPath>global_definitions.h</itemPath>
-      <itemPath>dht.h</itemPath>
-      <itemPath>pll.h</itemPath>
-      <itemPath>timerstart.h</itemPath>
-      <itemPath>font.h</itemPath>
-      <itemPath>PIC_init.h</itemPath>
-      <itemPath>OLED.h</itemPath>
-      <itemPath>logo.h</itemPath>
-      <itemPath>i2c_routines.h</itemPath>
-      <itemPath>uart.h</itemPath>
-      <itemPath>uart_dsPIC.h</itemPath>
+      <logicalFolder name="src" displayName="src" projectFiles="true">
+        <logicalFolder name="config" displayName="config" projectFiles="true">
+          <itemPath>src/config/config.h</itemPath>
+          <itemPath>src/config/global_definitions.h</itemPath>
+          <itemPath>src/config/pll.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="dht" displayName="dht" projectFiles="true">
+          <itemPath>src/dht/dht.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="oled" displayName="oled" projectFiles="true">
+          <itemPath>src/oled/font.h</itemPath>
+          <itemPath>src/oled/logo.h</itemPath>
+          <itemPath>src/oled/OLED.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="timer" displayName="timer" projectFiles="true">
+          <itemPath>src/timer/timer.h</itemPath>
+          <itemPath>src/timer/timerstart.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="uart" displayName="uart" projectFiles="true">
+          <itemPath>src/uart/uart.h</itemPath>
+          <itemPath>src/uart/uart_dsPIC.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -25,18 +35,28 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>main.c</itemPath>
-      <itemPath>timer.c</itemPath>
-      <itemPath>dht.c</itemPath>
-      <itemPath>pll.c</itemPath>
-      <itemPath>timerstart.c</itemPath>
-      <itemPath>global_definitions.c</itemPath>
-      <itemPath>PIC_init.c</itemPath>
-      <itemPath>OLED.c</itemPath>
-      <itemPath>i2c_routines.c</itemPath>
-      <itemPath>uart_dsPIC.c</itemPath>
-      <itemPath>testuart.c</itemPath>
-      <itemPath>uart.c</itemPath>
+      <logicalFolder name="src" displayName="src" projectFiles="true">
+        <logicalFolder name="config" displayName="config" projectFiles="true">
+          <itemPath>src/config/global_definitions.c</itemPath>
+          <itemPath>src/config/pll.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="dht" displayName="dht" projectFiles="true">
+          <itemPath>src/dht/dht.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="oled" displayName="oled" projectFiles="true">
+          <itemPath>src/oled/OLED.c</itemPath>
+          <itemPath>src/oled/i2c_routines.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="timer" displayName="timer" projectFiles="true">
+          <itemPath>src/timer/timer.c</itemPath>
+          <itemPath>src/timer/timerstart.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="uart" displayName="uart" projectFiles="true">
+          <itemPath>src/uart/uart.c</itemPath>
+          <itemPath>src/uart/uart_dsPIC.c</itemPath>
+        </logicalFolder>
+        <itemPath>src/main.c</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -107,7 +127,8 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="expand-pragma-config" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="src;src\config;src\dht;src\oled;src\timer;src\uart"/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
         <property key="oXC16gcc-align-arr" value="false"/>

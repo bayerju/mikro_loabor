@@ -3,15 +3,18 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "C:\\Program Files\\Microchip\\xc16\\v2.00\\support\\dsPIC33F\\h",
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "_UNICODE",
+                "__dsPIC33FJ128GP802__",
+                "__prog__="
             ],
             "intelliSenseMode": "gcc-x64",
-            "cStandard": "c11",
+            "cStandard": "c99",
             "compilerPath": "C:\\Program Files\\Microchip\\xc16\\v2.00\\bin\\xc16-gcc.exe",
             "configurationProvider": "ms-vscode.makefile-tools"
         }
