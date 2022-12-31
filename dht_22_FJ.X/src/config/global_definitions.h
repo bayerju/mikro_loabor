@@ -9,10 +9,13 @@
 #define GLOBAL_DEFINITIONS_H
 
 #define DHT_PIN PORTBbits.RB5 // von RB15 auf RB2 stellen da runtergezogen
-#define FCY 80000000 // 80MHz
+#define FCY 40000000 // 80MHz -> 40MHz Befehlstakt
 #define VALUE_10us 0.00001 // 1us
 // VALUE_10us/(1/(FCY/2))
 #define step_10us 400;
+
+#include <xc.h>
+#include <libpic30.h>
 
 extern short int
     isWakingSensorFlag; // löst die Messung und das Aufwachen des Sensors aus

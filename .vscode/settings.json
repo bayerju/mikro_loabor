@@ -11,6 +11,8 @@
         "ostream": "c",
         "sstream": "c",
         "streambuf": "c",
-        "xc.h": "c"
+        "xc.h": "c",
+        "global_definitions.h": "c",
+        "i2c_routines.h": "c"
     }
 }

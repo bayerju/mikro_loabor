@@ -17,6 +17,7 @@
           <itemPath>src/oled/font.h</itemPath>
           <itemPath>src/oled/logo.h</itemPath>
           <itemPath>src/oled/OLED.h</itemPath>
+          <itemPath>src/oled/i2c_routines.h</itemPath>
         </logicalFolder>
         <logicalFolder name="timer" displayName="timer" projectFiles="true">
           <itemPath>src/timer/timer.h</itemPath>

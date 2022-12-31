@@ -4,8 +4,10 @@
  *
  * Created on 24. M�rz 2017, 11:01
  */
-#include "i2c_routines.h"
+// #define FCY 40000000ULL
 
+#include "i2c_routines.h"
+#include "../config/global_definitions.h"
 
 void init_i2c(void)
 {

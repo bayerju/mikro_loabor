@@ -1,15 +1,9 @@
 #ifndef I2C_ROUTINES_H
 #define	I2C_ROUTINES_H
 
-#define FCY 40000000ULL
+#define I2C_TIMEOUT 10000       // timeout in ï¿½s
 
-#define I2C_TIMEOUT 10000       // timeout in µs
-
-
-#include <xc.h>
-#include <stdint.h>
-#include <libpic30.h>
-#include <stdint.h>
+#include "../config/global_definitions.h"
 
 // function prototypes
 void init_i2c(void);
