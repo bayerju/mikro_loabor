@@ -318,6 +318,14 @@ void fb_draw_string_big (uint16_t x, uint16_t y, const char *pS)
     }    
 }
 
+/**
+ * @brief implements same logic as fb_draw_string, but clears the row before drawing and when the row is full it starts again at x=0. 
+ * This is why it does not work for texts, that take more than one row.
+ * 
+ * @param x 
+ * @param row 
+ * @param pS 
+ */
 void fb_draw_one_line_string( uint8_t x,uint8_t row, const char *pS) {
     fb_clear_string_row(row);
     
@@ -330,10 +338,9 @@ void fb_draw_one_line_string( uint8_t x,uint8_t row, const char *pS) {
             lIndex += (font[lIndex]) + 1;
         }
 
-        int test = 127 - font[lIndex] - 1;
-        // q: what is the width of one letter?
-        // a: font[lIndex]
-        if (x > test) {
+        int maxX = 127 - font[lIndex] - 1; // max pixel in width - width of char - 1 safety pixel to the right.
+    
+        if (x > maxX) { // if the last char doesnt fit, start again at x=0 
             x = 0;
         }
         
