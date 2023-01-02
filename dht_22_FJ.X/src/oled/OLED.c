@@ -1,5 +1,3 @@
-#include <xc.h>
-#include <stdint.h>
 #include "OLED.h"
 #include "i2c_routines.h"
 #include "font.h"

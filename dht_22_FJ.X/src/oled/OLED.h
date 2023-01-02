@@ -1,7 +1,7 @@
 #ifndef OLED_H
 #define	OLED_H
 
-#include <stdint.h>
+#include "../config/global_definitions.h"
 
 //*******************************************************************************
 // SSD1306 Register Map
@@ -55,6 +55,7 @@ void fb_drawVLine(uint8_t x, uint8_t y, uint8_t length);
 void fb_drawHLine(uint8_t x, uint8_t y, uint8_t length);
 void fb_drawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t fill);
 void fb_clear();
+void fb_clear_string_area(uint8_t row, uint8_t x1, uint8_t x2);
 void fb_invert(uint8_t status);
 void fb_show();
 void fb_show_bmp(uint8_t *pBmp);

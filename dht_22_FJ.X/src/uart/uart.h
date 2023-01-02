@@ -7,7 +7,7 @@ extern unsigned char CommGetChar(void);
 extern unsigned char CommIsEmpty(void);
 extern unsigned char CommGetTxChar(void);
 extern void CommPutChar(unsigned char data);
-extern void CommPutString(unsigned char *str_data);
+extern void CommPutString(char *str_data);
 
 extern void __attribute__ ((interrupt, no_auto_psv)) _U1TXInterrupt(void);
 extern void __attribute__ ((interrupt, no_auto_psv)) _U1RXInterrupt(void);

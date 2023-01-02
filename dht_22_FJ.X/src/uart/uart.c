@@ -150,7 +150,7 @@ void CommPutChar(unsigned char data)
     CommTxIntEn();         // Enable RX IRQ
 }        
 
-void CommPutString(unsigned char *str_data)
+void CommPutString(char *str_data)
 // Writes a string into the TX Ring Buffer
 {
      

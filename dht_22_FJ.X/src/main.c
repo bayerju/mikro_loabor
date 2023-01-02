@@ -8,17 +8,14 @@
 #include <stdio.h>
 #include <stdlib.h>
      
-#include <xc.h>
+#include "global_definitions.h"
 #include "config.h" // sets primary oscillator to 4MHz
+#include "pll.h"
 #include "dht.h"
 #include "timer.h"
-#include "global_definitions.h"
-#include "pll.h"
-#include <libpic30.h>
 #include "i2c_routines.h"
 #include "OLED.h"
 #include "uart.h"
-#include "uart_dsPIC.h"
 
 #define datapin 5 // RB15
 
@@ -29,67 +26,6 @@
 // #define VALUE_10us 0.000001 // 1ms
 
 // #define step_10us = VALUE_10us/(1/(FCY/2));
-
-
-// convert int with multiple digits to char array and write to char array c
-int intToChar(int num, char *c) {
-    int i = 0;
-    int j = 0;
-    int temp = num;
-    int length = 0;
-    while (temp != 0) {
-        temp = temp / 10;
-        length++;
-    }
-    for (i = length - 1; i >= 0; i--) {
-        c[i] = num % 10 + '0';
-        num = num / 10;
-    }
-    return 0;
-}
-
-// concat char array to char array
-int concatChar(char *c1, char *c2, char *newArray) {
-    int i = 0;
-    int j = 0;
-    int k = 0;
-    while (c1[i] != '\0') {
-        newArray[k] = c1[i];
-        i++;
-        k++;
-    }
-    while (c2[j] != '\0') {
-        newArray[k] = c2[j];
-        j++;
-        k++;
-    }
-    return 0;
-}
-
-/**
- * @brief Set the bit object
- * SRC: https://hackernoon.com/bit-manipulation-in-c-and-c-1cs2bux
- * 
- * @param num 
- * @param position 
- * @return int 
- */
-int set_bit(int num, int position)
-{
-	int mask = 1 << position;
-	return num | mask;
-}
-
- int getRecievedByte(int offset, int *data) {
-     int byte = 0;
-     int i = 0;
-     for (i = 0 ; i < 8; i++) {
-            if (data[i + offset] == 1) {
-                byte = set_bit(byte, 7-i);
-            }
-        }
-     return byte;
- }
 
  void startUartComm() {
 
@@ -118,7 +54,7 @@ int set_bit(int num, int position)
         currentvalue = (float)atof(inputBuffer);
         if (currentvalue > 0 && currentvalue < 100) {
             *boarder = currentvalue;
-            snprintf(buffer, sizeof(buffer), "%.1f\n", *boarder);
+            snprintf(buffer, sizeof(buffer), "%.1f\n", (double)*boarder);
             CommPutString(buffer);
             *iState = 1;
         } else {
@@ -194,91 +130,35 @@ int main(int argc, char** argv) {
             }
 
            
-        int data[40] = {0};
-        int temp = 0, hum = 0; 
-        float tempFloat = 0, humFloat = 0;
-        int tempByte1 = 0, tempByte2 = 0, humByte1 = 0,humByte2 = 0, checksum = 0;
         char tempString [20] = {0};
-        char tempStringDisplay [20] = {0};
-        char humStringDisplay [20] = {0};
         char humString [20] = {0};
-        char walkingString [20] = {0};
-        char walkingStringDisplay [20] = {0};
+
+        int data[40] = {0};
+        float tempFloat = 0, humFloat = 0;
+
+        char walkingStringDisplay [20] = "Test";
+
         startDHT22();
         T3_setup();
-        readData(data);
+        FloatData dataValues = readData(data, tempString, humString);
 
-        humByte1 = getRecievedByte(0, data);
-        humByte2 = getRecievedByte(8, data);
-        tempByte1 = getRecievedByte(16, data);
-        tempByte2 = getRecievedByte(24, data);
-        checksum = getRecievedByte(32, data);
-        
-        int sum = humByte1 + humByte2 + tempByte1 +tempByte2;
-        int low8Bits = sum & 0xFF;
-        if (checksum == low8Bits) {
-            temp = (tempByte1 << 8) + tempByte2; // TODO: geteilt durch ersetzen f�r Performence
-            tempFloat = (float)temp/10;
-            hum = (humByte1 << 8) + humByte2;
-            humFloat = (float)hum/10;
-            snprintf(tempString, sizeof tempString, "%.1f", tempFloat);
-            snprintf(humString, sizeof humString, "%.1f", humFloat);
-            // intToChar(temp, tempString);
-            concatChar("Temperatur: ", tempString, tempStringDisplay);
-            concatChar("Feuchtigkeit: ", humString, humStringDisplay);
-            concatChar("Walking: ", walkingString, walkingStringDisplay);
-        }
-        //fb_draw_string_big(35,0,"FH KIEL");
-        fb_draw_string(10,0,tempStringDisplay);
-        fb_draw_one_line_string(0,3,humStringDisplay);
-        // fb_draw_string(0,5,walkingStringDisplay);
-        //fb_draw_string(10,16,"Feuchtigkeit: ");
-        // Animations
+
+        fb_draw_string(10,0,tempString);
+        fb_draw_one_line_string(0,3,humString);
+
         int i = 0;
         for(i=0;i<128;i++){
-            // for (int j = 0; j < 128; j++)
-            // {
-            //     fb_drawPixel(i,j,1);
-            // }
-            // fb_drawPixel(i,5,1);
             fb_draw_one_line_string(i,5,walkingStringDisplay);
             fb_show();
         }
-        // for(i=63;i>42;i--){
-        //     fb_draw_string(i,5,walkingStringDisplay);
-        //     fb_show();
-        // }
-        // for(i=127;i;i--){
-        //     fb_draw_string(i,5,walkingStringDisplay);
-        //     fb_show();
-        // }
-        //  for(i=42;i<63;i++){
-        //     fb_draw_string(i,5,walkingStringDisplay);
-        //     fb_show();
-        // }
-        // for(i=0;i<128;i++){
-        //     fb_draw_string(i,5,walkingStringDisplay);
-        //     fb_show();
-        // }
-        // for(i=63;i>42;i--){
-        //     fb_draw_string(i,5,walkingStringDisplay);
-        //     fb_show();
-        // }
-        // for(i=127;i;i--){
-        //     fb_draw_string(i,5,walkingStringDisplay);
-        //     fb_show();
-        // }
-        //  for(i=42;i<63;i++){
-        //     fb_draw_string(i,5,walkingStringDisplay);
-        //     fb_show();
-        //  }
+
         fb_show();
 
-        if (humFloat > boarderRedHum) {
+        if (dataValues.hum > boarderRedHum) {
             ROT = 1;
             GRUEN = 0;
             GELB = 0;
-        } else if (humFloat > borderYellowHum && humFloat < boarderRedHum) {
+        } else if (dataValues.hum > borderYellowHum && dataValues.hum < boarderRedHum) {
             ROT = 0;
             GRUEN = 0;
             GELB = 1;

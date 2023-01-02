@@ -11,6 +11,7 @@
                 "${workspaceFolder}\\dht_22_FJ.X/src/uart",
 
                 "C:\\Program Files\\Microchip\\xc16\\v2.00\\support\\dsPIC33F\\h",
+                "C:\\Program Files\\Microchip\\xc16\\v2.00\\support\\generic\\h",
             ],
             "defines": [
                 "_DEBUG",
