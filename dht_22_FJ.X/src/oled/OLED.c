@@ -333,7 +333,7 @@ void fb_draw_one_line_string( uint8_t x,uint8_t row, const char *pS) {
         // index the width information of character <c> 
         lIndex = 0;
         for(k=0; k < (*pS - ' '); k++){
-            lIndex += (font[lIndex]) + 1;
+            lIndex += (font[lIndex]) + 1; // +1 because the first byte is the width of the char
         }
 
         int maxX = 127 - font[lIndex] - 1; // max pixel in width - width of char - 1 safety pixel to the right.

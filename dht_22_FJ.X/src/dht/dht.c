@@ -48,6 +48,7 @@ int isChecksumOk(DataBytes *bytes) {
 
 FloatData readData(int *data, char *tempString, char *humidityString) {
     int counterBits = 0;
+    FloatData dataValues;
     int isAnswerOk = checkSensorReply();
     if (isAnswerOk == 0){ // all good start reading
         int bit = -1;
@@ -55,7 +56,8 @@ FloatData readData(int *data, char *tempString, char *humidityString) {
         while (counterBits < 40){
             bit = evalBit();
             if (bit == -1)
-                return;
+                // TODO: add error handling
+                return dataValues;
             data[counterBits] = bit;
             counterBits++;
         }
@@ -71,14 +73,11 @@ FloatData readData(int *data, char *tempString, char *humidityString) {
     }
     recievedBytes.currentByte = &recievedBytes.humByte1;
 
-    FloatData dataValues;
     dataValues.temp = ((float)(recievedBytes.tempByte1 << 8) + recievedBytes.tempByte2)/10;
     dataValues.hum = ((float)(recievedBytes.humByte1 << 8) + recievedBytes.humByte2)/10;
     dataToString(data, tempString, humidityString, &recievedBytes, &dataValues);
     return dataValues;
 }
-
-
 
 /**
  * @brief Sets a bit in the int num at position t 1.
@@ -88,8 +87,7 @@ FloatData readData(int *data, char *tempString, char *humidityString) {
  * @param position 
  * @return int 
  */
-int set_bit(int num, int position)
-{
+int set_bit(int num, int position) {
 	int mask = 1 << position;
 	return num | mask;
 }
@@ -138,7 +136,7 @@ int evalBit() {
         TMR3 = 0;
         return 0;
     }
-    else if (time > 2000 && time < 4000){ // 50us *400 && 100us * 400
+    else if (time > 2000 && time < 4000){ // 50us *400 && 100us * 400 // TODO:timeout is at 3000 and one is up to 4000
         TMR3 = 0;
         return 1;
     }
@@ -192,6 +190,13 @@ int checkSensorReply() {
     return 1;
 }
 
+/**
+ * @brief evaluates the data from the sensor and returns 0 if the sensor is waking up and -1 if it is not.
+ * 
+ * @param a_data 
+ * @param length 
+ * @return int 
+ */
 int evalWakingData(short int *a_data, short int length) {
     #if DEBUG
     TRISBbits.TRISB4 = 0;
@@ -217,43 +222,3 @@ int evalWakingData(short int *a_data, short int length) {
     #endif
     return -1;
 }
-
-// /**
-//  * @brief 
-//  * 
-//  * @param dataPoints 
-//  * @return int 
-//  */
-// int evalBit(int *dataPoints) {
-//     short int ones = 0;
-//     short int zeros = 0;
-//     short int counter = 0;
-//     if (dataPoints[counter] == 0) {
-
-//     }
-//     // make sure to start with a one
-//     while (dataPoints[counter] != NULL) {
-//         if (dataPoints[counter] == 1) break;
-//         counter++;
-//     }
-//     // eval Bit
-//     while (dataPoints[counter] != NULL) {
-//         // check if it is a 0
-//         if (ones >= 1 && dataPoints[counter] == 0) {
-//             return 0;
-//         }
-//         if (ones >= 5 && dataPoints[counter] == 0) {
-//             return 1;
-//         }
-//         if (dataPoints[counter] == 1) {
-//             ones++;
-//             counter++;
-//         }
-
-//         if (dataPoints[counter] == 0) {
-//             zeros++;
-//             counter++;
-//         }
-//     }
-//     return -1;
-// }

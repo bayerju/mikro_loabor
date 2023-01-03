@@ -16,12 +16,12 @@
 #include "i2c_routines.h"
 #include "OLED.h"
 #include "uart.h"
+#include "uart_dsPIC.h"
+#include "ampel.h"
 
 #define datapin 5 // RB15
 
-#define ROT LATBbits.LATB15
-#define GELB LATBbits.LATB13
-#define GRUEN LATBbits.LATB14
+
 
 // #define VALUE_10us 0.000001 // 1ms
 
@@ -52,7 +52,7 @@
         float currentvalue = 0;
         CommGetString(inputBuffer);
         currentvalue = (float)atof(inputBuffer);
-        if (currentvalue > 0 && currentvalue < 100) {
+        if (currentvalue > 0 && currentvalue < 100) { // check if the value is in the range of 0 to 100
             *boarder = currentvalue;
             snprintf(buffer, sizeof(buffer), "%.1f\n", (double)*boarder);
             CommPutString(buffer);
@@ -93,8 +93,8 @@ int main(int argc, char** argv) {
     __delay_ms(1000);
 
     unsigned char iState = 0;
-    char inputValue[30] = {0};
     CommPutString("To change the middle border value type x and to change the upper boarder Value type k. \n");
+    T3_setup();
    
     while(1){
             
@@ -134,16 +134,17 @@ int main(int argc, char** argv) {
         char humString [20] = {0};
 
         int data[40] = {0};
-        float tempFloat = 0, humFloat = 0;
 
         char walkingStringDisplay [20] = "Test";
-
         startDHT22();
-        T3_setup();
+        TMR3 = 0x00;
         FloatData dataValues = readData(data, tempString, humString);
 
-
+        char timerString [20] = {0};
+        sprintf(timerString, "Timer: %d", TMR3);
+        fb_clear();
         fb_draw_string(10,0,tempString);
+        fb_draw_string(10,4,timerString);
         fb_draw_one_line_string(0,3,humString);
 
         int i = 0;
@@ -154,19 +155,7 @@ int main(int argc, char** argv) {
 
         fb_show();
 
-        if (dataValues.hum > boarderRedHum) {
-            ROT = 1;
-            GRUEN = 0;
-            GELB = 0;
-        } else if (dataValues.hum > borderYellowHum && dataValues.hum < boarderRedHum) {
-            ROT = 0;
-            GRUEN = 0;
-            GELB = 1;
-        } else {
-            ROT = 0;
-            GRUEN = 1;
-            GELB = 0;
-        }
+        setAmpel(dataValues.hum, boarderRedHum, borderYellowHum);
         
         __delay_ms(1000)
     };

@@ -9,6 +9,7 @@
                 "${workspaceFolder}\\dht_22_FJ.X/src/oled",
                 "${workspaceFolder}\\dht_22_FJ.X/src/timer",
                 "${workspaceFolder}\\dht_22_FJ.X/src/uart",
+                "${workspaceFolder}\\dht_22_FJ.X/src/ampel",
 
                 "C:\\Program Files\\Microchip\\xc16\\v2.00\\support\\dsPIC33F\\h",
                 "C:\\Program Files\\Microchip\\xc16\\v2.00\\support\\generic\\h",
