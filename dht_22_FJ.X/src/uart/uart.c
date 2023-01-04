@@ -160,3 +160,38 @@ void CommPutString(char *str_data)
         str_data++;
     }            
 }        
+/**************************************************************************************************************************************************/
+// Switch case for change the values of the boarders
+void ChangeValue(int iState, float boarderRedHum, float borderYellowHum)
+{
+    switch (iState) {
+                case 0: // wait for first input
+                    if (CommIsEmpty() != 1){  // Echo of RX
+                        iState = CommGetChar();
+                    }
+                    break;
+                case 1:
+                    CommPutString("To change the middle border value type x and to change the upper boarder Value type k.\n");
+                    iState = 0;
+                    break;
+                case 120: // x changes the middle boarder value
+                    CommPutString("please insert the new value for the middle Boarder for the humidity: \n");
+                    iState = 2;
+                case 2:
+                    CommGetSetBorderValue(&borderYellowHum, &iState);
+                    break;
+                case 107: // k changes the upper boarder value
+                    CommPutString("please insert the new value for the upper Boarder for the humidity: \n");
+                    iState = 3;
+                case 3:
+                    CommGetSetBorderValue(&boarderRedHum, &iState);
+                    break;
+
+
+                default:
+                    // if (CommIsEmpty() != 1){  // Echo of RX
+                    //     iState = CommGetChar();
+                    // }
+                    break;
+            }
+}
