@@ -3,7 +3,7 @@
 * Comments
 * Refectoring
   * ~~Ampel auslagern~~
-  * Comm Schnittstelle raus aus der main --> Transver in UART (Felix)
+  * ~~Comm Schnittstelle raus aus der main --> Transver in UART (Felix)~~
   * Code kommentieren
   * imports sortieren
   * Errorhandling mit Errorstate und globalem Errorstring?
