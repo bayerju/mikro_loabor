@@ -26,15 +26,21 @@
 // #define VALUE_10us 0.000001 // 1ms
 
 // #define step_10us = VALUE_10us/(1/(FCY/2));
-
+/**
+ * @brief Sarts UART communication
+ */
  void startUartComm() {
 
  }
-
+/**
+ * @brief As long as the ring buffer is not empty, the characters are stored in a string
+ * 
+ * @param stringArray 
+ */
  void CommGetString(char *stringArray) {
      int i = 0;
      unsigned char currentInput = 0;
-     while (CommIsEmpty() != 1 ) { // sizeof gibt die Größe in Byte zurück und nicht die Anzahl der Elemente, aber da es hier achrs sind, ist das das gleiche.
+     while (CommIsEmpty() != 1 ) { // sizeof returns the size in bytes and not the number of elements, but since it is character here, it is the same.
          currentInput = CommGetChar();
          if (currentInput == '\n' || currentInput == '\r' || currentInput == 'q') {
              return;
