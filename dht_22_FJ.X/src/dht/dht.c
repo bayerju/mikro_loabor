@@ -13,7 +13,7 @@
 void startDHT22(void){
     TRISBbits.TRISB5 = 0;
     PORTBbits.RB5 = 0;
-    __delay_ms(2);                  // 
+    __delay_ms(2);                  // As a start signal, the DHT22 must pull the signal from the host to 0 for at least 1ms
     PORTBbits.RB5 = 1;
     TRISBbits.TRISB5 = 1;
 }
@@ -33,8 +33,8 @@ void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes
     hum = (bytes->humByte1 << 8) + bytes->humByte2;
     humFloat = (float)hum/10;
 
-    sprintf(tempString, "Temperatur: %.1f", (double)floatData->temp); // converted to double, because printf converts it anyway and now there is no warning and it is clear what is happening.
-    sprintf(humString, "Feuchtigkeit: %.1f", (double)floatData->hum);   
+    sprintf(tempString, "Temperature: %.1f", (double)floatData->temp); // converted to double, because printf converts it anyway and now there is no warning and it is clear what is happening.
+    sprintf(humString, "Humidity: %.1f", (double)floatData->hum);   
 }
 
 int isChecksumOk(DataBytes *bytes) {
