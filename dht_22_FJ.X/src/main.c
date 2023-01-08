@@ -45,24 +45,24 @@
      return;
  }
 
- void CommGetSetBorderValue(float *boarder, unsigned char *iState) {
-    if (CommIsEmpty() != 1){  // Echo of RX
-        char buffer[30] = "The new value is: ";
-        char inputBuffer[10] = {0};
-        float currentvalue = 0;
-        CommGetString(inputBuffer);
-        currentvalue = (float)atof(inputBuffer);
-        if (currentvalue > 0 && currentvalue < 100) { // check if the value is in the range of 0 to 100
-            *boarder = currentvalue;
-            snprintf(buffer, sizeof(buffer), "%.1f\n", (double)*boarder);
-            CommPutString(buffer);
-            *iState = 1;
-        } else {
-            CommPutString("The value is not in the range of 0 to 100. \nPlase try again. \n");
-        }
-    }
-    return;
- }
+//  void CommGetSetBorderValue(float *boarder, unsigned char *iState) {
+//     if (CommIsEmpty() != 1){  // Echo of RX
+//         char buffer[30] = "The new value is: ";
+//         char inputBuffer[10] = {0};
+//         float currentvalue = 0;
+//         CommGetString(inputBuffer);
+//         currentvalue = (float)atof(inputBuffer);
+//         if (currentvalue > 0 && currentvalue < 100) { // check if the value is in the range of 0 to 100
+//             *boarder = currentvalue;
+//             snprintf(buffer, sizeof(buffer), "%.1f\n", (double)*boarder);
+//             CommPutString(buffer);
+//             *iState = 1;
+//         } else {
+//             CommPutString("The value is not in the range of 0 to 100. \nPlase try again. \n");
+//         }
+//     }
+//     return;
+//  }
 
 int main(int argc, char** argv) {
     AD1PCFGL = 0xffff;
@@ -86,19 +86,19 @@ int main(int argc, char** argv) {
     CommInit();
     CommEnable();               // Enable UART1
     
-    float boarderRedHum = 70;
-    float borderYellowHum = 61;
+    // float boarderRedHum = 70;
+    // float borderYellowHum = 61;
     
     
     __delay_ms(1000);
 
     unsigned char iState = 0;
-    CommPutString("To change the middle border value type x and to change the upper boarder Value type k. \n");
+    CommPutString("To change the middle border value type Y and to change the upper boarder Value type R. \n");
     T3_setup();
    
     while(1){
             
-            ChangeValue(iState, boarderRedHum, borderYellowHum);
+            ChangeValue(iState);
 
             // switch (iState) {
             //     case 0: // wait for first input
@@ -137,7 +137,7 @@ int main(int argc, char** argv) {
 
         int data[40] = {0};
 
-        char walkingStringDisplay [20] = "Test";
+        // char walkingStringDisplay [20] = "Achtung!";
         startDHT22();
         TMR3 = 0x00;
         FloatData dataValues = readData(data, tempString, humString);
@@ -149,11 +149,11 @@ int main(int argc, char** argv) {
         fb_draw_string(10,4,timerString);
         fb_draw_one_line_string(0,3,humString);
 
-        int i = 0;
-        for(i=0;i<128;i++){
-            fb_draw_one_line_string(i,5,walkingStringDisplay);
-            fb_show();
-        }
+        // int i = 0;
+        // for(i=0;i<128;i++){
+        //     fb_draw_one_line_string(i,5,walkingStringDisplay);
+        //     fb_show();
+        // }
 
         fb_show();
 

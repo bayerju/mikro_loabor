@@ -6,10 +6,14 @@
 #include "dht.h"
 #include <libpic30.h>
 
+/**
+ * @brief Reads the data from the DHT22 sensor.
+ * Starts the sensor
+ */
 void startDHT22(void){
     TRISBbits.TRISB5 = 0;
     PORTBbits.RB5 = 0;
-    __delay_ms(2);
+    __delay_ms(2);                  // 
     PORTBbits.RB5 = 1;
     TRISBbits.TRISB5 = 1;
 }

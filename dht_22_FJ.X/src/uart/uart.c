@@ -162,29 +162,72 @@ void CommPutString(char *str_data)
 }        
 /**************************************************************************************************************************************************/
 // Switch case for change the values of the boarders
-void ChangeValue(int iState, float boarderRedHum, float borderYellowHum)
+
+ void CommGetSetBorderValue(float *boarder, unsigned char *iState) {
+    if (CommIsEmpty() != 1){  // Echo of RX
+        char buffer[30] = "The new value is: ";
+        char inputBuffer[10] = {0};
+        float currentvalue = 0;
+        CommGetString(inputBuffer);
+        currentvalue = (float)atof(inputBuffer);
+        if (currentvalue > 0 && currentvalue < 100) { // check if the value is in the range of 0 to 100
+            *boarder = currentvalue;
+            snprintf(buffer, sizeof(buffer), "%.1f\n", (double)*boarder);
+            CommPutString(buffer);
+            *iState = 1;
+        } else {
+            CommPutString("The value is not in the range of 0 to 100. \nPlase try again. \n");
+        }
+    }
+    return;
+ }
+
+void ChangeValue(int iState)
 {
+
+    float boarderRedHum = 70;
+    float borderYellowHum = 61;
+
+/**Borders in  ASCCI table
+ * Y = 89
+ * R = 82
+ * Any other input is an error
+*/
     switch (iState) {
                 case 0: // wait for first input
-                    if (CommIsEmpty() != 1){  // Echo of RX
+                    if ((CommIsEmpty() != 1) && (89 || 82)){  // Echo of RX
                         iState = CommGetChar();
+                    }else {
+                        iState = 4;
                     }
                     break;
                 case 1:
-                    CommPutString("To change the middle border value type x and to change the upper boarder Value type k.\n");
+                    CommPutString("To change the middle border value type Y (yellow light) \nand to change the upper boarder Value type R (red light).\n");
                     iState = 0;
                     break;
-                case 120: // x changes the middle boarder value
+                case 89: // Y changes the middle boarder value
                     CommPutString("please insert the new value for the middle Boarder for the humidity: \n");
                     iState = 2;
                 case 2:
                     CommGetSetBorderValue(&borderYellowHum, &iState);
-                    break;
-                case 107: // k changes the upper boarder value
+                    if (borderYellowHum < 0){
+                        iState = 5;
+                    }else {
+                        break;
+                    }
+                case 82: // R changes the upper boarder value
                     CommPutString("please insert the new value for the upper Boarder for the humidity: \n");
                     iState = 3;
                 case 3:
                     CommGetSetBorderValue(&boarderRedHum, &iState);
+                    break;
+                case 4:
+                    CommPutString("Wrong input! You are only allowed to enter Y or R! \nPlease try again.\n");
+                    iState = 0;
+                    break;
+                case 5:
+                    CommPutString("Wrong input! You are only allowed to enter numbers between 0 and 100! \nPlease try again.\n");
+                    iState = 0;
                     break;
 
 
