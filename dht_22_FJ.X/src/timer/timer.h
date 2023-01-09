@@ -1,9 +1,3 @@
-/*
- * File:   timer.h
- * Author: Julian
- *
- * Created on 28. November 2022, 16:10
- */
 
 #ifndef TIMER_H
 #define TIMER_H

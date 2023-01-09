@@ -1,9 +1,3 @@
-/*
- * File:   global_definitions.h
- * Author: Julian
- *
- * Created on 28. November 2022, 17:19
- */
 
 #ifndef GLOBAL_DEFINITIONS_H
 #define GLOBAL_DEFINITIONS_H

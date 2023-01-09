@@ -1,12 +1,3 @@
-
-
-/* 
- * File:   Timer002.c
- * Author: felix
- *
- * Created on 19. November 2022, 12:25
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "p33FJ128GP802.h"

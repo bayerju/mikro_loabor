@@ -1,9 +1,3 @@
-/*
- * File:   dht.h
- * Author: Julian
- *
- * Created on 28. November 2022, 17:59
- */
 
 #ifndef AMPEL_H
 #define AMPEL_H

@@ -1,12 +1,3 @@
-/* 
- * File:   config.h
- * Author: Julian
- * 
- * sets the Primary Oscillator to 4MHz
- *
- * Created on 28. November 2022, 16:13
- */
-
 
 #ifndef CONFIG_H
 #define	CONFIG_H

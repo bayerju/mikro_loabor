@@ -1,9 +1,4 @@
-/*
- * File:   i2c_routines.c
- * Author: jhoffmue
- *
- * Created on 24. M�rz 2017, 11:01
- */
+
 // #define FCY 40000000ULL
 
 #include "i2c_routines.h"

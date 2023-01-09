@@ -1,3 +1,4 @@
+
 // sensor messuring
 const short int MAX_DATA_ARRAY_LENGTH = 20;        // 200us
 short int isMessuringSensorFlag = 0;

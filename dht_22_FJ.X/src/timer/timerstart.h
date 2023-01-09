@@ -1,9 +1,3 @@
-/* 
- * File:   Timer002.h
- * Author: felix
- *
- * Created on 29. November 2022, 11:09
- */
 
 #ifndef TIMER002_H
 #define	TIMER002_H
