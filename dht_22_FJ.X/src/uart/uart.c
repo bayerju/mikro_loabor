@@ -1,3 +1,14 @@
+/**
+ * @file uart.c
+ * @author Group DHT22
+ * @source Jan Haffmueller
+ * @brief Initializing the UART
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 #include "xc.h"             // Einbinden der prozessor-spezifischen 
                                 // Header-Datei

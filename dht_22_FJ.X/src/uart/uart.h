@@ -1,3 +1,14 @@
+/**
+ * @file uart.h
+ * @author Group DHT22
+ * @source Jan Haffmueller
+ * @brief Providing the UART functions
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 #ifndef _UART_H_
    #define _UART_H_

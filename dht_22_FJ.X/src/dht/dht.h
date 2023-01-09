@@ -1,3 +1,13 @@
+/**
+ * @file dht.h
+ * @author Group DHT22
+ * @brief Providing the DHT22 functions
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 #ifndef DHT_H
 #define DHT_H

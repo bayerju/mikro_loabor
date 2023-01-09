@@ -1,3 +1,14 @@
+/**
+ * @file i2c_routines.c
+ * @author Group DHT22
+ * @source Code from Jan Haffmueller
+ * @brief Inizalizing the I2C
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 // #define FCY 40000000ULL
 

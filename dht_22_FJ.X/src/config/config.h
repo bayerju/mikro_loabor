@@ -1,3 +1,13 @@
+/**
+ * @file config.h
+ * @author Group DHT22
+ * @brief Providing the configuration for the PIC
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 #ifndef CONFIG_H
 #define	CONFIG_H

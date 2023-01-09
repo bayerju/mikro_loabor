@@ -1,3 +1,13 @@
+/**
+ * @file pll.c
+ * @author Group DHT22
+ * @brief Initializes the PLL
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 // #include "p33FJ128GP802.h"
 #include <xc.h>

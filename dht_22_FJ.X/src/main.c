@@ -1,3 +1,13 @@
+/**
+ * @file main.c
+ * @author Group DHT22
+ * @brief 
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 #include <stdio.h>
 #include <stdlib.h>

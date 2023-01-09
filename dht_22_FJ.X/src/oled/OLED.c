@@ -1,3 +1,14 @@
+/**
+ * @file OLED.c
+ * @author Group DHT22
+ * @ source Jan Haffmueller
+ * @brief Initializing the OLED
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 #include "OLED.h"
 #include "i2c_routines.h"

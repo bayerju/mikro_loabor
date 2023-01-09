@@ -1,3 +1,14 @@
+/**
+ * @file timerstart.c
+ * @author Group DHT 22
+ * @brief Initializes the start timer
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "p33FJ128GP802.h"

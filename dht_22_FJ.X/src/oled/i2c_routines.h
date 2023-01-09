@@ -1,3 +1,14 @@
+/**
+ * @file i2c_routines.h
+ * @author Group DHT22
+ * @source Jan Haffmueller
+ * @brief Providing the I2C functions
+ * @version 0.1
+ * @date 2023-01-09
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 
 #ifndef I2C_ROUTINES_H
 #define	I2C_ROUTINES_H
