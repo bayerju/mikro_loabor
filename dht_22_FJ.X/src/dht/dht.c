@@ -9,11 +9,8 @@
  * 
  */
 
-#include <xc.h>
 #include "../config/global_definitions.h"
-#include <stdio.h>
 #include "dht.h"
-#include <libpic30.h>
 
 /**
  * @brief Reads the data from the DHT22 sensor.

@@ -20,6 +20,7 @@
 
 #include <xc.h>
 #include <libpic30.h>
+#include <stdio.h>
 #include "../ampel/ampel.h"
 
 extern short int isWakingSensorFlag; // löst die Messung und das Aufwachen des Sensors aus
@@ -30,6 +31,8 @@ extern short int bitEvalData[];
 extern short int measurementBits[];
 extern float borderRedHum;
 extern float borderYellowHum;
+extern char tempString [20];
+extern char humString [20];
 
 
 #define DEBUG 1

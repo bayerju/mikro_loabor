@@ -77,5 +77,6 @@ void fb_draw_one_line_string ( uint8_t x, uint8_t row, const char *pS);
 
 void fb_draw_string_big (uint16_t x, uint16_t y, const char *pS);
 void fb_draw_BMP (uint16_t x, uint16_t y);
+void oled_draw(const char *tempString, const char *humString);
 
 #endif	// OLED_H

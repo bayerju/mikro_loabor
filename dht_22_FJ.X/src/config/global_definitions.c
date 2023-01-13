@@ -11,6 +11,9 @@ short int isWakingSensorFlag = 0;
 short int bitEvalData[12];
 short int measurementBits[40];
 
+char tempString [20] = {0};
+char humString [20] = {0};
+
 float borderRedHum = 70.0;
 float borderYellowHum = 60.0;
 

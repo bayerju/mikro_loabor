@@ -382,5 +382,11 @@ void fb_draw_BMP (uint16_t x, uint16_t y)
 		framebuffer[( y    << 7) + x + k] = FH_logo[1][k*2  ];
 		framebuffer[((y+1) << 7) + x + k] = FH_logo[1][k*2+1];
     }
+ }
 
+ void oled_draw(const char *tempString, const char *humString) {
+        fb_clear();
+        fb_draw_string(10,1,tempString);
+        fb_draw_one_line_string(10,3,humString);
+        fb_show();
  }
