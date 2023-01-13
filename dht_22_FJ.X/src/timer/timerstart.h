@@ -12,7 +12,7 @@
 #ifndef TIMER002_H
 #define	TIMER002_H
 
-extern void Setup_T1(void);
+extern void T1_setup(void);
 #ifdef	__cplusplus
 extern "C" {
 #endif

@@ -18,6 +18,7 @@
 #include "OLED.h"
 #include "uart.h"
 #include "uart_dsPIC.h"
+#include "timerstart.h"
 // #include "ampel.h"
 
 #define datapin 5 // RB15
@@ -49,23 +50,13 @@ int main(int argc, char** argv) {
     unsigned char iState = 0;
     CommPutString("To change the middle border value type Y and to change the upper border Value type R. \n");
     T3_setup();
+    
+    T1_setup();
    
     while(1){
-            
         ChangeValue(iState, &borderRedHum, &borderYellowHum);
-
-        int data[40] = {0};
-
-        startDHT22();
-        TMR3 = 0x00;
-        FloatData dataValues = readData(data, tempString, humString);
-
-        char timerString [20] = {0};
-        sprintf(timerString, "Timer: %d", TMR3);
         oled_draw(tempString, humString);
         setAmpel(dataValues.hum, borderRedHum, borderYellowHum);
-        
-        __delay_ms(1000)
     };
 
 

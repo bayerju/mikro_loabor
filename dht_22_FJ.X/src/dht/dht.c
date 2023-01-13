@@ -59,6 +59,9 @@ int isChecksumOk(DataBytes *bytes) {
 FloatData readData(int *data, char *tempString, char *humidityString) {
     int counterBits = 0;
     FloatData dataValues;
+    TMR3 = 0;
+    startDHT22();
+    TMR3 = 0;
     int isAnswerOk = checkSensorReply();
     if (isAnswerOk == 0){ // all good start reading
         int bit = -1;
@@ -136,7 +139,7 @@ int evalBit() {
         return -1;
     }
     while(DHT_PIN == 1){
-        if(DHT_PIN == 1 && prevPin == 0){ // wait for pin to go to 0;
+        if(DHT_PIN == 1 && prevPin == 0) { // wait for pin to go to 0;
             TMR3 = 0;
             prevPin = 1;
         }

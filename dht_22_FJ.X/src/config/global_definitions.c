@@ -3,6 +3,8 @@
  * 
  */
 
+#include "global_definitions.h"
+
 // sensor messuring
 const short int MAX_DATA_ARRAY_LENGTH = 20;        // 200us
 short int isMessuringSensorFlag = 0;
@@ -16,7 +18,6 @@ char humString [20] = {0};
 
 float borderRedHum = 70.0;
 float borderYellowHum = 60.0;
+int data[40] = {0};
 
-
-
-
+FloatData dataValues;

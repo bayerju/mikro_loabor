@@ -13,7 +13,7 @@
 #define GLOBAL_DEFINITIONS_H
 
 #define DHT_PIN PORTBbits.RB5 // von RB15 auf RB2 stellen da runtergezogen
-#define FCY 40000000 // 80MHz -> 40MHz Befehlstakt
+#define FCY 40000000 // 80MHz -> 40MHz Befehlstakt = 40_000_000 this syntax only works in c++11 and later
 #define VALUE_10us 0.00001 // 1us
 // VALUE_10us/(1/(FCY/2))
 #define step_10us 400;
@@ -21,7 +21,8 @@
 #include <xc.h>
 #include <libpic30.h>
 #include <stdio.h>
-#include "../ampel/ampel.h"
+#include "ampel.h"
+#include "dht.h"
 
 extern short int isWakingSensorFlag; // löst die Messung und das Aufwachen des Sensors aus
 extern short int isMessuringSensorFlag; // löst die Messung der Daten des Sensors aus
@@ -33,6 +34,8 @@ extern float borderRedHum;
 extern float borderYellowHum;
 extern char tempString [20];
 extern char humString [20];
+extern FloatData dataValues;
+extern int data[];
 
 
 #define DEBUG 1

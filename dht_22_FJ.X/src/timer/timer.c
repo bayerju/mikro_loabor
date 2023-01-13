@@ -31,6 +31,26 @@ void T3_setup(void) {
     T3CONbits.TON = 1; // Start Timer
 }
 
+void enable_T3_interrupts(void) {
+    IEC0bits.T3IE = 1; // Enable Timer3 interrupt
+}
+
+void disable_T3_interrupts(void) {
+    IEC0bits.T3IE = 0; // Disable Timer3 interrupt
+}
+
+void enable_gate(void) {
+    T3CONbits.TGATE = 1; // Enable Gated Timer mode
+}
+
+void disable_gate(void) {
+    T3CONbits.TGATE = 0; // Disable Gated Timer mode
+}
+
+// void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void) {
+
+// }
+
 // void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
 //     /* Interrupt Service Routine code goes here */
 //     static short int counter = 0;
