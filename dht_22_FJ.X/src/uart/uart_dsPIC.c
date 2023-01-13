@@ -10,15 +10,13 @@
  * 
  */
 
-#include "xc.h"	    // Einbinden der prozessor-spezifischen 
-                                // Header-Datei
 #include "uart.h"               // Access to the Ring Buffer
 
 // Defines
-//#define BAUDRATEREG1 12         // 9600 Baud, BRGH=0, fOSC = 4MHz 
-                                // ohne PLL
+//#define BAUDRATEREG1 12       // 9600 Baud, BRGH=0, fOSC = 4MHz 
+                                // without PLL
 #define BAUDRATEREG1 21         // 115200 Baud, BRGH=0, fOSC = 80MHz 
-                                // mit PLL
+                                // with PLL
 
 #define U1RXPIN RPINR18bits.U1RXR = 3;// RP3 (Pin 7) to U1RX
 #define U1RXTRIS TRISBbits.TRISB3 = 1;// RB3 (RP3) as Input f?r U1RX

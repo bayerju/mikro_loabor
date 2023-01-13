@@ -10,13 +10,9 @@
  * 
  */
 
-#include "xc.h"             // Einbinden der prozessor-spezifischen 
-                                // Header-Datei
-#include <stdlib.h>
-#include <stdio.h>
-#include "uart.h"           // Einbinden der UART-Header-Datei
-#include "uart_dsPIC.h"     // Einbinden der UART-Header-Datei für dsPIC
-#define BUFFER_LENGTH 100       // Length of Ring Buffer
+#include "uart.h"           
+#include "uart_dsPIC.h"     
+#define BUFFER_LENGTH 100               // Length of Ring Buffer
 
 /********* Global Buffer ************/
 struct RingBuffer{
@@ -175,7 +171,8 @@ void CommPutString(char *str_data)
 }    
 
 /**
- * @brief As long as the ring buffer is not empty, the characters are stored in a string
+ * @brief As long as the ring buffer is not empty, the characters
+ * are stored in a string
  * 
  * @param stringArray 
  */

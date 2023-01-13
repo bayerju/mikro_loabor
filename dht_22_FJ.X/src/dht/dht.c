@@ -9,12 +9,10 @@
  * 
  */
 
-#include "../config/global_definitions.h"
 #include "dht.h"
 
 /**
- * @brief Reads the data from the DHT22 sensor.
- * Starts the sensor
+ * @brief Starts the sensor
  */
 void startDHT22(void){
     TRISBbits.TRISB5 = 0;
@@ -24,29 +22,49 @@ void startDHT22(void){
     TRISBbits.TRISB5 = 1;
 }
 
+/**
+ * @brief Datas from the sensor are inserted into an string
+ * @return int 
+ */
 void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes, FloatData *floatData) {
     int temp = 0, hum = 0; 
     float tempFloat = 0, humFloat = 0;
 
+    /**
+     * @brief Checks whether an error occurs in the
+     * checksum and then outputs an error text
+     * 
+     */
     if (isChecksumOk(bytes) == 0) {
         sprintf(tempString, "Checksum Error");
         sprintf(humString, "Checksum Error");
         return;
     }
 
-    temp = (bytes->tempByte1 << 8) + bytes->tempByte2;
-    tempFloat = (float)temp/10;
-    hum = (bytes->humByte1 << 8) + bytes->humByte2;
-    humFloat = (float)hum/10;
+    temp = (bytes->tempByte1 << 8) + bytes->tempByte2;                  // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.     
+    tempFloat = (float)temp/10;                                         // convert the integer to a float
+    hum = (bytes->humByte1 << 8) + bytes->humByte2;                     // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.
+    humFloat = (float)hum/10;                                           // convert the integer to a float
 
     sprintf(tempString, "Temperature: %.1f", (double)floatData->temp); // converted to double, because printf converts it anyway and now there is no warning and it is clear what is happening.
     sprintf(humString, "Humidity: %.1f", (double)floatData->hum);   
 }
 
+/**
+ * @brief Compares the sum of the bits of the
+ * temperature and humidity data with the checksum.
+ * 
+ * @param bytes 
+ * @return int 
+ */
 int isChecksumOk(DataBytes *bytes) {
     int sum = bytes->humByte1 + bytes->humByte2 + bytes->tempByte1 + bytes->tempByte2;
     int low8Bits = sum & 0xFF;
 
+    /**
+     * @brief If the checksum is correct, the function returns 1
+     * 
+     */
     if (bytes->checksum == low8Bits) {
         return 1;
     } else {
@@ -54,15 +72,21 @@ int isChecksumOk(DataBytes *bytes) {
     }
 }
 
-
-
+/**
+ * @brief Reads the data from the sensor and stores it in an array. 
+ * 
+ * @param data 
+ * @param tempString 
+ * @param humidityString 
+ * @return FloatData 
+ */
 FloatData readData(int *data, char *tempString, char *humidityString) {
     int counterBits = 0;
     FloatData dataValues;
     int isAnswerOk = checkSensorReply();
-    if (isAnswerOk == 0){ // all good start reading
+    if (isAnswerOk == 0){                                   // all good start reading
         int bit = -1;
-        while (DHT_PIN == 1 && TMR3 < 4000); // wait up to 100us;
+        while (DHT_PIN == 1 && TMR3 < 4000);                // wait up to 100us;
         while (counterBits < 40){
             bit = evalBit();
             if (bit == -1)
@@ -103,7 +127,8 @@ int set_bit(int num, int position) {
 }
 
 /**
- * @brief Get the Recieved Byte from the data  Pointer starting at the offset and returns it as int.
+ * @brief Get the Recieved Byte from the data  Pointer starting at the
+ * offset and returns it as int.
  * 
  * @param offset 
  * @param data 
@@ -129,24 +154,24 @@ int evalBit() {
     int prevPin = 0;
     PORTBbits.RB9 = 1;
     TMR3 = 0;
-    while(DHT_PIN == 0 && TMR3 < 3000); // wait up to 75us;
+    while(DHT_PIN == 0 && TMR3 < 3000);     // wait up to 75us;
     PORTBbits.RB9 = 0;
     if (TMR3 > 3000) {
         TMR3 = 0;
         return -1;
     }
     while(DHT_PIN == 1){
-        if(DHT_PIN == 1 && prevPin == 0){ // wait for pin to go to 0;
+        if(DHT_PIN == 1 && prevPin == 0){   // wait for pin to go to 0;
             TMR3 = 0;
             prevPin = 1;
         }
     }
     int time = TMR3;
-    if (time > 600 && time < 2000){ // 15us * 400 && 50us * 400
+    if (time > 600 && time < 2000){         // 15us * 400 && 50us * 400
         TMR3 = 0;
         return 0;
     }
-    else if (time > 2000 && time < 4000){ // 50us *400 && 100us * 400 // TODO:timeout is at 3000 and one is up to 4000
+    else if (time > 2000 && time < 4000){   // 50us *400 && 100us * 400 // TODO:timeout is at 3000 and one is up to 4000
         TMR3 = 0;
         return 1;
     }
@@ -167,6 +192,11 @@ int checkSensorReply() {
     int prevValue = 1;
     //TRISBbits.TRISB5 = 0; hier wollten wir toggeln
     //PORTBbits.RB5  = 0;
+
+    /**
+     * @brief Wait for the sensor replay
+     * 
+     */
     while (TMR3 < maxTime) {
         
         
@@ -182,7 +212,7 @@ int checkSensorReply() {
         if (PORTBbits.RB5 == 1 && prevValue == 0) {
 
                 int timeStayedZero = TMR3;
-                if (timeStayedZero > 2800 && timeStayedZero < 3600) { // zwischen 70 und 90 us // 1/40E6 = 25E-9 70E-6/25E-9 = 2800
+                if (timeStayedZero > 2800 && timeStayedZero < 3600) { // between 70 and 90 us // 1/40E6 = 25E-9 70E-6/25E-9 = 2800
                     TMR3 = 0;
                     return 0;
                     break;
@@ -201,7 +231,8 @@ int checkSensorReply() {
 }
 
 /**
- * @brief evaluates the data from the sensor and returns 0 if the sensor is waking up and -1 if it is not.
+ * @brief evaluates the data from the sensor and returns 0 if the sensor
+ * is waking up and -1 if it is not.
  * 
  * @param a_data 
  * @param length 

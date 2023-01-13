@@ -15,7 +15,7 @@
 
 #define I2C_TIMEOUT 10000       // timeout in �s
 
-#include "../config/global_definitions.h"
+ #include "global_definitions.h"
 
 // function prototypes
 void init_i2c(void);

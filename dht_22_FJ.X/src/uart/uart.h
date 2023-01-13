@@ -11,8 +11,9 @@
  */
 
 #ifndef _UART_H_
-   #define _UART_H_
-   #include "../config/global_definitions.h"
+#define _UART_H_
+
+#include "global_definitions.h"
 
 extern void CommInit(void);
 extern void CommPutRxChar(unsigned char data);

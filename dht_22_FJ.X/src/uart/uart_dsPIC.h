@@ -11,7 +11,9 @@
  */
 
 #ifndef _UART_DSPIC_H_
-   #define _UART_DSPIC_H_
+#define _UART_DSPIC_H_
+
+#include "global_definitions.h"
 
 extern void CommConfig(void);
 extern void CommEnable(void);

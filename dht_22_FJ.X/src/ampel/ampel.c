@@ -12,6 +12,13 @@
  * The yellow light sinalises that the humidity is too low
  */
 
+// TODO: move into ampel.c
+void initAmpelLEDs (void) {
+    TRISBbits.TRISB13 = 0;
+    TRISBbits.TRISB14 = 0;
+    TRISBbits.TRISB15 = 0;
+}
+
 void setAmpel(float currentValue, float borderRed, float borderYellow) {
     if (currentValue > borderRed) {                                       // Humidity is higher than the red border --> Red light on
         ROT = 1;
