@@ -17,7 +17,7 @@
 #define GRUEN LATBbits.LATB14
 #define ROT LATBbits.LATB15
 
-void setAmpel(float currentValue, float boarderRed, float borderYellow);
+void setAmpel(float currentValue, float borderRed, float borderYellow);
 
 #ifdef __cplusplus
 extern "C"
@@ -28,4 +28,4 @@ extern "C"
 }
 #endif
 
-#endif /* DHT_H */
+#endif /* AMPEL_H */

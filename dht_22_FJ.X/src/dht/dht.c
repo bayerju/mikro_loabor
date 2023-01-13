@@ -9,11 +9,9 @@
  * 
  */
 
-// #include "p33FJ128GP802.h"
 #include <xc.h>
 #include "../config/global_definitions.h"
 #include <stdio.h>
-// #include "timerstartvs.h"
 #include "dht.h"
 #include <libpic30.h>
 

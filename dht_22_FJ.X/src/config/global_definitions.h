@@ -20,15 +20,18 @@
 
 #include <xc.h>
 #include <libpic30.h>
+#include "../ampel/ampel.h"
 
-extern short int
-    isWakingSensorFlag; // löst die Messung und das Aufwachen des Sensors aus
-extern short int
-    isMessuringSensorFlag; // löst die Messung der Daten des Sensors aus
+extern short int isWakingSensorFlag; // löst die Messung und das Aufwachen des Sensors aus
+extern short int isMessuringSensorFlag; // löst die Messung der Daten des Sensors aus
 extern const short int MAX_DATA_ARRAY_LENGTH;
-// extern short int data[];
+
 extern short int bitEvalData[];
 extern short int measurementBits[];
+extern float borderRedHum;
+extern float borderYellowHum;
+
+
 #define DEBUG 1
 
 #ifdef __cplusplus

@@ -12,8 +12,10 @@
 
 #include "xc.h"             // Einbinden der prozessor-spezifischen 
                                 // Header-Datei
-#include "uart_dsPIC.h"         // HAL 
-
+#include <stdlib.h>
+#include <stdio.h>
+#include "uart.h"           // Einbinden der UART-Header-Datei
+#include "uart_dsPIC.h"     // Einbinden der UART-Header-Datei für dsPIC
 #define BUFFER_LENGTH 100       // Length of Ring Buffer
 
 /********* Global Buffer ************/
@@ -170,20 +172,42 @@ void CommPutString(char *str_data)
         CommPutChar(*str_data);
         str_data++;
     }            
-}        
-/**************************************************************************************************************************************************/
-// Switch case for change the values of the boarders
+}    
 
- void CommGetSetBorderValue(float *boarder, unsigned char *iState) {
+/**
+ * @brief As long as the ring buffer is not empty, the characters are stored in a string
+ * 
+ * @param stringArray 
+ */
+ void CommGetString(char *stringArray) {
+     int i = 0;
+     unsigned char currentInput = 0;
+     while (CommIsEmpty() != 1 ) { // sizeof returns the size in bytes and not the number of elements, but since it is character here, it is the same.
+         currentInput = CommGetChar();
+         if (currentInput == '\n' || currentInput == '\r' || currentInput == 'q') {
+             return;
+         }
+         stringArray[i] = currentInput;
+         i++;
+     }
+     return;
+ }
+
+
+/**************************************************************************************************************************************************/
+// Switch case for change the values of the borders
+
+ void CommGetSetBorderValue(float *border, int *iState) {
     if (CommIsEmpty() != 1){  // Echo of RX
         char buffer[30] = "The new value is: ";
         char inputBuffer[10] = {0};
         float currentvalue = 0;
         CommGetString(inputBuffer);
-        currentvalue = (float)atof(inputBuffer);
+        currentvalue = atof(inputBuffer); // atof converts a string to a float
+        
         if (currentvalue > 0 && currentvalue < 100) { // check if the value is in the range of 0 to 100
-            *boarder = currentvalue;
-            snprintf(buffer, sizeof(buffer), "%.1f\n", (double)*boarder);
+            *border = currentvalue;
+            snprintf(buffer, sizeof(buffer), "%.1f\n", (double)*border);
             CommPutString(buffer);
             *iState = 1;
         } else {
@@ -193,11 +217,7 @@ void CommPutString(char *str_data)
     return;
  }
 
-void ChangeValue(int iState)
-{
-
-    float boarderRedHum = 70;
-    float borderYellowHum = 61;
+void ChangeValue(int iState, float *a_borderYellowHum, float *a_borderRedHum) {
 
 /**Borders in  ASCCI table
  * Y = 89
@@ -213,24 +233,24 @@ void ChangeValue(int iState)
                     }
                     break;
                 case 1:
-                    CommPutString("To change the middle border value type Y (yellow light) \nand to change the upper boarder Value type R (red light).\n");
+                    CommPutString("To change the middle border value type Y (yellow light) \nand to change the upper border Value type R (red light).\n");
                     iState = 0;
                     break;
-                case 89: // Y changes the middle boarder value
-                    CommPutString("please insert the new value for the middle Boarder for the humidity: \n");
+                case 89: // Y changes the middle border value
+                    CommPutString("please insert the new value for the middle border for the humidity: \n");
                     iState = 2;
                 case 2:
-                    CommGetSetBorderValue(&borderYellowHum, &iState);
-                    if (borderYellowHum < 0){
+                    CommGetSetBorderValue(a_borderYellowHum, &iState);
+                    if (a_borderYellowHum < 0){
                         iState = 5;
                     }else {
                         break;
                     }
-                case 82: // R changes the upper boarder value
-                    CommPutString("please insert the new value for the upper Boarder for the humidity: \n");
+                case 82: // R changes the upper border value
+                    CommPutString("please insert the new value for the upper border for the humidity: \n");
                     iState = 3;
                 case 3:
-                    CommGetSetBorderValue(&boarderRedHum, &iState);
+                    CommGetSetBorderValue(a_borderRedHum, &iState);
                     break;
                 case 4:
                     CommPutString("Wrong input! You are only allowed to enter Y or R! \nPlease try again.\n");
