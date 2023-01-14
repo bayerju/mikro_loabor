@@ -18,7 +18,7 @@
   * Maybe Error text or informations
   * walking text mit timer neu drawen (Julian)
 * gated Timer verwenden für dht (Julian)
-* Presentation
+* Presentation (Felix)
   * Grund Rahmen
   * Pictures
   * Explanations
