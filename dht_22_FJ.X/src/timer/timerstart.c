@@ -9,44 +9,34 @@
  * 
  */
 
+
 #include "timer.h"
 
-#define T1_Periode_Ground 1999  // for starting the sensor min. 1ms grounding
+#define T1_Periode 0.1*FCY/256-1    //  should trigger the asulreading of the sensor every 2 seconds
+                                    // 2s/(1/FCY) = 2*FCY
 
     
-void Setup_T1(void)             // from moodle
+void Setup_T1(void)                 // from moodle
     {
-    T1CONbits.TON = 0;          // diesable Timer1
-    T1CONbits.TCS = 0;          // select internal clock FCY
-    T1CONbits.TGATE = 0;        // disable Gated Timer mode
-    T1CONbits.TCKPS = 0b00;     // select 1:1 Prescaler
-    TMR1 = 0x00;                // clear timer register
-    PR1 = T1_Periode_Ground;    // load the period value
+    T1CONbits.TON = 0;              // diesable Timer1
+    T1CONbits.TCS = 0;              // select internal clock FCY
+    T1CONbits.TGATE = 0;            // disable Gated Timer mode
+    T1CONbits.TCKPS = 0b11;         // select 1:256 Prescaler
+    TMR1 = 0x00;                    // clear timer register
+    PR1 = T1_Periode;               // load the period value 1kHz t_PR1
 
-    IPC0bits.T1IP = 0x01;       // set Timer1 Interrupt Priority Level
-    IFS0bits.T1IF = 0;          // clear Timer1 Interrupt Flag
-    IEC0bits.T1IE = 0;          // disable Timer1 interrupt
-    T1CONbits.TON = 1;          // start Timer 
+    IPC0bits.T1IP = 0x01;           // set Timer1 Interrupt Priority Level
+    IFS0bits.T1IF = 0;              // clear Timer1 Interrupt Flag
+    IEC0bits.T1IE = 1;              // enable Timer1 interrupt
+    T1CONbits.TON = 1;              // start Timer1
     }
     
-    // Interrut sorgt f?r das Rechtecksignal
-    /*void __attribute__((__interrupt__,  no_auto_psv)) _T1Interrupt(void){
-        
-        static short int counter = 0;
-        if (counter == 0){
-        TRISBbits.TRISB5 = 0; // output
-        PORTBbits.RB5 = 0;
-        }
-        if (counter >= 20){
-        PORTBbits.RB5 = 1;
-        TRISBbits.TRISB5 = 1; // input
-        isWakingSensorFlag = 1;
-        T1CONbits.TON = 0;
-        IEC0bits.T1IE = 0;
-        T3_setup();
-        }
-        counter ++;
-        
-        
-        IFS0bits.T1IF = 0;
-    }*/
+void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void){
+    static int counter = 0; // prescaler is not sufficient for 2 seconds, so we need a counter to count every 0.1 seconds and only run the function every 20th time.
+    if (counter >= 20) {
+        counter = 0;
+        dataValues = readData(data, tempString, humString);
+    }
+    counter++;
+    IFS0bits.T1IF = 0; // Interrupt Flag zurücksetzen
+}

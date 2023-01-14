@@ -83,6 +83,9 @@ int isChecksumOk(DataBytes *bytes) {
 FloatData readData(int *data, char *tempString, char *humidityString) {
     int counterBits = 0;
     FloatData dataValues;
+    TMR3 = 0;
+    startDHT22();
+    TMR3 = 0;
     int isAnswerOk = checkSensorReply();
     if (isAnswerOk == 0){                                   // all good start reading
         int bit = -1;
