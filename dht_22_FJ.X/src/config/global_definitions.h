@@ -23,6 +23,23 @@
 #include <stdio.h>
 #include "ampel.h"
 #include "dht.h"
+#include <string.h>
+
+// ErrorHandling
+typedef enum ErrorCodes
+{
+    NO_ERROR,
+    ERROR,
+    ERROR_NO_RESPONSE,
+    ERROR_CHECKSUM,
+    ERROR_TIMEOUT,
+    ERROR_UNKNOWN
+} ErrorCodes;
+extern enum errorCodes errorCodes;
+extern char errorMessage[];
+extern void throwError(ErrorCodes errorCode);
+
+
 
 extern short int isWakingSensorFlag; // löst die Messung und das Aufwachen des Sensors aus
 extern short int isMessuringSensorFlag; // löst die Messung der Daten des Sensors aus

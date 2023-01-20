@@ -25,14 +25,16 @@ void T3_setup(void) {
     T3CONbits.TCKPS = 0b00; // Select 1:1 Prescaler
     TMR3 = 0x00; // Clear timer register
     PR3 = T3_Period; // Load the period value
-    IPC2bits.T3IP = 0x01; // Set Timer3 Interrupt Priority Level
+    IPC2bits.T3IP = 0x01; // Set Timer3 Interrupt Priority Level // TODO: can we have two same prioritiylevels?
     IFS0bits.T3IF = 0; // Clear Timer3 Interrupt Flag
     IEC0bits.T3IE = 0; // Disable Timer3 interrupt
     T3CONbits.TON = 1; // Start Timer
 }
 
 void enable_T3_interrupts(void) {
+    T3CONbits.TON = 0; // Disable Timer
     IEC0bits.T3IE = 1; // Enable Timer3 interrupt
+    T3CONbits.TON = 1; // Start Timer
 }
 
 void disable_T3_interrupts(void) {
@@ -41,6 +43,8 @@ void disable_T3_interrupts(void) {
 
 void enable_gate(void) {
     T3CONbits.TGATE = 1; // Enable Gated Timer mode
+    TMR3 = 0x00; // Clear timer register
+    T3CONbits.TON = 1; // Start Timer
 }
 
 void disable_gate(void) {

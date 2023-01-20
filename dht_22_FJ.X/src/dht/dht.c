@@ -63,14 +63,22 @@ FloatData readData(int *data, char *tempString, char *humidityString) {
     startDHT22();
     TMR3 = 0;
     int isAnswerOk = checkSensorReply();
+    if (isAnswerOk != 0) {
+        throwError(ERROR_CHECKSUM);
+        return dataValues;
+    }
     if (isAnswerOk == 0){ // all good start reading
         int bit = -1;
         while (DHT_PIN == 1 && TMR3 < 4000); // wait up to 100us;
+        // TODO: change to gated timer from here on or just use different timer that is gated
+        enable_gate();
         while (counterBits < 40){
             bit = evalBit();
-            if (bit == -1)
-                // TODO: add error handling
+            if (bit == -1) {
+                throwError(ERROR_TIMEOUT); // TODO: new error for bit not recognized
                 return dataValues;
+            }
+
             data[counterBits] = bit;
             counterBits++;
         }
@@ -165,6 +173,7 @@ int evalBit() {
  * @return int 0 if the check was ok and 1 if it wasnt
  */
 int checkSensorReply() {
+    disable_gate();
     // 400 is 10 us (step_10us) and 12 to wait 80us+20 to 40us
     int maxTime = 4800; // 400*12
     int prevValue = 1;

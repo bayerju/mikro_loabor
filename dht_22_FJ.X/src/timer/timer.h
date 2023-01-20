@@ -14,6 +14,8 @@
 extern void T3_setup(void);
 extern void enable_T3_interrupts(void);
 extern void disable_T3_interrupts(void);
+extern void enable_gate(void);
+extern void disable_gate(void);
 extern short isMessuringSensorFlag; // l�st die Messung des Sensors aus
 extern void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void);
 
