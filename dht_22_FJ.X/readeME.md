@@ -23,3 +23,12 @@
   * Pictures
   * Explanations
   * Benötige Bilder des Aufbaues
+  * Was wir noch benötigen:
+1. Bild von unseren Board 
+2. Kennzeichnung, wie wir alles verkabeln --> Auf die Folie des dsPIC33
+3. Was macht RB8 und was RB9 --> hinsichtlich I2C (Kontrolle der Beschriftung OLED-Folie)
+4. Bilder vom OLED, Ampel, Testen der Funktionen
+				Hitze = Erwärmen
+				Kälte = Kühlakku
+				Luftfeutigkeit = Anzeigen nach Anhauchen
+5. Ablaufdiagramm? --> Sollten wir ein ABlaifdigramm schreiben?
