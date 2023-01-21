@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2023
  * 
  */
+
+// Frequency ist set to 80MHz
     
     void setup_pll() {
             

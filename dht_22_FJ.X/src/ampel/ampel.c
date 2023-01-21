@@ -12,7 +12,7 @@
  * The yellow light sinalises that the humidity is too low
  */
 
-// TODO: move into ampel.c
+// TODO: Screen shot 1
 void initAmpelLEDs (void) {
     TRISBbits.TRISB13 = 0;
     TRISBbits.TRISB14 = 0;

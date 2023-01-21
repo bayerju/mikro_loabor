@@ -15,7 +15,7 @@
 #define T1_Periode 0.1*FCY/256-1    //  should trigger the asulreading of the sensor every 2 seconds
                                     // 2s/(1/FCY) = 2*FCY
 
-    
+// TODO: Screen shot 5 
 void Setup_T1(void)                 // from moodle
     {
     T1CONbits.TON = 0;              // diesable Timer1
@@ -32,7 +32,8 @@ void Setup_T1(void)                 // from moodle
     }
     
 void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void){
-    static int counter = 0; // prescaler is not sufficient for 2 seconds, so we need a counter to count every 0.1 seconds and only run the function every 20th time.
+    static int counter = 0;     // prescaler is not sufficient for 2 seconds, so we need a counter to
+                                // count every 0.1 seconds and only run the function every 20th time.
     if (counter >= 20) {
         counter = 0;
         dataValues = readData(data, tempString, humString);

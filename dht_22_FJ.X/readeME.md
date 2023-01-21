@@ -22,3 +22,4 @@
   * Grund Rahmen
   * Pictures
   * Explanations
+  * Benötige Bilder des Aufbaues

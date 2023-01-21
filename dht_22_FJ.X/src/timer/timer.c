@@ -11,9 +11,9 @@
 
 #include "dht.h"
 #include "timer.h"
-
-#define T3_Period 65000         // 1us with 4MHz: 4MHz -> Befehlstakt: 2Mhz -> 1/2Mhz = 0.5us -> 10us/0.5us = 20
-
+// TODO: Screen shot 6
+#define T3_Period 65000         // 1us with 4MHz: 4MHz
+                                // Befehlstakt: 2Mhz -> 1/2Mhz = 0.5us -> 10us/0.5us = 20
 void T3_setup(void) {
     T3CONbits.TON = 0;          // Disable Timer
     T3CONbits.TCS = 0;          // Select internal instruction cycle clock

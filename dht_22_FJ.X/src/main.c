@@ -22,7 +22,7 @@
 // #include "ampel.h"
 
 #define datapin 5 // RB15
-
+//TODO: Screen shot 8
 int main(int argc, char** argv) {
     AD1PCFGL = 0xffff;
     

@@ -230,6 +230,7 @@ void fb_show_bmp(uint8_t *pBmp)
 }
 
 //*******************************************************************************
+// TODO: Screen shot 4
 // Draw a character at position (x,y) - This function can only be called indirectly
 // with the help of the function fb_draw_string, because it calculates the // corresponding index for the font vector! 
 // corresponding index for the font vector!

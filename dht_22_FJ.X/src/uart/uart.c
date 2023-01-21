@@ -193,7 +193,7 @@ void CommPutString(char *str_data)
 
 /**************************************************************************************************************************************************/
 // Switch case for change the values of the borders
-
+// TODO: Screen shot 7
  void CommGetSetBorderValue(float *border, int *iState) {
     if (CommIsEmpty() != 1){  // Echo of RX
         char buffer[30] = "The new value is: ";

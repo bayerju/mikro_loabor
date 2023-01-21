@@ -80,6 +80,7 @@ int isChecksumOk(DataBytes *bytes) {
  * @param humidityString 
  * @return FloatData 
  */
+// TODO: Screen shot 3
 FloatData readData(int *data, char *tempString, char *humidityString) {
     int counterBits = 0;
     FloatData dataValues;
@@ -149,7 +150,7 @@ int getRecievedByte(int offset, int *data) {
 }
 
 /**
- * @brief 
+ * @brief sorts the bits
  * 
  * @return int -1 for failure, 1 for a 1 and 0 for a 0
  */
@@ -185,7 +186,7 @@ int evalBit() {
 }
 
 /**
- * @brief 
+ * @brief check the sensor reply
  * 
  * @return int 0 if the check was ok and 1 if it wasnt
  */
