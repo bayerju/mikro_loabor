@@ -29,7 +29,7 @@ void setAmpel(float currentValue, float borderRed, float borderYellow) {
         for(i=0;i<128;i++){                                                    // Inizalisation walking string (text)
         fb_draw_one_line_string(i,5,walkingStringDisplay);
         fb_show();
-    }
+        }
     } else if (currentValue > borderYellow && currentValue < borderRed) {      // Humidity is higher than the yellow border --> Green light on
         ROT = 0;
         GRUEN = 0;

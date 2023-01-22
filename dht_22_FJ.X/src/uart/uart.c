@@ -192,7 +192,7 @@ void CommPutString(char *str_data)
 
 
 /**************************************************************************************************************************************************/
-// Switch case for change the values of the borders
+// Convert the string to a float and check if the value is in the range of 0 to 100
 // TODO: Screen shot 7
  void CommGetSetBorderValue(float *border, int *iState) {
     if (CommIsEmpty() != 1){  // Echo of RX
@@ -214,6 +214,7 @@ void CommPutString(char *str_data)
     return;
  }
 
+// Switch case for change the values of the borders
 void ChangeValue(int iState, float *a_borderYellowHum, float *a_borderRedHum) {
 
 /**Borders in  ASCCI table
