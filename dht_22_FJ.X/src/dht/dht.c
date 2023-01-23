@@ -235,12 +235,6 @@ int checkSensorReply() {
                 } else {
                     return -1;
                 }
-            // if (timeStayedZero > step_10us*50) {
-            //     PORTBbits.RB14 = 1;
-            // } else {
-            //     PORTBbits.RB14 = 0;
-            // }
-            // prevValue = 1;
         } 
     }
     return 1;

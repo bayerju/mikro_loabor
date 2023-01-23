@@ -26,8 +26,4 @@ extern void CommTxIntEn(void);
 extern void CommTxIntDis(void);
 extern void CommTxIntSet(void);
 
-/*
-extern void __attribute__ ((interrupt, no_auto_psv)) _U1TXInterrupt(void);
-extern void __attribute__ ((interrupt, no_auto_psv)) _U1RXInterrupt(void);
-extern unsigned int PulsWidth;*/
 #endif // _init_device_H_
