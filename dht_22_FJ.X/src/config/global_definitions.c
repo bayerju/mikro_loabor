@@ -23,6 +23,12 @@ TFloatData sensorData = {0};
 ErrorCodes currentErrorCode = NO_ERROR;
 
 char errorMessage[30] = "";
+
+void resolveError() {
+    strcpy(errorMessage, "NO_ERROR");
+    currentErrorCode = NO_ERROR;
+}
+
 void throwError(ErrorCodes a_errorCode) {
     switch (a_errorCode) {
         case NO_ERROR:
@@ -56,7 +62,4 @@ void throwError(ErrorCodes a_errorCode) {
     }
 }
 
-void resolveError() {
-    strcpy(errorMessage, "NO_ERROR");
-}
 
