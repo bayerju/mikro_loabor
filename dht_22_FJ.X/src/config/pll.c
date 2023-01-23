@@ -9,10 +9,12 @@
  * 
  */
 
+#include "global_definitions.h"
+
 // Frequency ist set to 80MHz
     
     void setup_pll() {
-            
+
     PLLFBDbits.PLLDIV = 78;             // set plldiv to 78
     
     CLKDIVbits.PLLPOST = 0;             // set pllpost to 0

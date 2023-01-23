@@ -1,6 +1,7 @@
 
 #include "ampel.h" 
 #include "OLED.h"
+#include "global_definitions.h"
 
 /**
  * @brief Traffic light control
@@ -19,17 +20,14 @@ void initAmpelLEDs (void) {
     TRISBbits.TRISB15 = 0;
 }
 
-void setAmpel(float currentValue, float borderRed, float borderYellow) {
+void setAmpel(float currentValue, float borderRed, float borderYellow, int loopCounter_OLED) {
     if (currentValue > borderRed) {                                       // Humidity is higher than the red border --> Red light on
         ROT = 1;
         GRUEN = 0;
         GELB = 0;
         char walkingStringDisplay [20] = "Warning!";                           // Inizalisation when humidity is exceeded --> Output warning
-        int i = 0;
-        for(i=0;i<128;i++){                                                    // Inizalisation walking string (text)
-        fb_draw_one_line_string(i,5,walkingStringDisplay);
+        fb_draw_one_line_string(loopCounter_OLED,5,walkingStringDisplay);
         fb_show();
-        }
     } else if (currentValue > borderYellow && currentValue < borderRed) {      // Humidity is higher than the yellow border --> Green light on
         ROT = 0;
         GRUEN = 0;

@@ -9,6 +9,7 @@
  * 
  */
 
+#include "ampel.h"
 #include "config.h" // sets primary oscillator to 4MHz
 #include "dht.h"
 #include "global_definitions.h"
@@ -42,6 +43,7 @@ int main(int argc, char** argv) {
     __delay_ms(1000);
 
     unsigned char iState = 0;
+    int i = 0;
     CommPutString("To change the middle border value type Y and to change the upper border Value type R. \n");
     T3_setup();
     
@@ -52,11 +54,20 @@ int main(int argc, char** argv) {
     * 
     */
     while(1){
-        ChangeValue(iState, &borderRedHum, &borderYellowHum);
-        oled_draw(tempString, humString);
-        setAmpel(dataValues.hum, borderRedHum, borderYellowHum);
+        if (currentErrorCode != NO_ERROR)
+        {
+            fb_clear();
+            fb_draw_one_line_string(i,3,errorMessage);
+            fb_show();
+        } else {
+            ChangeValue(iState, &borderRedHum, &borderYellowHum); // change the border values
+            oled_draw(tempString, humString); //
+            setAmpel(sensorData.hum, borderRedHum, borderYellowHum, i);
+        }
+        i++;
+        if (i > 127) {
+            i = 0;
+        }
     };
-
-
     return (0);
 }

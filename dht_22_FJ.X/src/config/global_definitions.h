@@ -21,14 +21,12 @@
 /**
  * @brief Provision of the main libraries
  */
+#include <xc.h>
 #include <libpic30.h>
-#include "p33FJ128GP802.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <xc.h>
-#include "ampel.h"
-#include "dht.h"
 #include <string.h>
+
 
 // ErrorHandling
 typedef enum ErrorCodes
@@ -41,10 +39,17 @@ typedef enum ErrorCodes
     ERROR_UNKNOWN
 } ErrorCodes;
 extern enum errorCodes errorCodes;
+extern ErrorCodes currentErrorCode;
 extern char errorMessage[];
 extern void throwError(ErrorCodes errorCode);
 
 
+struct FloatData {
+    float temp;
+    float hum;
+} ;
+
+typedef struct FloatData TFloatData;
 
 extern short int isWakingSensorFlag;            // triggers the measurement and the wake-up of the sensor
 extern short int isMessuringSensorFlag;         // triggers the measurement of the sensor's data
@@ -52,11 +57,11 @@ extern const short int MAX_DATA_ARRAY_LENGTH;   // maximum length of the data ar
 
 extern short int bitEvalData[];                 // array for the evaluation of the data
 extern short int measurementBits[];             // array for the measurement of the data
-extern float borrderRedHum;                     // border value for the red light
+extern float borderRedHum;                     // border value for the red light
 extern float borderYellowHum;                   // border value for the yellow light
 extern char tempString [20];                    // string for the temperature
 extern char humString [20];                     // string for the humidity
-extern FloatData dataValues;                    // struct for the data
+extern TFloatData sensorData;                    // struct for the data
 extern int data[];                              // array for the data
 
 #define DEBUG 1
