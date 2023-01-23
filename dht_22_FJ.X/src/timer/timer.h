@@ -13,6 +13,7 @@
 #define TIMER_H
 
 #include "global_definitions.h"
+#include "dht.h"
 
 extern void T3_setup(void);
 extern void enable_T3_interrupts(void);

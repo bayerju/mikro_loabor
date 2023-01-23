@@ -19,32 +19,39 @@ char humString [20] = {0};                         // Buffer to store the humidi
 float borderYellowHum = 60.0;
 float borderRedHum = 70.0;
 int data[40] = {0};
-FloatData dataValues;
+TFloatData sensorData = {0};
+ErrorCodes currentErrorCode = NO_ERROR;
 
-
-char errorMessage[30] = {0};
+char errorMessage[30] = "";
 void throwError(ErrorCodes a_errorCode) {
     switch (a_errorCode) {
         case NO_ERROR:
-            strcpy(errorMessage, "NO_ERROR");
+            strcpy(errorMessage, "");
+            currentErrorCode = NO_ERROR;
             break;
         case ERROR:
             strcpy(errorMessage, "ERROR");
+            currentErrorCode = ERROR;
             break;
         case ERROR_NO_RESPONSE:
             strcpy(errorMessage, "ERROR_NO_RESPONSE");
+            currentErrorCode = ERROR_NO_RESPONSE;
             break;
         case ERROR_CHECKSUM:
             strcpy(errorMessage, "ERROR_CHECKSUM");
+            currentErrorCode = ERROR_CHECKSUM;
             break;
         case ERROR_TIMEOUT:
             strcpy(errorMessage, "ERROR_TIMEOUT");
+            currentErrorCode = ERROR_TIMEOUT;
             break;
         case ERROR_UNKNOWN:
             strcpy(errorMessage, "ERROR_UNKNOWN");
+            currentErrorCode = ERROR_UNKNOWN;
             break;
         default:
             strcpy(errorMessage, "ERROR_UNKNOWN");
+            currentErrorCode = ERROR_UNKNOWN;
             break;
     }
 }

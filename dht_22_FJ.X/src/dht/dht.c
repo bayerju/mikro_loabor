@@ -26,7 +26,7 @@ void startDHT22(void){
  * @brief Datas from the sensor are inserted into an string
  * @return int 
  */
-void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes, FloatData *floatData) {
+void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes, TFloatData *floatData) {
     int temp = 0, hum = 0; 
     float tempFloat = 0, humFloat = 0;
 
@@ -35,9 +35,8 @@ void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes
      * checksum and then outputs an error text
      * 
      */
-    if (isChecksumOk(bytes) == 0) {
-        sprintf(tempString, "Checksum Error");
-        sprintf(humString, "Checksum Error");
+    if (isChecksumOk(bytes) != 0) {
+        throwError(ERROR_CHECKSUM);
         return;
     }
 
@@ -66,9 +65,9 @@ int isChecksumOk(DataBytes *bytes) {
      * 
      */
     if (bytes->checksum == low8Bits) {
-        return 1;
-    } else {
         return 0;
+    } else {
+        return -1;
     }
 }
 
@@ -78,33 +77,28 @@ int isChecksumOk(DataBytes *bytes) {
  * @param data 
  * @param tempString 
  * @param humidityString 
- * @return FloatData 
+ * @return TFloatData 
  */
 // TODO: Screen shot 3
-FloatData readData(int *data, char *tempString, char *humidityString) {
+int readData(int *data, char *tempString, char *humidityString) {
     int counterBits = 0;
-    FloatData dataValues;
     TMR3 = 0;
     startDHT22();
     TMR3 = 0;
     int isAnswerOk = checkSensorReply();
     if (isAnswerOk != 0) {
-        throwError(ERROR_CHECKSUM);
-        return dataValues;
+        throwError(ERROR_NO_RESPONSE);
+        return -1;
     }
-    if (isAnswerOk == 0){                                   // all good start reading
+    if (isAnswerOk == 0) {                                   // all good start reading
         int bit = -1;
         while (DHT_PIN == 1 && TMR3 < 4000);                // wait up to 100us;
         // TODO: change to gated timer from here on or just use different timer that is gated
-
-    if (isAnswerOk == 0){                                   // all good start reading
-        int bit = -1;
-        while (DHT_PIN == 1 && TMR3 < 4000);                // wait up to 100us;
         while (counterBits < 40){
             bit = evalBit();
             if (bit == -1) {
                 throwError(ERROR_TIMEOUT); // TODO: new error for bit not recognized
-                return dataValues;
+                return -1;
             }
 
             data[counterBits] = bit;
@@ -122,10 +116,10 @@ FloatData readData(int *data, char *tempString, char *humidityString) {
     }
     recievedBytes.currentByte = &recievedBytes.humByte1;
 
-    dataValues.temp = ((float)(recievedBytes.tempByte1 << 8) + recievedBytes.tempByte2)/10;
-    dataValues.hum = ((float)(recievedBytes.humByte1 << 8) + recievedBytes.humByte2)/10;
-    dataToString(data, tempString, humidityString, &recievedBytes, &dataValues);
-    return dataValues;
+    sensorData.temp = ((float)(recievedBytes.tempByte1 << 8) + recievedBytes.tempByte2)/10;
+    sensorData.hum = ((float)(recievedBytes.humByte1 << 8) + recievedBytes.humByte2)/10;
+    dataToString(data, tempString, humidityString, &recievedBytes, &sensorData);
+    return 0;
 }
 
 /**
@@ -202,12 +196,9 @@ int evalBit() {
  * @return int 0 if the check was ok and 1 if it wasnt
  */
 int checkSensorReply() {
-    disable_gate();
     // 400 is 10 us (step_10us) and 12 to wait 80us+20 to 40us
     int maxTime = 4800; // 400*12
     int prevValue = 1;
-    //TRISBbits.TRISB5 = 0; hier wollten wir toggeln
-    //PORTBbits.RB5  = 0;
 
     /**
      * @brief Wait for the sensor replay
@@ -233,6 +224,7 @@ int checkSensorReply() {
                     return 0;
                     break;
                 } else {
+                    throwError(ERROR_NO_RESPONSE);
                     return -1;
                 }
             // if (timeStayedZero > step_10us*50) {

@@ -18,7 +18,7 @@
 #define GRUEN LATBbits.LATB14
 #define ROT LATBbits.LATB15
 
-void setAmpel(float currentValue, float borderRed, float borderYellow);
+extern void setAmpel(float currentValue, float borderRed, float borderYellow, int loopCounter_OLED);
 
 #ifdef __cplusplus
 extern "C"

@@ -12,7 +12,7 @@
 #ifndef DHT_H
 #define DHT_H
 
-#include "global_definitions.h"
+#include "../config/global_definitions.h"
 
 struct DataBytes  {
     int humByte1;
@@ -25,29 +25,16 @@ struct DataBytes  {
 
 typedef struct DataBytes DataBytes;
 
-struct FloatData {
-    float temp;
-    float hum;
-} ;
 
-typedef struct FloatData FloatData;
 
 void startDHT22 (void);
-void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes, FloatData *floatData);
+void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes, TFloatData *floatData);
 int isChecksumOk(DataBytes *bytes);
-FloatData readData(int *data, char *tempString, char *humidityString);
+int readData(int *data, char *tempString, char *humidityString);
 int set_bit(int num, int position);
 int getRecievedByte(int offset, int *data);
 int evalBit();
 int checkSensorReply(void);
 int evalWakingData(short int *a_data, short int length);
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* DHT_H */
