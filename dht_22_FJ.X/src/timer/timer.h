@@ -16,9 +16,7 @@
 #include "dht.h"
 
 extern void T3_setup(void);
-extern void enable_T3_interrupts(void);
-extern void disable_T3_interrupts(void);
-extern short isMessuringSensorFlag; // triggers the measurement of the sesor
+extern void T3_setup_gated(void);
 extern void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void);
 
 #ifdef __cplusplus

@@ -20,9 +20,7 @@
 #include "uart.h"
 #include "uart_dsPIC.h"
 #include "timerstart.h"
-// #include "ampel.h"
 
-#define datapin 5 // RB15
 //TODO: Screen shot 8
 int main(int argc, char** argv) {
     AD1PCFGL = 0xffff;
@@ -30,10 +28,6 @@ int main(int argc, char** argv) {
 
     setup_pll();
     // CNPU1bits.CN15PUE = 1; // pull up resistor for RB15 // could not be used, because it is too big for the dht sensor
-    isMessuringSensorFlag = 0;
-
-    TRISBbits.TRISB9 = 0;
-    PORTBbits.RB9 = 0;
     init_i2c();
     init_OLED();
     CommConfig();               // Configure UART1
@@ -61,8 +55,8 @@ int main(int argc, char** argv) {
             fb_show();
         } else {
             ChangeValue(iState, &borderRedHum, &borderYellowHum); // change the border values
-            oled_draw(tempString, humString); //
-            setAmpel(sensorData.hum, borderRedHum, borderYellowHum, i);
+            oled_draw(tempString, humString); // draw the values on the OLED
+            setAmpel(sensorData.hum, borderRedHum, borderYellowHum, i); // set the light
         }
         i++;
         if (i > 127) {

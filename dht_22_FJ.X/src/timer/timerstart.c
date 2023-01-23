@@ -36,7 +36,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void){
                                 // count every 0.1 seconds and only run the function every 20th time.
     if (counter >= 20) {
         counter = 0;
-        readData(data, tempString, humString);
+        readData(data);
     }
     counter++;
     IFS0bits.T1IF = 0; // Interrupt Flag zurücksetzen
