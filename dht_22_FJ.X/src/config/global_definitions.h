@@ -42,6 +42,7 @@ extern enum errorCodes errorCodes;
 extern ErrorCodes currentErrorCode;
 extern char errorMessage[];
 extern void throwError(ErrorCodes errorCode);
+extern void resetError(void);
 
 
 struct FloatData {

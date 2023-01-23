@@ -91,7 +91,7 @@ int readData(int *data, char *tempString, char *humidityString) {
         return -1;
     }
     if (isAnswerOk == 0) {                                   // all good start reading
-        resolveError();
+        resetError();
         int bit = -1;
         while (DHT_PIN == 1 && TMR3 < 4000);                // wait up to 100us;
         // TODO: change to gated timer from here on or just use different timer that is gated

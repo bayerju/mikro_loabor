@@ -24,7 +24,7 @@ ErrorCodes currentErrorCode = NO_ERROR;
 
 char errorMessage[30] = "";
 
-void resolveError() {
+void resetError() {
     strcpy(errorMessage, "NO_ERROR");
     currentErrorCode = NO_ERROR;
 }

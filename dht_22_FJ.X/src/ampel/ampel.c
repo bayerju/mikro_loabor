@@ -20,6 +20,12 @@ void initAmpelLEDs (void) {
     TRISBbits.TRISB15 = 0;
 }
 
+void setAmpelError (void) {
+    ROT = 1;
+    GRUEN = 1;
+    GELB = 1;
+}
+
 void setAmpel(float currentValue, float borderRed, float borderYellow, int loopCounter_OLED) {
     if (currentValue > borderRed) {                                       // Humidity is higher than the red border --> Red light on
         ROT = 1;
