@@ -11,7 +11,10 @@
 
 #ifndef PLL_H
 #define PLL_H
-extern void setup_pll(void);
+
+#include "global_definitions.h"
+
+extern void setup_pll(void);    // setup the PLL
 
 #ifdef __cplusplus
 extern "C" {

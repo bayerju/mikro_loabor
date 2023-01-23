@@ -13,11 +13,10 @@
 // #define FCY 40000000ULL
 
 #include "i2c_routines.h"
-#include "../config/global_definitions.h"
 
 void init_i2c(void)
 {
-    I2C1BRG = 45;					// I2C Clock setting -> sollte ~400KHz sein bei FCY=40MHz
+    I2C1BRG = 45;					    // I2C Clock setting -> should be ~400KHz with FCY=40MHz
     I2C1CONbits.I2CEN = 1;
     while(I2C1CONbits.I2CEN == 0);
 }

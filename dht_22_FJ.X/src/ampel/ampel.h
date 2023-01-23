@@ -11,7 +11,8 @@
 
 #ifndef AMPEL_H
 #define AMPEL_H
-#include "../config/global_definitions.h"
+
+#include "global_definitions.h"
 
 #define GELB LATBbits.LATB13
 #define GRUEN LATBbits.LATB14

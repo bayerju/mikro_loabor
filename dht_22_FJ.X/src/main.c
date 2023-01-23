@@ -8,21 +8,21 @@
  * @copyright Copyright (c) 2023
  * 
  */
-     
-#include "global_definitions.h"
+
 #include "config.h" // sets primary oscillator to 4MHz
-#include "pll.h"
 #include "dht.h"
-#include "timer.h"
+#include "global_definitions.h"
 #include "i2c_routines.h"
 #include "OLED.h"
+#include "pll.h"
+#include "timer.h"
 #include "uart.h"
 #include "uart_dsPIC.h"
 #include "timerstart.h"
 // #include "ampel.h"
 
 #define datapin 5 // RB15
-
+//TODO: Screen shot 8
 int main(int argc, char** argv) {
     AD1PCFGL = 0xffff;
     
@@ -30,12 +30,6 @@ int main(int argc, char** argv) {
     setup_pll();
     // CNPU1bits.CN15PUE = 1; // pull up resistor for RB15 // could not be used, because it is too big for the dht sensor
     isMessuringSensorFlag = 0;
-
-// TODO: move into ampel.c
-    // init ampel LEDs
-    TRISBbits.TRISB13 = 0;
-    TRISBbits.TRISB14 = 0;
-    TRISBbits.TRISB15 = 0;
 
     TRISBbits.TRISB9 = 0;
     PORTBbits.RB9 = 0;
@@ -53,6 +47,10 @@ int main(int argc, char** argv) {
     
     T1_setup();
    
+   /**
+    * @brief Programme control through infinitely continuous loop 
+    * 
+    */
     while(1){
         ChangeValue(iState, &borderRedHum, &borderYellowHum);
         oled_draw(tempString, humString);

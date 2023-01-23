@@ -13,7 +13,7 @@
 #ifndef OLED_H
 #define	OLED_H
 
-#include "../config/global_definitions.h"
+#include "global_definitions.h"
 
 //*******************************************************************************
 // SSD1306 Register Map
@@ -50,11 +50,11 @@
 #define SSD1306_BUFFERSIZE (SSD1306_WIDTH*SSD1306_HEIGHT)/8 // it is devided by 8 because there are 8 pixels per byte
 
 //*******************************************************************************
-// globale Variablen
+// global variables
 extern uint8_t framebuffer[SSD1306_BUFFERSIZE];
 
 //*******************************************************************************
-// Funktions Prototypen
+// funktion prototypes
 
 void init_OLED(void);
 void OLED_sendFramebuffer(uint8_t *framebuffer);

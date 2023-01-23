@@ -11,6 +11,9 @@
 
 #ifndef DHT_H
 #define DHT_H
+
+#include "global_definitions.h"
+
 struct DataBytes  {
     int humByte1;
     int humByte2;

@@ -11,6 +11,7 @@
 
 #ifndef TIMER002_H
 #define	TIMER002_H
+#include "global_definitions.h"
 
 extern void T1_setup(void);
 #ifdef	__cplusplus

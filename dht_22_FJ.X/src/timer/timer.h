@@ -11,12 +11,13 @@
 
 #ifndef TIMER_H
 #define TIMER_H
+
+#include "global_definitions.h"
+
 extern void T3_setup(void);
 extern void enable_T3_interrupts(void);
 extern void disable_T3_interrupts(void);
-extern void enable_gate(void);
-extern void disable_gate(void);
-extern short isMessuringSensorFlag; // l�st die Messung des Sensors aus
+extern short isMessuringSensorFlag; // triggers the measurement of the sesor
 extern void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void);
 
 #ifdef __cplusplus

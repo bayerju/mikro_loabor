@@ -10,15 +10,15 @@
  * 
  */
 
-#include "OLED.h"
-#include "i2c_routines.h"
 #include "font.h"
 #include "logo.h"
+#include "i2c_routines.h"
+#include "OLED.h"
 
 // Framebuffer
-uint8_t framebuffer[SSD1306_BUFFERSIZE];	// globales Array mit gesamten Displayinhalt.
-											// Framebuffer wird in den Funktionen bearbeitet und dann
-											// mit fb_show() komplett zur Anzeige gesendet
+uint8_t framebuffer[SSD1306_BUFFERSIZE];	// global array with entire display content.
+											// Framebuffer is processed in the functions and then
+											// sent completely for display with fb_show().
 
 void init_OLED(void)
 {
@@ -71,7 +71,7 @@ void init_OLED(void)
 }
 
 //*******************************************************************************
-// �bertragen eines Befehls an das OLED-Display
+// Transmitting a command to the OLED display
 
 void OLED_sendCommand(uint8_t command)
 {
@@ -82,7 +82,7 @@ void OLED_sendCommand(uint8_t command)
 }
 
 //*******************************************************************************
-// Invertierung des OLED-Display
+// Inversion of the OLED display
 
 void OLED_invert(uint8_t inverted)
 {
@@ -95,7 +95,7 @@ void OLED_invert(uint8_t inverted)
 }
 
 //*******************************************************************************
-// �bertragen des Framebuffers an das OLED-Display
+// Transferring the frame buffer to the OLED display
 
 void OLED_sendFramebuffer(uint8_t *framebuffer)
 {
@@ -128,8 +128,8 @@ void OLED_sendFramebuffer(uint8_t *framebuffer)
 }
 
 //*******************************************************************************
-// Zeichnen eines Pixels in den Framebuffer an die Position (pos_x|pos_y).
-// Setzten des Pixels mit pixel_status = 1, loeschen mit pixel_status = 0
+// Draw a pixel into the frame buffer at the position (pos_x|pos_y).
+// Set the pixel with pixel_status = 1, delete with pixel_status = 0
 
 void fb_drawPixel(uint8_t pos_x, uint8_t pos_y, uint8_t pixel_status)
 {
@@ -146,7 +146,7 @@ void fb_drawPixel(uint8_t pos_x, uint8_t pos_y, uint8_t pixel_status)
 }
 
 //*******************************************************************************
-// Zeichnen einer vertikalen Linie in den Framebuffer von (x,y) der Laenge 
+// Draw a vertical line in the framebuffer of (x,y) length. 
 // length.
 
 void fb_drawVLine(uint8_t x, uint8_t y, uint8_t length)
@@ -159,7 +159,7 @@ void fb_drawVLine(uint8_t x, uint8_t y, uint8_t length)
 }
 
 //*******************************************************************************
-// Zeichnen einer horizontalen Linie in den Framebuffer von (x|y) der Laenge
+// Draw a horizontal line in the framebuffer of (x|y) of length
 // length.
 
 void fb_drawHLine(uint8_t x, uint8_t y, uint8_t length)
@@ -172,8 +172,8 @@ void fb_drawHLine(uint8_t x, uint8_t y, uint8_t length)
 }
 
 //*******************************************************************************
-// Zeichnen eines Rechtecks in den Framebuffer von (x1|y1) zu (x2|y2).
-// Das Rechteck kann gefuellt werden (1 = fill) oder leer sein (0 = fill).
+// Draw a rectangle in the frame buffer from (x1|y1) to (x2|y2).
+// The rectangle can be filled (1 = fill) or empty (0 = fill).
 
 void fb_drawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t fill)
 {
@@ -197,7 +197,7 @@ void fb_drawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t fi
 }
 
 //*******************************************************************************
-// L�schen des Framebuffers
+// Delete the frame buffer
 
 void fb_clear()
 {
@@ -209,7 +209,7 @@ void fb_clear()
 }
 
 //*******************************************************************************
-// Invertieren des Framebuffers
+// Invertiert the frame buffer
 
 void fb_invert(uint8_t status)
 {
@@ -217,7 +217,7 @@ void fb_invert(uint8_t status)
 }
 
 //*******************************************************************************
-// Darstellen des Framebuffers auf dem OLED-Display
+// Displaying the frame buffer on the OLED display
 
 void fb_show()
 {
@@ -230,9 +230,9 @@ void fb_show_bmp(uint8_t *pBmp)
 }
 
 //*******************************************************************************
-// Zeichnen eines Zeichens an Position (x,y) - Diese Funktion kann nur indirekt
-// mit Hilfe der Funktion fb_draw_string aufgerufen werden, da diese den 
-// entsprechenden Index fuer den font-Vector berechnet!
+// Draw a character at position (x,y) - This function can only be called indirectly
+// with the help of the function fb_draw_string, because it calculates the // corresponding index for the font vector! 
+// corresponding index for the font vector!
 
 void fb_draw_char (uint16_t x, uint16_t y, uint16_t fIndex)
 {
@@ -245,10 +245,10 @@ void fb_draw_char (uint16_t x, uint16_t y, uint16_t fIndex)
 }
 
 //*******************************************************************************
-// Zeichnen einer Zeichenkette ab Position (x,y)
-// x: Startpixel 0...(127-Zeichenbreite)
-// y: Zeile 0...7 (auch bei fb_draw_string_big)
-
+// Draw a string from position (x,y)
+// x: Start pixel 0...(127 character width)
+// y: Line 0...7 (also with fb_draw_string_big)
+// TODO: Screen shot 4
 void fb_draw_string (uint16_t x, uint16_t y, const char *pS)
 {    
     uint16_t lIndex, k;
