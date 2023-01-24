@@ -56,19 +56,18 @@ void initIC2(void) {
 
 void __attribute__((interrupt, shadow, no_auto_psv)) _IC2Interrupt()
 {
-    static int currentBit = 0;
-    int test = currentBit;
+    static int currentBit = -1;
     // int firstCapture = IC2BUF;
     // int secondCpature = IC2BUF;
     // firstCaptures[currentBit] = firstCapture;
     // secondCaptures[currentBit] = secondCpature;
     int timeAtOne = TMR3; // secondCpature - firstCapture;
-    if (currentBit == 0) {
+    if (currentBit < 0) {
         TMR3 = 0;
         currentBit++;
         return;
     }
-    if (currentBit > 40) {
+    if (currentBit >= 40) {
         currentBit = 0;
         evaluateBitData(data, tempString, humString);
         TMR3=0;

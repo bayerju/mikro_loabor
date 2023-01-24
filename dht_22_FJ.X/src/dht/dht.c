@@ -62,8 +62,8 @@ void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes
  * @return int 
  */
 int isChecksumOk(DataBytes *bytes) {
-    int sum = bytes->humByte1 + bytes->humByte2 + bytes->tempByte1 + bytes->tempByte2;
-    int low8Bits = sum & 0xFF;
+    unsigned int sum = bytes->humByte1 + bytes->humByte2 + bytes->tempByte1 + bytes->tempByte2;
+    unsigned int low8Bits = sum & 0xFF;
 
     /**
      * @brief If the checksum is correct, the function returns 1
