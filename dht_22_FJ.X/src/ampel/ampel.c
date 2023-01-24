@@ -35,7 +35,7 @@ void setAmpel(float currentValue, float borderRed, float borderYellow, int loopC
         char walkingStringDisplay [20] = "Warning!";                           // Inizalisation when humidity is exceeded --> Output warning
         fb_draw_one_line_string(loopCounter_OLED,5,walkingStringDisplay);
         fb_show();
-    } else if (currentValue > borderYellow && currentValue < borderRed) {      // Humidity is higher than the yellow border --> Green light on
+    } else if (currentValue < borderYellow) {      // Humidity is higher than the yellow border --> Green light on
         ROT = 0;
         GRUEN = 0;
         GELB = 1;

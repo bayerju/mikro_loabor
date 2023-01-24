@@ -216,54 +216,54 @@ void CommPutString(char *str_data)
  }
 
 // Switch case for change the values of the borders
-void ChangeValue(int *a_iState, float *a_borderYellowHum, float *a_borderRedHum) {
-
+void ChangeValue(int *iState, float *a_borderYellowHum, float *a_borderRedHum) {
+    static int testState = 0;
 /**Borders in  ASCCI table
  * Y = 89
  * R = 82
  * Any other input is an error
 */
-    switch (*a_iState) {
+    switch (testState) {
                 case 0: // wait for first input
                     if ((CommIsEmpty() != 1) && (CommGetChar() == 89 || CommGetChar() == 82)){  // R oder Y
-                        *a_iState = CommGetChar();
+                        testState = CommGetChar();
                     }else if (CommIsEmpty() != 1) {
-                        *a_iState = 4;
+                        testState = 4;
                     }
                     break;
                 case 1:
                     CommPutString("To change the middle border value type Y (yellow light) \nand to change the upper border Value type R (red light).\n");
-                    *a_iState = 0;
+                    testState = 0;
                     break;
                 case 89: // Y changes the middle border value
                     CommPutString("please insert the new value for the middle border for the humidity: \n");
-                    *a_iState = 2;
+                    testState = 2;
                 case 2:
-                    CommGetSetBorderValue(a_borderYellowHum, &a_iState);
+                    CommGetSetBorderValue(a_borderYellowHum, &testState);
                     if (a_borderYellowHum < 0){
-                        *a_iState = 5;
+                        testState = 5;
                     }else {
                         break;
                     }
                 case 82: // R changes the upper border value
                     CommPutString("please insert the new value for the upper border for the humidity: \n");
-                    *a_iState = 3;
+                    testState = 3;
                 case 3:
-                    CommGetSetBorderValue(a_borderRedHum, &a_iState);
+                    CommGetSetBorderValue(a_borderRedHum, &testState);
                     break;
                 case 4:
                     CommPutString("Wrong input! You are only allowed to enter Y or R! \nPlease try again.\n");
-                    *a_iState = 0;
+                    testState = 0;
                     break;
                 case 5:
                     CommPutString("Wrong input! You are only allowed to enter numbers between 0 and 100! \nPlease try again.\n");
-                    *a_iState = 0;
+                    testState = 0;
                     break;
 
 
                 default:
                     // if (CommIsEmpty() != 1){  // Echo of RX
-                    //     a_iState = CommGetChar();
+                    //     testState = CommGetChar();
                     // }
                     break;
             }
