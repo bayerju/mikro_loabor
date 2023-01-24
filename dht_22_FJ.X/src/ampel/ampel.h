@@ -14,10 +14,6 @@
 
 #include "global_definitions.h"
 
-#define GELB LATBbits.LATB13
-#define GRUEN LATBbits.LATB14
-#define ROT LATBbits.LATB15
-
 extern void setAmpel(float currentValue, float borderRed, float borderYellow, int loopCounter_OLED);
 
 #ifdef __cplusplus

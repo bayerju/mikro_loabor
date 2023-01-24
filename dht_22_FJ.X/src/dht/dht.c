@@ -10,16 +10,21 @@
  */
 
 #include "dht.h"
+#include "timer.h"
 
 /**
  * @brief Starts the sensor
  */
 void startDHT22(void){
+    //DHT_PIN_INIT = 0;
     TRISBbits.TRISB5 = 0;
+    //PORTBbits.RB5 = 0;
     PORTBbits.RB5 = 0;
     __delay_ms(2);                  // As a start signal, the DHT22 must pull the signal from the host to 0 for at least 1ms
+    //PORTBbits.RB5 = 1;
     PORTBbits.RB5 = 1;
     TRISBbits.TRISB5 = 1;
+    //DHT_PIN_INIT = 1;
 }
 
 /**
@@ -35,15 +40,16 @@ void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes
      * checksum and then outputs an error text
      * 
      */
+     temp = (bytes->tempByte1 << 8) + bytes->tempByte2;                  // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.     
+    tempFloat = (float)temp/10;                                         // convert the integer to a float
+    hum = (bytes->humByte1 << 8) + bytes->humByte2;                     // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.
+    humFloat = (float)hum/10;  
     if (isChecksumOk(bytes) != 0) {
         throwError(ERROR_CHECKSUM);
         return;
     }
 
-    temp = (bytes->tempByte1 << 8) + bytes->tempByte2;                  // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.     
-    tempFloat = (float)temp/10;                                         // convert the integer to a float
-    hum = (bytes->humByte1 << 8) + bytes->humByte2;                     // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.
-    humFloat = (float)hum/10;                                           // convert the integer to a float
+                                            // convert the integer to a float
 
     sprintf(tempString, "Temperature: %.1f", (double)floatData->temp); // converted to double, because printf converts it anyway and now there is no warning and it is clear what is happening.
     sprintf(humString, "Humidity: %.1f", (double)floatData->hum);   
@@ -57,8 +63,8 @@ void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes
  * @return int 
  */
 int isChecksumOk(DataBytes *bytes) {
-    int sum = bytes->humByte1 + bytes->humByte2 + bytes->tempByte1 + bytes->tempByte2;
-    int low8Bits = sum & 0xFF;
+    unsigned int sum = bytes->humByte1 + bytes->humByte2 + bytes->tempByte1 + bytes->tempByte2;
+    unsigned int low8Bits = sum & 0xFF;
 
     /**
      * @brief If the checksum is correct, the function returns 1
@@ -80,9 +86,8 @@ int isChecksumOk(DataBytes *bytes) {
  * @return TFloatData 
  */
 // TODO: Screen shot 3
-int readData(int *data, char *tempString, char *humidityString) {
-    int counterBits = 0;
-    TMR3 = 0;
+int readData(int *data) {
+    T3_setup();
     startDHT22();
     TMR3 = 0;
     int isAnswerOk = checkSensorReply();
@@ -91,22 +96,43 @@ int readData(int *data, char *tempString, char *humidityString) {
         return -1;
     }
     if (isAnswerOk == 0) {                                   // all good start reading
+        while(PORTBbits.RB5 == 1); // wait for sensor to pull low so the first flank is not captured
         resetError();
-        int bit = -1;
-        while (DHT_PIN == 1 && TMR3 < 4000);                // wait up to 100us;
+        TMR3 = 0;
+        __delay_us(40); // wait for sensor to pull high again
+        startI2C();
+        // while (PORTBbits.RB5 == 1 && TMR3 < 4000);                // wait up to 100us;
         // TODO: change to gated timer from here on or just use different timer that is gated
-        while (counterBits < 40){
-            bit = evalBit();
-            if (bit == -1) {
-                throwError(ERROR_TIMEOUT); // TODO: new error for bit not recognized
-                return -1;
-            }
+        // while (counterBits < 40){
+        //     bit = evalBit();
+        //     if (bit == -1) {
+        //         throwError(ERROR_TIMEOUT); // TODO: new error for bit not recognized
+        //         return -1;
+        //     }
 
-            data[counterBits] = bit;
-            counterBits++;
-        }
+        //     data[counterBits] = bit;
+        //     counterBits++;
+        // }
     }
+    return 0;
 
+    // DataBytes recievedBytes;
+    // recievedBytes.currentByte = &recievedBytes.humByte1;
+
+    // int i;
+    // for (i = 0; i < 5; i++) {
+    //     *recievedBytes.currentByte = getRecievedByte(i*8, data);
+    //     recievedBytes.currentByte++;
+    // }
+    // recievedBytes.currentByte = &recievedBytes.humByte1;
+
+    // sensorData.temp = ((float)(recievedBytes.tempByte1 << 8) + recievedBytes.tempByte2)/10;
+    // sensorData.hum = ((float)(recievedBytes.humByte1 << 8) + recievedBytes.humByte2)/10;
+    // dataToString(data, tempString, humidityString, &recievedBytes, &sensorData);
+    // return 0;
+}
+
+void evaluateBitData(int *data,  char *tempString, char *humidityString) {
     DataBytes recievedBytes;
     recievedBytes.currentByte = &recievedBytes.humByte1;
 
@@ -120,7 +146,7 @@ int readData(int *data, char *tempString, char *humidityString) {
     sensorData.temp = ((float)(recievedBytes.tempByte1 << 8) + recievedBytes.tempByte2)/10;
     sensorData.hum = ((float)(recievedBytes.humByte1 << 8) + recievedBytes.humByte2)/10;
     dataToString(data, tempString, humidityString, &recievedBytes, &sensorData);
-    return 0;
+    return;
 }
 
 /**
@@ -162,16 +188,14 @@ int getRecievedByte(int offset, int *data) {
  */
 int evalBit() {
     int prevPin = 0;
-    PORTBbits.RB9 = 1;
     TMR3 = 0;
-    while(DHT_PIN == 0 && TMR3 < 3000);     // wait up to 75us;
-    PORTBbits.RB9 = 0;
+    while(PORTBbits.RB5 == 0 && TMR3 < 3000);     // wait up to 75us;
     if (TMR3 > 3000) {
         TMR3 = 0;
         return -1;
     }
-    while(DHT_PIN == 1){
-        if(DHT_PIN == 1 && prevPin == 0){   // wait for pin to go to 0;
+    while(PORTBbits.RB5 == 1){
+        if(PORTBbits.RB5 == 1 && prevPin == 0){   // wait for pin to go to 0;
             TMR3 = 0;
             prevPin = 1;
         }
@@ -192,7 +216,7 @@ int evalBit() {
 }
 
 /**
- * @brief check the sensor reply
+ * @brief check the sensor reply. First we wait for the Pin to go down and then we wait for it to go up again and messure the time.
  * 
  * @return int 0 if the check was ok and 1 if it wasnt
  */
@@ -201,12 +225,7 @@ int checkSensorReply() {
     int maxTime = 4800; // 400*12
     int prevValue = 1;
 
-    /**
-     * @brief Wait for the sensor replay
-     * 
-     */
     while (TMR3 < maxTime) {
-        
         
         if (PORTBbits.RB5 == 1 && prevValue == 1) {
             continue;
@@ -230,6 +249,7 @@ int checkSensorReply() {
                 }
         } 
     }
+    throwError(ERROR_TIMEOUT);
     return 1;
 }
 
@@ -242,9 +262,6 @@ int checkSensorReply() {
  * @return int 
  */
 int evalWakingData(short int *a_data, short int length) {
-    #if DEBUG
-    TRISBbits.TRISB4 = 0;
-    #endif
     int i;
     short int counter_zero = 0;
     short int currentState = 1;
@@ -261,8 +278,5 @@ int evalWakingData(short int *a_data, short int length) {
     }
     isWakingSensorFlag = 0;
     isMessuringSensorFlag = 0;
-    #if DEBUG
-    PORTBbits.RB4 = 1;
-    #endif
     return -1;
 }

@@ -12,7 +12,6 @@
 #ifndef GLOBAL_DEFINITIONS_H
 #define GLOBAL_DEFINITIONS_H
 
-#define DHT_PIN PORTBbits.RB5                   // from RB15 to RB2 put down there
 #define FCY 40000000                            // 80MHz -> 40MHz Command clock
 #define VALUE_10us 0.00001                      // 1us
 #define step_10us 400;                          // VALUE_10us/(1/(FCY/2))
@@ -27,6 +26,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+// PINs
+#define LED_RED_INIT TRISBbits.TRISB15
+#define LED_YELLOW_INIT TRISBbits.TRISB12
+#define LED_GREEN_INIT TRISBbits.TRISB14
+
+#define LED_RED LATBbits.LATB15
+#define LED_YELLOW LATBbits.LATB12
+#define LED_GREEN LATBbits.LATB14
+
 
 // ErrorHandling
 typedef enum ErrorCodes
@@ -36,13 +44,15 @@ typedef enum ErrorCodes
     ERROR_NO_RESPONSE,
     ERROR_CHECKSUM,
     ERROR_TIMEOUT,
-    ERROR_UNKNOWN
+    ERROR_UNKNOWN,
+    ERROR_BIT_EVAL_FAILED
 } ErrorCodes;
 extern enum errorCodes errorCodes;
 extern ErrorCodes currentErrorCode;
 extern char errorMessage[];
 extern void throwError(ErrorCodes errorCode);
 extern void resetError(void);
+extern int timeLog[];                     // arrayof the captured times
 
 
 struct FloatData {
@@ -64,6 +74,11 @@ extern char tempString [20];                    // string for the temperature
 extern char humString [20];                     // string for the humidity
 extern TFloatData sensorData;                    // struct for the data
 extern int data[];                              // array for the data
+extern char isReadingDataFlag;                  // flag for the reading of the data
+
+
+
+
 
 #define DEBUG 1
 
