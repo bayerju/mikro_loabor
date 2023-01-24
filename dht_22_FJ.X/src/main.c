@@ -48,6 +48,7 @@ int main(int argc, char** argv) {
     T3_setup();
     
     T1_setup();
+    initAmpelLEDs();
    
    /**
     * @brief Programme control through infinitely continuous loop 
