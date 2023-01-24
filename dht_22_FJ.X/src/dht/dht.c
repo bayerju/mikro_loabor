@@ -10,16 +10,21 @@
  */
 
 #include "dht.h"
+#include "timer.h"
 
 /**
  * @brief Starts the sensor
  */
 void startDHT22(void){
+    //DHT_PIN_INIT = 0;
     TRISBbits.TRISB5 = 0;
+    //DHT_PIN = 0;
     PORTBbits.RB5 = 0;
     __delay_ms(2);                  // As a start signal, the DHT22 must pull the signal from the host to 0 for at least 1ms
+    //DHT_PIN = 1;
     PORTBbits.RB5 = 1;
     TRISBbits.TRISB5 = 1;
+    //DHT_PIN_INIT = 1;
 }
 
 /**
@@ -80,9 +85,9 @@ int isChecksumOk(DataBytes *bytes) {
  * @return TFloatData 
  */
 // TODO: Screen shot 3
-int readData(int *data, char *tempString, char *humidityString) {
+int readData(int *data) {
     int counterBits = 0;
-    TMR3 = 0;
+    T3_setup();
     startDHT22();
     TMR3 = 0;
     int isAnswerOk = checkSensorReply();
@@ -95,18 +100,37 @@ int readData(int *data, char *tempString, char *humidityString) {
         int bit = -1;
         while (DHT_PIN == 1 && TMR3 < 4000);                // wait up to 100us;
         // TODO: change to gated timer from here on or just use different timer that is gated
-        while (counterBits < 40){
-            bit = evalBit();
-            if (bit == -1) {
-                throwError(ERROR_TIMEOUT); // TODO: new error for bit not recognized
-                return -1;
-            }
+        T3_setup_gated();
+        // while (counterBits < 40){
+        //     bit = evalBit();
+        //     if (bit == -1) {
+        //         throwError(ERROR_TIMEOUT); // TODO: new error for bit not recognized
+        //         return -1;
+        //     }
 
-            data[counterBits] = bit;
-            counterBits++;
-        }
+        //     data[counterBits] = bit;
+        //     counterBits++;
+        // }
     }
+    return 0;
 
+    // DataBytes recievedBytes;
+    // recievedBytes.currentByte = &recievedBytes.humByte1;
+
+    // int i;
+    // for (i = 0; i < 5; i++) {
+    //     *recievedBytes.currentByte = getRecievedByte(i*8, data);
+    //     recievedBytes.currentByte++;
+    // }
+    // recievedBytes.currentByte = &recievedBytes.humByte1;
+
+    // sensorData.temp = ((float)(recievedBytes.tempByte1 << 8) + recievedBytes.tempByte2)/10;
+    // sensorData.hum = ((float)(recievedBytes.humByte1 << 8) + recievedBytes.humByte2)/10;
+    // dataToString(data, tempString, humidityString, &recievedBytes, &sensorData);
+    // return 0;
+}
+
+void evaluateBitData(int *data,  char *tempString, char *humidityString) {
     DataBytes recievedBytes;
     recievedBytes.currentByte = &recievedBytes.humByte1;
 
@@ -120,7 +144,7 @@ int readData(int *data, char *tempString, char *humidityString) {
     sensorData.temp = ((float)(recievedBytes.tempByte1 << 8) + recievedBytes.tempByte2)/10;
     sensorData.hum = ((float)(recievedBytes.humByte1 << 8) + recievedBytes.humByte2)/10;
     dataToString(data, tempString, humidityString, &recievedBytes, &sensorData);
-    return 0;
+    return;
 }
 
 /**
@@ -162,10 +186,8 @@ int getRecievedByte(int offset, int *data) {
  */
 int evalBit() {
     int prevPin = 0;
-    PORTBbits.RB9 = 1;
     TMR3 = 0;
     while(DHT_PIN == 0 && TMR3 < 3000);     // wait up to 75us;
-    PORTBbits.RB9 = 0;
     if (TMR3 > 3000) {
         TMR3 = 0;
         return -1;
@@ -207,17 +229,17 @@ int checkSensorReply() {
      */
     while (TMR3 < maxTime) {
         
-        
-        if (PORTBbits.RB5 == 1 && prevValue == 1) {
+        int test = DHT_PIN;
+        if (DHT_PIN == 1 && prevValue == 1) {
             continue;
         } 
-        if (PORTBbits.RB5 == 0 && prevValue == 1) {
+        if (DHT_PIN == 0 && prevValue == 1) {
             TMR3 = 0;
             prevValue = 0;
             
         }
 
-        if (PORTBbits.RB5 == 1 && prevValue == 0) {
+        if (DHT_PIN == 1 && prevValue == 0) {
 
                 int timeStayedZero = TMR3;
                 if (timeStayedZero > 2800 && timeStayedZero < 3600) { // between 70 and 90 us // 1/40E6 = 25E-9 70E-6/25E-9 = 2800
@@ -230,6 +252,7 @@ int checkSensorReply() {
                 }
         } 
     }
+    
     return 1;
 }
 
@@ -242,9 +265,6 @@ int checkSensorReply() {
  * @return int 
  */
 int evalWakingData(short int *a_data, short int length) {
-    #if DEBUG
-    TRISBbits.TRISB4 = 0;
-    #endif
     int i;
     short int counter_zero = 0;
     short int currentState = 1;
@@ -261,8 +281,5 @@ int evalWakingData(short int *a_data, short int length) {
     }
     isWakingSensorFlag = 0;
     isMessuringSensorFlag = 0;
-    #if DEBUG
-    PORTBbits.RB4 = 1;
-    #endif
     return -1;
 }

@@ -12,7 +12,6 @@
 #ifndef GLOBAL_DEFINITIONS_H
 #define GLOBAL_DEFINITIONS_H
 
-#define DHT_PIN PORTBbits.RB5                   // from RB15 to RB2 put down there
 #define FCY 40000000                            // 80MHz -> 40MHz Command clock
 #define VALUE_10us 0.00001                      // 1us
 #define step_10us 400;                          // VALUE_10us/(1/(FCY/2))
@@ -64,6 +63,20 @@ extern char tempString [20];                    // string for the temperature
 extern char humString [20];                     // string for the humidity
 extern TFloatData sensorData;                    // struct for the data
 extern int data[];                              // array for the data
+extern char isReadingDataFlag;                  // flag for the reading of the data
+
+
+// PINs
+#define LED_RED_INIT TRISBbits.TRISB15
+#define LED_YELLOW_INIT TRISBbits.TRISB12
+#define LED_GREEN_INIT TRISBbits.TRISB14
+#define DHT_PIN_INIT TRISBbits.TRISB5
+
+#define LED_RED LATBbits.LATB15
+#define LED_YELLOW LATBbits.LATB12
+#define LED_GREEN LATBbits.LATB14
+#define DHT_PIN PORTBbits.RB5
+
 
 #define DEBUG 1
 
