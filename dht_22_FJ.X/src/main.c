@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     
     __delay_ms(1000);
 
-    unsigned char iState = 0;
+    int iState = 0;
     int i = 0;
     CommPutString("To change the middle border value type Y and to change the upper border Value type R. \n");
     T3_setup();
@@ -60,7 +60,9 @@ int main(int argc, char** argv) {
             fb_draw_one_line_string(i,3,errorMessage);
             fb_show();
         } else {
-            ChangeValue(iState, &borderRedHum, &borderYellowHum); // change the border values
+            // q: how do I pass iState to the function?
+            
+            ChangeValue(&iState, &borderRedHum, &borderYellowHum); // change the border values
             oled_draw(tempString, humString); //
             setAmpel(sensorData.hum, borderRedHum, borderYellowHum, i);
         }

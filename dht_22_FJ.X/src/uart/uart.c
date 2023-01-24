@@ -11,7 +11,8 @@
  */
 
 #include "uart.h"           
-#include "uart_dsPIC.h"     
+#include "uart_dsPIC.h" 
+#include "global_definitions.h"
 #define BUFFER_LENGTH 100               // Length of Ring Buffer
 
 /********* Global Buffer ************/
@@ -194,7 +195,7 @@ void CommPutString(char *str_data)
 /**************************************************************************************************************************************************/
 // Convert the string to a float and check if the value is in the range of 0 to 100
 // TODO: Screen shot 7
- void CommGetSetBorderValue(float *border, int *iState) {
+ void CommGetSetBorderValue(float *border, int *a_iState) {
     if (CommIsEmpty() != 1){  // Echo of RX
         char buffer[30] = "The new value is: ";
         char inputBuffer[10] = {0};
@@ -206,7 +207,7 @@ void CommPutString(char *str_data)
             *border = currentvalue;
             snprintf(buffer, sizeof(buffer), "%.1f\n", (double)*border);
             CommPutString(buffer);
-            *iState = 1;
+            *a_iState = 1;
         } else {
             CommPutString("The value is not in the range of 0 to 100. \nPlase try again. \n");
         }
@@ -215,54 +216,54 @@ void CommPutString(char *str_data)
  }
 
 // Switch case for change the values of the borders
-void ChangeValue(int iState, float *a_borderYellowHum, float *a_borderRedHum) {
+void ChangeValue(int *a_iState, float *a_borderYellowHum, float *a_borderRedHum) {
 
 /**Borders in  ASCCI table
  * Y = 89
  * R = 82
  * Any other input is an error
 */
-    switch (iState) {
+    switch (*a_iState) {
                 case 0: // wait for first input
-                    if ((CommIsEmpty() != 1) && (89 || 82)){  // Echo of RX
-                        iState = CommGetChar();
-                    }else {
-                        iState = 4;
+                    if ((CommIsEmpty() != 1) && (CommGetChar() == 89 || CommGetChar() == 82)){  // R oder Y
+                        *a_iState = CommGetChar();
+                    }else if (CommIsEmpty() != 1) {
+                        *a_iState = 4;
                     }
                     break;
                 case 1:
                     CommPutString("To change the middle border value type Y (yellow light) \nand to change the upper border Value type R (red light).\n");
-                    iState = 0;
+                    *a_iState = 0;
                     break;
                 case 89: // Y changes the middle border value
                     CommPutString("please insert the new value for the middle border for the humidity: \n");
-                    iState = 2;
+                    *a_iState = 2;
                 case 2:
-                    CommGetSetBorderValue(a_borderYellowHum, &iState);
+                    CommGetSetBorderValue(a_borderYellowHum, &a_iState);
                     if (a_borderYellowHum < 0){
-                        iState = 5;
+                        *a_iState = 5;
                     }else {
                         break;
                     }
                 case 82: // R changes the upper border value
                     CommPutString("please insert the new value for the upper border for the humidity: \n");
-                    iState = 3;
+                    *a_iState = 3;
                 case 3:
-                    CommGetSetBorderValue(a_borderRedHum, &iState);
+                    CommGetSetBorderValue(a_borderRedHum, &a_iState);
                     break;
                 case 4:
                     CommPutString("Wrong input! You are only allowed to enter Y or R! \nPlease try again.\n");
-                    iState = 0;
+                    *a_iState = 0;
                     break;
                 case 5:
                     CommPutString("Wrong input! You are only allowed to enter numbers between 0 and 100! \nPlease try again.\n");
-                    iState = 0;
+                    *a_iState = 0;
                     break;
 
 
                 default:
                     // if (CommIsEmpty() != 1){  // Echo of RX
-                    //     iState = CommGetChar();
+                    //     a_iState = CommGetChar();
                     // }
                     break;
             }

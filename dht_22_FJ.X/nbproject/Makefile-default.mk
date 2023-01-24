@@ -95,134 +95,134 @@ MP_LINKER_FILE_OPTION=,--script=p33FJ128GP802.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/src/ampel/ampel.o: src/ampel/ampel.c  .generated_files/flags/default/bdc621115a767bc9303c8fd6c341005a916597c1 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/ampel/ampel.o: src/ampel/ampel.c  .generated_files/flags/default/3cd0ff1ef06234c06de48c325e83319fd0cfcd26 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/ampel" 
 	@${RM} ${OBJECTDIR}/src/ampel/ampel.o.d 
 	@${RM} ${OBJECTDIR}/src/ampel/ampel.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/ampel/ampel.c  -o ${OBJECTDIR}/src/ampel/ampel.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/ampel/ampel.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/config/global_definitions.o: src/config/global_definitions.c  .generated_files/flags/default/77e7536ba9de67ee9b353ae2e13eacb8fe4197e9 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/config/global_definitions.o: src/config/global_definitions.c  .generated_files/flags/default/a5bcde9b80aba380c8450158a947396e9a4c8155 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/config" 
 	@${RM} ${OBJECTDIR}/src/config/global_definitions.o.d 
 	@${RM} ${OBJECTDIR}/src/config/global_definitions.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/config/global_definitions.c  -o ${OBJECTDIR}/src/config/global_definitions.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/config/global_definitions.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/config/pll.o: src/config/pll.c  .generated_files/flags/default/91f9aefcbd3815db13e7663893ca87fe1a195e2e .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/config/pll.o: src/config/pll.c  .generated_files/flags/default/d6849961e06b97eec69e778c8a8797688327f60b .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/config" 
 	@${RM} ${OBJECTDIR}/src/config/pll.o.d 
 	@${RM} ${OBJECTDIR}/src/config/pll.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/config/pll.c  -o ${OBJECTDIR}/src/config/pll.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/config/pll.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/dht/dht.o: src/dht/dht.c  .generated_files/flags/default/ac305230ecacbcb7ebeebc6cc76dece73ee3e920 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/dht/dht.o: src/dht/dht.c  .generated_files/flags/default/ccba64886c1e4e78e1427a4476707cdfc4d214bd .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/dht" 
 	@${RM} ${OBJECTDIR}/src/dht/dht.o.d 
 	@${RM} ${OBJECTDIR}/src/dht/dht.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/dht/dht.c  -o ${OBJECTDIR}/src/dht/dht.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/dht/dht.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/oled/OLED.o: src/oled/OLED.c  .generated_files/flags/default/fdecd63c975d33f9d4a612e9de922c0f09928722 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/oled/OLED.o: src/oled/OLED.c  .generated_files/flags/default/351637067b91a28ad58791bc489e44f5c357b941 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/oled" 
 	@${RM} ${OBJECTDIR}/src/oled/OLED.o.d 
 	@${RM} ${OBJECTDIR}/src/oled/OLED.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/oled/OLED.c  -o ${OBJECTDIR}/src/oled/OLED.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/oled/OLED.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/oled/i2c_routines.o: src/oled/i2c_routines.c  .generated_files/flags/default/d0197bf87518ccf86e2d80c832cdd7c35b27085 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/oled/i2c_routines.o: src/oled/i2c_routines.c  .generated_files/flags/default/f65f26396a057d36905c14001dfb88fb4641c2b3 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/oled" 
 	@${RM} ${OBJECTDIR}/src/oled/i2c_routines.o.d 
 	@${RM} ${OBJECTDIR}/src/oled/i2c_routines.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/oled/i2c_routines.c  -o ${OBJECTDIR}/src/oled/i2c_routines.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/oled/i2c_routines.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/timer/timer.o: src/timer/timer.c  .generated_files/flags/default/8febe08efdba925d9bc89fda5511daf46ae8fead .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/timer/timer.o: src/timer/timer.c  .generated_files/flags/default/c0bb0ae22090e4505ce32824fda195b0d2000747 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/timer" 
 	@${RM} ${OBJECTDIR}/src/timer/timer.o.d 
 	@${RM} ${OBJECTDIR}/src/timer/timer.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/timer/timer.c  -o ${OBJECTDIR}/src/timer/timer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/timer/timer.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/timer/timerstart.o: src/timer/timerstart.c  .generated_files/flags/default/a4c3307c5a08d250dccd7765320b86e4f962b9c4 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/timer/timerstart.o: src/timer/timerstart.c  .generated_files/flags/default/a45b582bfe0a0d141738c9cebc2f741ddfed36fe .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/timer" 
 	@${RM} ${OBJECTDIR}/src/timer/timerstart.o.d 
 	@${RM} ${OBJECTDIR}/src/timer/timerstart.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/timer/timerstart.c  -o ${OBJECTDIR}/src/timer/timerstart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/timer/timerstart.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/uart/uart.o: src/uart/uart.c  .generated_files/flags/default/acac886dad6f0de80cbf30fb6a6eb23bfc87a9c7 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/uart/uart.o: src/uart/uart.c  .generated_files/flags/default/689f6703d8c7ffac7b06254701cc59d9b835ec1a .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/uart" 
 	@${RM} ${OBJECTDIR}/src/uart/uart.o.d 
 	@${RM} ${OBJECTDIR}/src/uart/uart.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/uart/uart.c  -o ${OBJECTDIR}/src/uart/uart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/uart/uart.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/uart/uart_dsPIC.o: src/uart/uart_dsPIC.c  .generated_files/flags/default/827c6034037c63554164b3a9bf0f11c1f116d05d .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/uart/uart_dsPIC.o: src/uart/uart_dsPIC.c  .generated_files/flags/default/9042906a4ed682a6841f0c6edcb5671bb845ddea .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/uart" 
 	@${RM} ${OBJECTDIR}/src/uart/uart_dsPIC.o.d 
 	@${RM} ${OBJECTDIR}/src/uart/uart_dsPIC.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/uart/uart_dsPIC.c  -o ${OBJECTDIR}/src/uart/uart_dsPIC.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/uart/uart_dsPIC.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/116f9dae241dddc965ad299a6455b80756567c1 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/948d197d1301b72b7f32cb4773f0e5ccbe83c2ad .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/main.o.d 
 	@${RM} ${OBJECTDIR}/src/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/main.c  -o ${OBJECTDIR}/src/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 else
-${OBJECTDIR}/src/ampel/ampel.o: src/ampel/ampel.c  .generated_files/flags/default/a556e469ae6958ad78a0bd5789a55911349ebaa8 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/ampel/ampel.o: src/ampel/ampel.c  .generated_files/flags/default/dc0aefb39e516658653a7d18295ba29e0671551 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/ampel" 
 	@${RM} ${OBJECTDIR}/src/ampel/ampel.o.d 
 	@${RM} ${OBJECTDIR}/src/ampel/ampel.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/ampel/ampel.c  -o ${OBJECTDIR}/src/ampel/ampel.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/ampel/ampel.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/config/global_definitions.o: src/config/global_definitions.c  .generated_files/flags/default/a96981224e9bc09f74a5de0d8c9dab73985ade9a .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/config/global_definitions.o: src/config/global_definitions.c  .generated_files/flags/default/ae60f966f374100e61e97371e1cb7ec05197ef73 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/config" 
 	@${RM} ${OBJECTDIR}/src/config/global_definitions.o.d 
 	@${RM} ${OBJECTDIR}/src/config/global_definitions.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/config/global_definitions.c  -o ${OBJECTDIR}/src/config/global_definitions.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/config/global_definitions.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/config/pll.o: src/config/pll.c  .generated_files/flags/default/6f3e4a1e9efabcfbd40624a8aafe30d0bf7b1844 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/config/pll.o: src/config/pll.c  .generated_files/flags/default/b334b1ee62bd2c6a245551fcffe5a9f8024e202b .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/config" 
 	@${RM} ${OBJECTDIR}/src/config/pll.o.d 
 	@${RM} ${OBJECTDIR}/src/config/pll.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/config/pll.c  -o ${OBJECTDIR}/src/config/pll.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/config/pll.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/dht/dht.o: src/dht/dht.c  .generated_files/flags/default/78b8fd43adefdbde826c90848b7b6d03ca73bcb .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/dht/dht.o: src/dht/dht.c  .generated_files/flags/default/3592fc44e1103b9ddc32f1cdd6dd33802fb097ac .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/dht" 
 	@${RM} ${OBJECTDIR}/src/dht/dht.o.d 
 	@${RM} ${OBJECTDIR}/src/dht/dht.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/dht/dht.c  -o ${OBJECTDIR}/src/dht/dht.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/dht/dht.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/oled/OLED.o: src/oled/OLED.c  .generated_files/flags/default/7e53d0665c9e7f94d4b3f1e649e1e0760a43f04d .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/oled/OLED.o: src/oled/OLED.c  .generated_files/flags/default/3ba689e6ef0a8864fa4e02dcd633d7e7a5adc497 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/oled" 
 	@${RM} ${OBJECTDIR}/src/oled/OLED.o.d 
 	@${RM} ${OBJECTDIR}/src/oled/OLED.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/oled/OLED.c  -o ${OBJECTDIR}/src/oled/OLED.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/oled/OLED.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/oled/i2c_routines.o: src/oled/i2c_routines.c  .generated_files/flags/default/5f6db54fc2de76e75a45d839d8623dc78d2cc625 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/oled/i2c_routines.o: src/oled/i2c_routines.c  .generated_files/flags/default/86216679f9488ef84da80cb320041e6a89392fde .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/oled" 
 	@${RM} ${OBJECTDIR}/src/oled/i2c_routines.o.d 
 	@${RM} ${OBJECTDIR}/src/oled/i2c_routines.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/oled/i2c_routines.c  -o ${OBJECTDIR}/src/oled/i2c_routines.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/oled/i2c_routines.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/timer/timer.o: src/timer/timer.c  .generated_files/flags/default/43b73ebccf7625fc19e37e1a62c90e8f75412e73 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/timer/timer.o: src/timer/timer.c  .generated_files/flags/default/d21450af15aff47f28f3633142ceb0dd6d8091ed .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/timer" 
 	@${RM} ${OBJECTDIR}/src/timer/timer.o.d 
 	@${RM} ${OBJECTDIR}/src/timer/timer.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/timer/timer.c  -o ${OBJECTDIR}/src/timer/timer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/timer/timer.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/timer/timerstart.o: src/timer/timerstart.c  .generated_files/flags/default/8b9258a3c37d7e508e7a00a32362c4e4670eabbb .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/timer/timerstart.o: src/timer/timerstart.c  .generated_files/flags/default/3e978ede17cda1ccfa4a3fb07701f78e6a6ad533 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/timer" 
 	@${RM} ${OBJECTDIR}/src/timer/timerstart.o.d 
 	@${RM} ${OBJECTDIR}/src/timer/timerstart.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/timer/timerstart.c  -o ${OBJECTDIR}/src/timer/timerstart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/timer/timerstart.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/uart/uart.o: src/uart/uart.c  .generated_files/flags/default/93077291f7a8d79c3bba86bd75b53fd194fcf2f2 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/uart/uart.o: src/uart/uart.c  .generated_files/flags/default/497a8a8be4ef98b546367a3402d0be26c93dcbc8 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/uart" 
 	@${RM} ${OBJECTDIR}/src/uart/uart.o.d 
 	@${RM} ${OBJECTDIR}/src/uart/uart.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/uart/uart.c  -o ${OBJECTDIR}/src/uart/uart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/uart/uart.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/uart/uart_dsPIC.o: src/uart/uart_dsPIC.c  .generated_files/flags/default/fdfe60c2822cf3751b1be94711a002e4f3358a6 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/uart/uart_dsPIC.o: src/uart/uart_dsPIC.c  .generated_files/flags/default/856b7de6dee647b25cc796b83a1a11f71eaab60 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src/uart" 
 	@${RM} ${OBJECTDIR}/src/uart/uart_dsPIC.o.d 
 	@${RM} ${OBJECTDIR}/src/uart/uart_dsPIC.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/uart/uart_dsPIC.c  -o ${OBJECTDIR}/src/uart/uart_dsPIC.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/uart/uart_dsPIC.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -I"src" -I"src/config" -I"src/dht" -I"src/oled" -I"src/timer" -I"src/uart" -I"src/ampel" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/38947179eeaaa72a16871656f5026b903f604852 .generated_files/flags/default/74d464f3899599845d713a1d015fd0bf2695bd19
+${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/cd8ef23c24b0f0a9fc53b53ef0de0c359b955d94 .generated_files/flags/default/154a39b459d497157d1f034ee9131ad407b9cda3
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/main.o.d 
 	@${RM} ${OBJECTDIR}/src/main.o 

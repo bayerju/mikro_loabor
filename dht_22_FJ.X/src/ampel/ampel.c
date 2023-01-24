@@ -27,6 +27,7 @@ void setAmpelError (void) {
 }
 
 void setAmpel(float currentValue, float borderRed, float borderYellow, int loopCounter_OLED) {
+    initAmpelLEDs();
     if (currentValue > borderRed) {                                       // Humidity is higher than the red border --> Red light on
         ROT = 1;
         GRUEN = 0;
