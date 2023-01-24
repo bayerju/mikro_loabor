@@ -16,7 +16,7 @@
 #include "dht.h"
 
 extern void T3_setup(void);
-extern void T3_setup_gated(void);
+extern void initIC2(void);
 extern void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void);
 
 #ifdef __cplusplus

@@ -14,6 +14,10 @@
 // TODO: Screen shot 6
 #define T3_Period 65000         // 1us with 4MHz: 4MHz
                                 // Befehlstakt: 2Mhz -> 1/2Mhz = 0.5us -> 10us/0.5us = 20
+
+#define IOLock() __builtin_write_OSCCONL(OSCCON | 0x40);
+#define IOUnlock() __builtin_write_OSCCONL( OSCCON & 0xbf);
+
 void T3_setup(void) {
     T3CONbits.TON = 0;          // Disable Timer
     T3CONbits.TCS = 0;          // Select internal instruction cycle clock
@@ -27,46 +31,84 @@ void T3_setup(void) {
     T3CONbits.TON = 1;          // Start Timer
 }
 
-void T3_setup_gated(void) {
-    T3CONbits.TON = 0;          // Disable Timer
-    T3CONbits.TCS = 0;          // Select internal instruction cycle clock
-    T3CONbits.TGATE = 1;        // Enable Gated Timer mode
-    T3CONbits.TCKPS = 0b00;     // Select 1:1 Prescaler
-    TMR3 = 0x00;                // Clear timer register
-    PR3 = T3_Period;
-    __builtin_write_OSCCONL(OSCCON & 0xbf);
-    RPINR3bits.T3CKR = 0b00101;
-    __builtin_write_OSCCONL(OSCCON | 0x40);
-    int testi = RPINR3bits.T3CKR;  
-    IPC2bits.T3IP = 0x01;       // Set Timer3 Interrupt Priority Level // TODO: can we have two same prioritiylevels?
-    IFS0bits.T3IF = 0;          // Clear Timer3 Interrupt Flag
-    int test = PORTBbits.RB5;
-    int test1 = RPINR3bits.T3CKR;
-    int test2 =  TRISBbits.TRISB5;
-    IEC0bits.T3IE = 1;          // Enable Timer3 interrupt
-    T3CONbits.TON = 1;          // Start Timer
+void initIC2(void) {
+    TRISBbits.TRISB5 = 1; // set RB5 as input
+    TMR3 = 0;
+    IOUnlock();
+    RPINR7bits.IC2R = 5; // set IC2 to RB5
+    IOLock();
+    int test = RPINR7bits.IC2R;
+    IC2CONbits.ICSIDL = 1; // stops at idle CPU
+	IC2CONbits.ICTMR = 0; // Uses Timer3
+	IC2CONbits.ICI = 0b00; // interrupt every capture event
+	IC2CONbits.ICM = 0b010; // capture on every falling edge
+    IEC0bits.IC2IE = 1;						// enable IC2 interrupt
+    IFS0bits.IC2IF = 0;						// clear IC2 interrupt flag
+    // q: why is this not triggering an interrupt?
+    // a: because the interrupt is not enabled
+    // q: why is the interrupt not enabled?
+    // a: because the interrupt is not enabled
+    // q: how do I enable the interrupt?
+    // a: by setting the IEC0bits.IC2IE = 1;
+
+
 }
 
-void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
-// q: why does this interrupt trigger every 40 to 50 cycles?
-// a:
+void __attribute__((interrupt, shadow, no_auto_psv)) _IC2Interrupt()
+{
     static int currentBit = 0;
     int test = currentBit;
-    if (currentBit >= 40) {
+    // int firstCapture = IC2BUF;
+    // int secondCpature = IC2BUF;
+    // firstCaptures[currentBit] = firstCapture;
+    // secondCaptures[currentBit] = secondCpature;
+    int timeAtOne = TMR3; // secondCpature - firstCapture;
+    if (currentBit == 0) {
+        TMR3 = 0;
+        currentBit++;
+        return;
+    }
+    if (currentBit > 40) {
         currentBit = 0;
         evaluateBitData(data, tempString, humString);
-        T3_setup();
+        TMR3=0;
+        IC2CONbits.ICM = 0; // disable IC2
     }
     
-    if (TMR3 > 2000 && TMR3 < 4000) {
-    data[currentBit] = TMR3;
-    TMR3 = 0;
-    currentBit++;
-    } else if (TMR3 > 600 && TMR3 < 2000) {
-    data[currentBit] = TMR3;
-    TMR3 = 0;
-    currentBit++;
+    if (timeAtOne >= 4000 && timeAtOne < 6000) {
+        data[currentBit] = 1;
+        currentBit++;
+    } else if (timeAtOne >= 2000 && timeAtOne < 4000) {
+        data[currentBit] = 0;
+        currentBit++;
+    } else {
+        throwError(ERROR_BIT_EVAL_FAILED);
     }
+	TMR3 = 0;								// clear timer 3
+	IFS0bits.IC2IF = 0;						// clear IC2 interrupt flag
 
-    IFS0bits.T1IF = 0; // Interrupt Flag zurücksetzen
 }
+
+// void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
+// // q: why does this interrupt trigger every 40 to 50 cycles?
+// // a:
+//     static int currentBit = 0;
+//     int test = currentBit;
+//     if (currentBit >= 40) {
+//         currentBit = 0;
+//         evaluateBitData(data, tempString, humString);
+//         T3_setup();
+//     }
+    
+//     if (TMR3 > 2000 && TMR3 < 4000) {
+//     data[currentBit] = TMR3;
+//     TMR3 = 0;
+//     currentBit++;
+//     } else if (TMR3 > 600 && TMR3 < 2000) {
+//     data[currentBit] = TMR3;
+//     TMR3 = 0;
+//     currentBit++;
+//     }
+
+//     IFS0bits.T1IF = 0; // Interrupt Flag zurücksetzen
+// }

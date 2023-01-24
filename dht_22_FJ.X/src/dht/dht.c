@@ -97,8 +97,8 @@ int readData(int *data) {
     }
     if (isAnswerOk == 0) {                                   // all good start reading
         resetError();
-        int bit = -1;
-        T3_setup_gated();
+        TMR3 = 0;
+        initIC2();
         // while (PORTBbits.RB5 == 1 && TMR3 < 4000);                // wait up to 100us;
         // TODO: change to gated timer from here on or just use different timer that is gated
         // while (counterBits < 40){
@@ -214,7 +214,7 @@ int evalBit() {
 }
 
 /**
- * @brief check the sensor reply
+ * @brief check the sensor reply. First we wait for the Pin to go down and then we wait for it to go up again and messure the time.
  * 
  * @return int 0 if the check was ok and 1 if it wasnt
  */
@@ -223,13 +223,8 @@ int checkSensorReply() {
     int maxTime = 4800; // 400*12
     int prevValue = 1;
 
-    /**
-     * @brief Wait for the sensor replay
-     * 
-     */
     while (TMR3 < maxTime) {
         
-        int test = PORTBbits.RB5;
         if (PORTBbits.RB5 == 1 && prevValue == 1) {
             continue;
         } 

@@ -44,7 +44,8 @@ typedef enum ErrorCodes
     ERROR_NO_RESPONSE,
     ERROR_CHECKSUM,
     ERROR_TIMEOUT,
-    ERROR_UNKNOWN
+    ERROR_UNKNOWN,
+    ERROR_BIT_EVAL_FAILED
 } ErrorCodes;
 extern enum errorCodes errorCodes;
 extern ErrorCodes currentErrorCode;
@@ -72,6 +73,8 @@ extern char tempString [20];                    // string for the temperature
 extern char humString [20];                     // string for the humidity
 extern TFloatData sensorData;                    // struct for the data
 extern int data[];                              // array for the data
+extern int firstCaptures[];                     // array for the first captures
+extern int secondCaptures[];                    // array for the second captures
 extern char isReadingDataFlag;                  // flag for the reading of the data
 
 

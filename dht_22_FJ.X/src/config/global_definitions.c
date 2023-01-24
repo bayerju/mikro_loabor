@@ -13,12 +13,14 @@ short int isWakingSensorFlag = 0;                  // Flag to start the sensor w
 short int bitEvalData[12];                         // BUffer to evaluate the bits
 short int measurementBits[40];                     // Buffer to store the bits
 
-char tempString [20] = {0};                        // Buffer to store the temperature
-char humString [20] = {0};                         // Buffer to store the humidity
+char tempString [20] = "NO DATA";                        // Buffer to store the temperature
+char humString [20] = "NO DATA";                         // Buffer to store the humidity
 
 float borderYellowHum = 60.0;
 float borderRedHum = 70.0;
 int data[40] = {0};
+int firstCaptures[40] = {0};
+int secondCaptures[40] = {0};
 TFloatData sensorData = {0};
 ErrorCodes currentErrorCode = NO_ERROR;
 
@@ -54,6 +56,10 @@ void throwError(ErrorCodes a_errorCode) {
         case ERROR_UNKNOWN:
             strcpy(errorMessage, "ERROR_UNKNOWN");
             currentErrorCode = ERROR_UNKNOWN;
+            break;
+        case ERROR_BIT_EVAL_FAILED:
+            strcpy(errorMessage, "ERROR_BIT_EVAL_FAILED");
+            currentErrorCode = ERROR_BIT_EVAL_FAILED;
             break;
         default:
             strcpy(errorMessage, "ERROR_UNKNOWN");
