@@ -42,6 +42,7 @@ int main(int argc, char** argv) {
     // T3_setup();
     TRISBbits.TRISB5 = 1; // set RB5 as input
     T1_setup();
+    initIC2();
    
    /**
     * @brief Programme control through infinitely continuous loop 
@@ -50,12 +51,12 @@ int main(int argc, char** argv) {
     while(1){
         if (currentErrorCode != NO_ERROR)
         {
-            //fb_clear();
-            //fb_draw_one_line_string(i,3,errorMessage);
-            //fb_show();
+            fb_clear();
+            fb_draw_one_line_string(i,3,errorMessage);
+            fb_show();
         } else {
             ChangeValue(iState, &borderRedHum, &borderYellowHum); // change the border values
-            //oled_draw(tempString, humString); // draw the values on the OLED
+            oled_draw(tempString, humString); // draw the values on the OLED
             setAmpel(sensorData.hum, borderRedHum, borderYellowHum, i); // set the light
         }
         i++;

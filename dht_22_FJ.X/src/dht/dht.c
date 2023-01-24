@@ -40,15 +40,16 @@ void dataToString(int *data, char *tempString, char *humString, DataBytes *bytes
      * checksum and then outputs an error text
      * 
      */
+     temp = (bytes->tempByte1 << 8) + bytes->tempByte2;                  // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.     
+    tempFloat = (float)temp/10;                                         // convert the integer to a float
+    hum = (bytes->humByte1 << 8) + bytes->humByte2;                     // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.
+    humFloat = (float)hum/10;  
     if (isChecksumOk(bytes) != 0) {
         throwError(ERROR_CHECKSUM);
         return;
     }
 
-    temp = (bytes->tempByte1 << 8) + bytes->tempByte2;                  // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.     
-    tempFloat = (float)temp/10;                                         // convert the integer to a float
-    hum = (bytes->humByte1 << 8) + bytes->humByte2;                     // Bit shifting is used to convert the data from the sensor into integer values that can be further processed.
-    humFloat = (float)hum/10;                                           // convert the integer to a float
+                                            // convert the integer to a float
 
     sprintf(tempString, "Temperature: %.1f", (double)floatData->temp); // converted to double, because printf converts it anyway and now there is no warning and it is clear what is happening.
     sprintf(humString, "Humidity: %.1f", (double)floatData->hum);   
@@ -86,7 +87,6 @@ int isChecksumOk(DataBytes *bytes) {
  */
 // TODO: Screen shot 3
 int readData(int *data) {
-    int counterBits = 0;
     T3_setup();
     startDHT22();
     TMR3 = 0;
@@ -96,9 +96,11 @@ int readData(int *data) {
         return -1;
     }
     if (isAnswerOk == 0) {                                   // all good start reading
+        while(PORTBbits.RB5 == 1); // wait for sensor to pull low so the first flank is not captured
         resetError();
         TMR3 = 0;
-        initIC2();
+        __delay_us(40); // wait for sensor to pull high again
+        startI2C();
         // while (PORTBbits.RB5 == 1 && TMR3 < 4000);                // wait up to 100us;
         // TODO: change to gated timer from here on or just use different timer that is gated
         // while (counterBits < 40){
@@ -247,7 +249,7 @@ int checkSensorReply() {
                 }
         } 
     }
-    
+    throwError(ERROR_TIMEOUT);
     return 1;
 }
 

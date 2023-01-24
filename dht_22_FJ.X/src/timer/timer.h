@@ -17,6 +17,7 @@
 
 extern void T3_setup(void);
 extern void initIC2(void);
+extern void startI2C(void);
 extern void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void);
 
 #ifdef __cplusplus

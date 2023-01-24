@@ -37,52 +37,48 @@ void initIC2(void) {
     IOUnlock();
     RPINR7bits.IC2R = 5; // set IC2 to RB5
     IOLock();
-    int test = RPINR7bits.IC2R;
     IC2CONbits.ICSIDL = 1; // stops at idle CPU
 	IC2CONbits.ICTMR = 0; // Uses Timer3
 	IC2CONbits.ICI = 0b00; // interrupt every capture event
-	IC2CONbits.ICM = 0b010; // capture on every falling edge
+	IC2CONbits.ICM = 0b000; // turn off and wait for it to bie turned on
     IEC0bits.IC2IE = 1;						// enable IC2 interrupt
     IFS0bits.IC2IF = 0;						// clear IC2 interrupt flag
-    // q: why is this not triggering an interrupt?
-    // a: because the interrupt is not enabled
-    // q: why is the interrupt not enabled?
-    // a: because the interrupt is not enabled
-    // q: how do I enable the interrupt?
-    // a: by setting the IEC0bits.IC2IE = 1;
+}
 
-
+void startI2C(void) {
+    TMR3 = 0;
+    IC2CONbits.ICM = 0b010; // capture on every falling edge
 }
 
 void __attribute__((interrupt, shadow, no_auto_psv)) _IC2Interrupt()
 {
-    static int currentBit = -1;
-    // int firstCapture = IC2BUF;
-    // int secondCpature = IC2BUF;
-    // firstCaptures[currentBit] = firstCapture;
-    // secondCaptures[currentBit] = secondCpature;
-    int timeAtOne = TMR3; // secondCpature - firstCapture;
-    if (currentBit < 0) {
+    static int currentBit = 0;
+    int timeAtOne = TMR3;
+    if (currentBit < 0) { // to skip the first one if necessary
         TMR3 = 0;
+        timeLog[50+currentBit] = timeAtOne;
         currentBit++;
+        IFS0bits.IC2IF = 0;	
         return;
     }
     if (currentBit >= 40) {
         currentBit = 0;
         evaluateBitData(data, tempString, humString);
-        TMR3=0;
         IC2CONbits.ICM = 0; // disable IC2
     }
     
     if (timeAtOne >= 4000 && timeAtOne < 6000) {
         data[currentBit] = 1;
+        timeLog[currentBit] = timeAtOne;
         currentBit++;
-    } else if (timeAtOne >= 2000 && timeAtOne < 4000) {
+    } else if (timeAtOne < 4000) {
         data[currentBit] = 0;
+        timeLog[currentBit] = timeAtOne;
         currentBit++;
     } else {
         throwError(ERROR_BIT_EVAL_FAILED);
     }
+    
 	TMR3 = 0;								// clear timer 3
 	IFS0bits.IC2IF = 0;						// clear IC2 interrupt flag
 

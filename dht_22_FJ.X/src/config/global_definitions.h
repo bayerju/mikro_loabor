@@ -52,6 +52,7 @@ extern ErrorCodes currentErrorCode;
 extern char errorMessage[];
 extern void throwError(ErrorCodes errorCode);
 extern void resetError(void);
+extern int timeLog[];                     // arrayof the captured times
 
 
 struct FloatData {
@@ -73,8 +74,6 @@ extern char tempString [20];                    // string for the temperature
 extern char humString [20];                     // string for the humidity
 extern TFloatData sensorData;                    // struct for the data
 extern int data[];                              // array for the data
-extern int firstCaptures[];                     // array for the first captures
-extern int secondCaptures[];                    // array for the second captures
 extern char isReadingDataFlag;                  // flag for the reading of the data
 
 

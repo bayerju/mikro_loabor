@@ -19,8 +19,7 @@ char humString [20] = "NO DATA";                         // Buffer to store the 
 float borderYellowHum = 60.0;
 float borderRedHum = 70.0;
 int data[40] = {0};
-int firstCaptures[40] = {0};
-int secondCaptures[40] = {0};
+int timeLog[50] = {0};
 TFloatData sensorData = {0};
 ErrorCodes currentErrorCode = NO_ERROR;
 
@@ -32,8 +31,10 @@ void resetError() {
 }
 
 void throwError(ErrorCodes a_errorCode) {
-    switch (a_errorCode) {
-        case NO_ERROR:
+    // errorMessage = {'\0'};
+    strncpy(errorMessage, "", sizeof(errorMessage));
+    switch (a_errorCode){
+        case NO_ERROR :
             strcpy(errorMessage, "");
             currentErrorCode = NO_ERROR;
             break;
