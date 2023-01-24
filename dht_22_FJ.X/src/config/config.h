@@ -24,8 +24,7 @@
                                     // (Secure segment may be written)
 #pragma config SSS = NO_FLASH // Secure Segment Program Flash Code Protection
                               // (No Secure Segment)
-#pragma config RSS =                                                           \
-    NO_RAM // Secure Segment Data RAM Protection (No Secure RAM)
+#pragma config RSS =  NO_RAM // Secure Segment Data RAM Protection (No Secure RAM)
 
 // FGS
 #pragma config GWRP = OFF // General Code Segment Write Protect (User program
@@ -40,30 +39,25 @@
 
 // FOSC
 #pragma config POSCMD = XT // Primary Oscillator Source (XT Oscillator Mode)
-#pragma config OSCIOFNC =                                                      \
-    OFF // OSC2 Pin Function (OSC2 pin has clock out function)
+#pragma config OSCIOFNC =    OFF // OSC2 Pin Function (OSC2 pin has clock out function)
 #pragma config IOL1WAY = OFF // Peripheral Pin Select Configuration (Allow Only
                             // One Re-configuration)
-#pragma config FCKSM =                                                         \
-    CSECME // Clock Switching and Monitor (Both Clock Switching and Fail-Safe
+#pragma config FCKSM =                  CSECME // Clock Switching and Monitor (Both Clock Switching and Fail-Safe
            // Clock Monitor are enabled)
 
 // FWDT
 #pragma config WDTPOST = PS32768 // Watchdog Timer Postscaler (1:32,768)
 #pragma config WDTPRE = PR128    // WDT Prescaler (1:128)
-#pragma config WINDIS =                                                        \
-    OFF // Watchdog Timer Window (Watchdog Timer in Non-Window mode)
+#pragma config WINDIS =                  OFF // Watchdog Timer Window (Watchdog Timer in Non-Window mode)
 #pragma config FWDTEN = OFF // Watchdog Timer Enable (Watchdog timer
                             // enabled/disabled by user software)
 
 // FPOR
 #pragma config FPWRT = PWR128 // POR Timer Value (128ms)
-#pragma config ALTI2C =                                                        \
-    OFF // Alternate I2C  pins (I2C mapped to SDA1/SCL1 pins)
+#pragma config ALTI2C =        OFF // Alternate I2C  pins (I2C mapped to SDA1/SCL1 pins)
 
 // FICD
-#pragma config ICS =                                                           \
-    PGD1 // Comm Channel Select (Communicate on PGC1/EMUC1 and PGD1/EMUD1)
+#pragma config ICS =             PGD1 // Comm Channel Select (Communicate on PGC1/EMUC1 and PGD1/EMUD1)
 #pragma config JTAGEN = OFF // JTAG Port Enable (JTAG is Disabled)
 
 #ifdef	__cplusplus

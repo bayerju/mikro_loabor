@@ -18,10 +18,10 @@
 void startDHT22(void){
     //DHT_PIN_INIT = 0;
     TRISBbits.TRISB5 = 0;
-    //DHT_PIN = 0;
+    //PORTBbits.RB5 = 0;
     PORTBbits.RB5 = 0;
     __delay_ms(2);                  // As a start signal, the DHT22 must pull the signal from the host to 0 for at least 1ms
-    //DHT_PIN = 1;
+    //PORTBbits.RB5 = 1;
     PORTBbits.RB5 = 1;
     TRISBbits.TRISB5 = 1;
     //DHT_PIN_INIT = 1;
@@ -98,9 +98,9 @@ int readData(int *data) {
     if (isAnswerOk == 0) {                                   // all good start reading
         resetError();
         int bit = -1;
-        while (DHT_PIN == 1 && TMR3 < 4000);                // wait up to 100us;
-        // TODO: change to gated timer from here on or just use different timer that is gated
         T3_setup_gated();
+        // while (PORTBbits.RB5 == 1 && TMR3 < 4000);                // wait up to 100us;
+        // TODO: change to gated timer from here on or just use different timer that is gated
         // while (counterBits < 40){
         //     bit = evalBit();
         //     if (bit == -1) {
@@ -187,13 +187,13 @@ int getRecievedByte(int offset, int *data) {
 int evalBit() {
     int prevPin = 0;
     TMR3 = 0;
-    while(DHT_PIN == 0 && TMR3 < 3000);     // wait up to 75us;
+    while(PORTBbits.RB5 == 0 && TMR3 < 3000);     // wait up to 75us;
     if (TMR3 > 3000) {
         TMR3 = 0;
         return -1;
     }
-    while(DHT_PIN == 1){
-        if(DHT_PIN == 1 && prevPin == 0){   // wait for pin to go to 0;
+    while(PORTBbits.RB5 == 1){
+        if(PORTBbits.RB5 == 1 && prevPin == 0){   // wait for pin to go to 0;
             TMR3 = 0;
             prevPin = 1;
         }
@@ -229,17 +229,17 @@ int checkSensorReply() {
      */
     while (TMR3 < maxTime) {
         
-        int test = DHT_PIN;
-        if (DHT_PIN == 1 && prevValue == 1) {
+        int test = PORTBbits.RB5;
+        if (PORTBbits.RB5 == 1 && prevValue == 1) {
             continue;
         } 
-        if (DHT_PIN == 0 && prevValue == 1) {
+        if (PORTBbits.RB5 == 0 && prevValue == 1) {
             TMR3 = 0;
             prevValue = 0;
             
         }
 
-        if (DHT_PIN == 1 && prevValue == 0) {
+        if (PORTBbits.RB5 == 1 && prevValue == 0) {
 
                 int timeStayedZero = TMR3;
                 if (timeStayedZero > 2800 && timeStayedZero < 3600) { // between 70 and 90 us // 1/40E6 = 25E-9 70E-6/25E-9 = 2800

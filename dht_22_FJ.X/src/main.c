@@ -39,8 +39,8 @@ int main(int argc, char** argv) {
     unsigned char iState = 0;
     int i = 0;
     CommPutString("To change the middle border value type Y and to change the upper border Value type R. \n");
-    T3_setup();
-    
+    // T3_setup();
+    TRISBbits.TRISB5 = 1; // set RB5 as input
     T1_setup();
    
    /**

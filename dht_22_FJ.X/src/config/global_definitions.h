@@ -26,6 +26,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+// PINs
+#define LED_RED_INIT TRISBbits.TRISB15
+#define LED_YELLOW_INIT TRISBbits.TRISB12
+#define LED_GREEN_INIT TRISBbits.TRISB14
+
+#define LED_RED LATBbits.LATB15
+#define LED_YELLOW LATBbits.LATB12
+#define LED_GREEN LATBbits.LATB14
+
 
 // ErrorHandling
 typedef enum ErrorCodes
@@ -66,16 +75,7 @@ extern int data[];                              // array for the data
 extern char isReadingDataFlag;                  // flag for the reading of the data
 
 
-// PINs
-#define LED_RED_INIT TRISBbits.TRISB15
-#define LED_YELLOW_INIT TRISBbits.TRISB12
-#define LED_GREEN_INIT TRISBbits.TRISB14
-#define DHT_PIN_INIT TRISBbits.TRISB5
 
-#define LED_RED LATBbits.LATB15
-#define LED_YELLOW LATBbits.LATB12
-#define LED_GREEN LATBbits.LATB14
-#define DHT_PIN PORTBbits.RB5
 
 
 #define DEBUG 1

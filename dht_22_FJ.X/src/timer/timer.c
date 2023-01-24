@@ -33,36 +33,40 @@ void T3_setup_gated(void) {
     T3CONbits.TGATE = 1;        // Enable Gated Timer mode
     T3CONbits.TCKPS = 0b00;     // Select 1:1 Prescaler
     TMR3 = 0x00;                // Clear timer register
+    PR3 = T3_Period;
+    __builtin_write_OSCCONL(OSCCON & 0xbf);
+    RPINR3bits.T3CKR = 0b00101;
+    __builtin_write_OSCCONL(OSCCON | 0x40);
+    int testi = RPINR3bits.T3CKR;  
     IPC2bits.T3IP = 0x01;       // Set Timer3 Interrupt Priority Level // TODO: can we have two same prioritiylevels?
     IFS0bits.T3IF = 0;          // Clear Timer3 Interrupt Flag
+    int test = PORTBbits.RB5;
+    int test1 = RPINR3bits.T3CKR;
+    int test2 =  TRISBbits.TRISB5;
     IEC0bits.T3IE = 1;          // Enable Timer3 interrupt
     T3CONbits.TON = 1;          // Start Timer
-    RPINR3bits.T3CKR = 0b00001000;
-}
-
-int evaluateBit(int time) {
- if (time > 2000 && time < 4000) {
-     return 1;
- } else if (time > 600 && time < 2000) {
-     return 0;
- } else {
-    throwError(ERROR_CHECKSUM);
-    return -1;
- }
 }
 
 void __attribute__((__interrupt__, no_auto_psv)) _T3Interrupt(void){
-
+// q: why does this interrupt trigger every 40 to 50 cycles?
+// a:
     static int currentBit = 0;
+    int test = currentBit;
     if (currentBit >= 40) {
         currentBit = 0;
         evaluateBitData(data, tempString, humString);
         T3_setup();
     }
-
-    data[currentBit] = evaluateBit(TMR3);
-    currentBit++;
+    
+    if (TMR3 > 2000 && TMR3 < 4000) {
+    data[currentBit] = TMR3;
     TMR3 = 0;
+    currentBit++;
+    } else if (TMR3 > 600 && TMR3 < 2000) {
+    data[currentBit] = TMR3;
+    TMR3 = 0;
+    currentBit++;
+    }
 
     IFS0bits.T1IF = 0; // Interrupt Flag zurücksetzen
 }
